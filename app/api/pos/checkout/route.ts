@@ -142,29 +142,30 @@ export async function POST(req: NextRequest) {
     const ops: any[] = []
 
     // Create Sale with items and payments
+    const saleData: any = {
+      receiptNumber,
+      cashierId,
+      ...(customerId ? { customerId } : {}),
+      ...(salespersonId ? { salespersonId } : {}),
+      taxable,
+      subtotal,
+      discountAmount,
+      taxAmount,
+      total,
+      totalCost,
+      profit,
+      notes,
+      status: 'COMPLETED',
+      items: { create: saleItemsData },
+      payments: { create: payments.map(p => ({
+        method: p.method,
+        amount: p.amount,
+        reference: p.reference,
+      }))},
+    }
     ops.push(
       prisma.sale.create({
-        data: {
-          receiptNumber,
-          cashierId,
-          ...(customerId ? { customerId } : {}),
-          ...(salespersonId ? { salespersonId } : {}),
-          taxable,
-          subtotal,
-          discountAmount,
-          taxAmount,
-          total,
-          totalCost,
-          profit,
-          notes,
-          status: 'COMPLETED',
-          items: { create: saleItemsData },
-          payments: { create: payments.map(p => ({
-            method: p.method,
-            amount: p.amount,
-            reference: p.reference,
-          }))},
-        },
+        data: saleData,
         include: {
           items:    { select: { commissionAmount: true, product: { select: { id: true, name: true, sku: true, unit: true } } } },
           payments: true,
