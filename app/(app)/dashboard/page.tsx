@@ -18,7 +18,7 @@ import {
   TrendingUp, Receipt, Percent, Activity,
   AlertTriangle, Clock, Eye,
   ArrowDownLeft, ArrowUpRight, ArrowLeftRight,
-  Users, FileText, ShieldCheck,
+  Users, FileText, ShieldCheck, BadgeDollarSign,
 } from 'lucide-react'
 
 export default async function DashboardPage() {
