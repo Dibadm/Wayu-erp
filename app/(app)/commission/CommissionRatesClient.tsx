@@ -19,7 +19,7 @@ interface Rate {
 }
 
 interface Product { id: string; name: string; sku: string }
-interface User { id: string; name: string; email: string; role: string }
+interface User { id: string; name: string | null; email: string; role: string }
 
 const SCOPES: { value: CommissionScope; label: string }[] = [
   { value: 'GLOBAL', label: 'Global' },
