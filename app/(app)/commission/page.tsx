@@ -21,6 +21,11 @@ export default async function CommissionPage() {
     prisma.user.findMany({ orderBy: { name: 'asc' }, select: { id: true, name: true, email: true, role: true } }),
   ])
 
+  const serializedRates = rates.map(r => ({
+    ...r,
+    rate: Number(r.rate),
+  }))
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
@@ -30,7 +35,7 @@ export default async function CommissionPage() {
         </div>
         <a href="/commission/performance" className="text-xs font-mono text-blue-400 hover:text-blue-300">Salesperson Performance →</a>
       </div>
-      <CommissionRatesClient initialRates={rates} products={products} users={users} />
+      <CommissionRatesClient initialRates={serializedRates} products={products} users={users} />
     </div>
   )
 }

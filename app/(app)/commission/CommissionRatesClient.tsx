@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Plus, Trash2, Save, X } from 'lucide-react'
-import { CommissionScope } from '@prisma/client'
+import { CommissionScope, Decimal } from '@prisma/client'
 
 interface Rate {
   id: string
@@ -13,7 +13,7 @@ interface Rate {
   product?: { id: string; name: string; sku: string } | null
   tierFromQty: number
   tierToQty: number | null
-  rate: number
+  rate: Decimal
   active: boolean
   createdAt: string
 }
