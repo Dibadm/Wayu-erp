@@ -20,9 +20,9 @@ export async function GET(req: NextRequest) {
       },
     }),
     await prisma.$queryRaw<{ id: string; name: string; sku: string; quantity: number; minStockLevel: number; unit: string }[]>`
-      SELECT id, name, sku, quantity, min_stock_level AS "minStockLevel", unit
+      SELECT id, name, sku, quantity, minStockLevel AS "minStockLevel", unit
       FROM products
-      WHERE quantity <= min_stock_level
+      WHERE quantity <= minStockLevel
       ORDER BY name ASC
       LIMIT 20
     `,

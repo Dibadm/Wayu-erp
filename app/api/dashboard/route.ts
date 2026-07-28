@@ -35,9 +35,9 @@ export async function GET(req: NextRequest) {
     prisma.product.count(),
     prisma.product.aggregate({ _sum: { quantity: true } }),
     prisma.$queryRaw<{ id: string; sku: string; name: string; quantity: number; minStockLevel: number }[]>`
-      SELECT "id", "sku", "name", "quantity", "min_stock_level" AS "minStockLevel"
+      SELECT "id", "sku", "name", "quantity", "minStockLevel" AS "minStockLevel"
       FROM "products"
-      WHERE "quantity" <= "min_stock_level"
+      WHERE "quantity" <= "minStockLevel"
       LIMIT 10
     `,
     prisma.bankAccount.findMany({ where: { isActive: true }, select: { accountName: true, currentBalance: true } }),

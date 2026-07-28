@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   const lowStock = searchParams.get('lowStock') === 'true'
 
   if (lowStock) {
-    const products = await prisma.$queryRaw`SELECT * FROM "products" WHERE "quantity" <= "min_stock_level" AND ("name" ILIKE ${`%${search}%`} OR "sku" ILIKE ${`%${search}%`} OR "category" ILIKE ${`%${search}%`}) ORDER BY "name" ASC`
+    const products = await prisma.$queryRaw`SELECT * FROM "products" WHERE "quantity" <= "minStockLevel" AND ("name" ILIKE ${`%${search}%`} OR "sku" ILIKE ${`%${search}%`} OR "category" ILIKE ${`%${search}%`}) ORDER BY "name" ASC`
     return NextResponse.json(products)
   }
 
