@@ -229,8 +229,7 @@ export default function AnalyticsPage() {
                 { key: 'profit',  label: 'Profit',   color: '#3b82f6' },
                 { key: 'purchases', label: 'Purchases', color: '#f59e0b' },
               ]}
-              formatY={fmtPHP}
-              formatX={(v: string) => v.slice(5)} // MM-DD
+              format="currency"
               height={240}
             />
           </ChartCard>
@@ -242,8 +241,7 @@ export default function AnalyticsPage() {
                 data={c.dailySeries}
                 xKey="date"
                 series={[{ key: 'units', label: 'Units Sold', color: '#8b5cf6' }]}
-                formatY={fmtUnits}
-                formatX={(v: string) => v.slice(5)}
+                format="units"
                 height={200}
               />
             </ChartCard>
@@ -256,7 +254,7 @@ export default function AnalyticsPage() {
                   { key: 'revenue', label: 'Revenue', color: '#10b981' },
                   { key: 'profit',  label: 'Profit',  color: '#3b82f6' },
                 ]}
-                formatY={fmtPHP}
+                format="currency"
                 height={200}
               />
             </ChartCard>
@@ -271,7 +269,7 @@ export default function AnalyticsPage() {
                   bars={[{ key: 'unitsSold', label: 'Units Sold', color: '#10b981' }]}
                   xKey="name"
                   layout="vertical"
-                  formatY={fmtUnits}
+                  format="units"
                   height={260}
                 />
               ) : (
@@ -288,7 +286,7 @@ export default function AnalyticsPage() {
                   bars={[{ key: 'unitsSold', label: 'Units Sold', color: '#f59e0b' }]}
                   xKey="name"
                   layout="vertical"
-                  formatY={fmtUnits}
+                  format="units"
                   height={260}
                 />
               ) : (
@@ -311,7 +309,7 @@ export default function AnalyticsPage() {
                       color: CAT_COLORS[i % CAT_COLORS.length],
                     }))}
                     height={200}
-                    formatValue={fmtFull}
+                    format="currency"
                   />
                   <div className="flex-1 space-y-2 min-w-0">
                     {c.categoryBreakdown.slice(0, 6).map((cat, i) => (
@@ -341,7 +339,7 @@ export default function AnalyticsPage() {
                   ]}
                   xKey="name"
                   layout="vertical"
-                  formatY={fmtUnits}
+                  format="units"
                   height={260}
                 />
               ) : (
@@ -375,7 +373,7 @@ export default function AnalyticsPage() {
                 ]}
                 xKey="name"
                 layout="vertical"
-                formatY={fmtUnits}
+                format="units"
                 height={Math.max(200, c.expiringData.length * 36)}
               />
             </ChartCard>
