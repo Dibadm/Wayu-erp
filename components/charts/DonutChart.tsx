@@ -9,21 +9,26 @@ interface Props {
   height?: number
   innerRadius?: number
   outerRadius?: number
-  formatValue?: (v: number) => string
+  format?: 'currency' | 'units' | 'number'
 }
 
-const CustomTooltip = ({ active, payload, formatValue }: any) => {
+const CustomTooltip = ({ active, payload, format }: any) => {
   if (!active || !payload?.length) return null
+  const formatValue = (v: number) => {
+    if (format === 'currency') return `ETB ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 0 })}`
+    if (format === 'units') return `${v} units`
+    return String(v)
+  }
   const p = payload[0]
   return (
     <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3 shadow-xl text-xs font-mono">
       <p style={{ color: p.payload.color }} className="font-semibold">{p.name}</p>
-      <p className="text-zinc-300 mt-1">{formatValue ? formatValue(p.value) : p.value}</p>
+      <p className="text-zinc-300 mt-1">{formatValue(p.value)}</p>
     </div>
   )
 }
 
-export default function DonutChart({ data, height = 200, innerRadius = 55, outerRadius = 80, formatValue }: Props) {
+export default function DonutChart({ data, height = 200, innerRadius = 55, outerRadius = 80, format = 'number' }: Props) {
   const total = data.reduce((s, d) => s + d.value, 0)
 
   return (
@@ -39,7 +44,7 @@ export default function DonutChart({ data, height = 200, innerRadius = 55, outer
               <Cell key={i} fill={entry.color} />
             ))}
           </Pie>
-          <Tooltip content={<CustomTooltip formatValue={formatValue} />} />
+          <Tooltip content={<CustomTooltip format={format} />} />
         </PieChart>
       </ResponsiveContainer>
 

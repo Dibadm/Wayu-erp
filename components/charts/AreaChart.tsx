@@ -14,12 +14,16 @@ interface Props {
   series: Series[]
   xKey?: string
   height?: number
-  formatY?: (v: number) => string
-  formatX?: (v: string) => string
+  format?: 'currency' | 'units' | 'number'
 }
 
-function CustomTooltip({ active, payload, label, formatY }: any) {
+function CustomTooltip({ active, payload, label, format }: any) {
   if (!active || !payload?.length) return null
+  const formatY = (v: number) => {
+    if (format === 'currency') return `ETB ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 0 })}`
+    if (format === 'units') return `${v} units`
+    return String(v)
+  }
   return (
     <div style={{
       background:   'var(--bg-card)',
@@ -32,14 +36,19 @@ function CustomTooltip({ active, payload, label, formatY }: any) {
       {payload.map((p: any) => (
         <p key={p.dataKey} style={{ color: p.color, fontSize: 11, fontFamily: 'monospace', display: 'flex', alignItems: 'center', gap: 6 }}>
           <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: p.color }} />
-          {p.name}: <strong>{formatY ? formatY(p.value) : p.value}</strong>
+          {p.name}: <strong>{formatY(p.value)}</strong>
         </p>
       ))}
     </div>
   )
 }
 
-export default function AreaChart({ data, series, xKey = 'date', height = 220, formatY, formatX }: Props) {
+export default function AreaChart({ data, series, xKey = 'date', height = 220, format = 'number' }: Props) {
+  const formatY = (v: number) => {
+    if (format === 'currency') return `ETB ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 0 })}`
+    if (format === 'units') return `${v} units`
+    return String(v)
+  }
   return (
     <ResponsiveContainer width="100%" height={height}>
       <ReAreaChart data={data} margin={{ top: 4, right: 4, bottom: 0, left: 0 }}>
@@ -64,7 +73,7 @@ export default function AreaChart({ data, series, xKey = 'date', height = 220, f
           axisLine={false} tickLine={false} width={60}
           tickFormatter={formatY}
         />
-        <Tooltip content={<CustomTooltip formatY={formatY} />} />
+        <Tooltip content={<CustomTooltip format={format} />} />
         {series.map(s => (
           <Area
             key={s.key}

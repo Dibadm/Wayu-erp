@@ -11,12 +11,16 @@ interface Props {
   xKey?: string
   height?: number
   layout?: 'horizontal' | 'vertical'
-  formatY?: (v: number) => string
-  formatX?: (v: string) => string
+  format?: 'currency' | 'units' | 'number'
 }
 
-function CustomTooltip({ active, payload, label, formatY }: any) {
+function CustomTooltip({ active, payload, label, format }: any) {
   if (!active || !payload?.length) return null
+  const formatY = (v: number) => {
+    if (format === 'currency') return `ETB ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 0 })}`
+    if (format === 'units') return `${v} units`
+    return String(v)
+  }
   return (
     <div style={{
       background:   'var(--bg-card)',
@@ -29,15 +33,20 @@ function CustomTooltip({ active, payload, label, formatY }: any) {
       {payload.map((p: any) => (
         <p key={p.dataKey} style={{ color: p.fill, fontSize: 11, fontFamily: 'monospace', display: 'flex', alignItems: 'center', gap: 6 }}>
           <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 2, background: p.fill }} />
-          {p.name}: <strong>{formatY ? formatY(p.value) : p.value}</strong>
+          {p.name}: <strong>{formatY(p.value)}</strong>
         </p>
       ))}
     </div>
   )
 }
 
-export default function BarChart({ data, bars, xKey = 'name', height = 220, layout = 'horizontal', formatY, formatX }: Props) {
+export default function BarChart({ data, bars, xKey = 'name', height = 220, layout = 'horizontal', format = 'number' }: Props) {
   const isVertical = layout === 'vertical'
+  const formatY = (v: number) => {
+    if (format === 'currency') return `ETB ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 0 })}`
+    if (format === 'units') return `${v} units`
+    return String(v)
+  }
   return (
     <ResponsiveContainer width="100%" height={height}>
       <ReBarChart data={data} layout={isVertical ? 'vertical' : 'horizontal'} margin={{ top: 4, right: 4, bottom: 0, left: 0 }}>
@@ -51,11 +60,11 @@ export default function BarChart({ data, bars, xKey = 'name', height = 220, layo
         ) : (
           <>
             <XAxis dataKey={xKey} tick={{ fill: 'var(--text-muted)', fontSize: 10, fontFamily: 'monospace' }} axisLine={false} tickLine={false}
-              tickFormatter={(v: string) => v.length > 10 ? v.slice(0, 10) + '…' : (formatX ? formatX(v) : v)} />
+              tickFormatter={(v: string) => v.length > 10 ? v.slice(0, 10) + '…' : v} />
             <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 10, fontFamily: 'monospace' }} axisLine={false} tickLine={false} width={60} tickFormatter={formatY} />
           </>
         )}
-        <Tooltip content={<CustomTooltip formatY={formatY} />} cursor={{ fill: 'var(--bg-muted)' }} />
+        <Tooltip content={<CustomTooltip format={format} />} cursor={{ fill: 'var(--bg-muted)' }} />
         {bars.map(b => (
           <Bar key={b.key} dataKey={b.key} name={b.label} fill={b.color} radius={[4, 4, 0, 0]} maxBarSize={40} />
         ))}

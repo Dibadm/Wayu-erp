@@ -57,7 +57,7 @@ export default async function DashboardPage() {
     prisma.product.count(),
     prisma.product.aggregate({ _sum: { quantity: true } }),
     prisma.$queryRaw<{ id: string; sku: string; name: string; quantity: number; minStockLevel: number }[]>`
-      SELECT "id", "sku", "name", "quantity", "minStockLevel" AS "minStockLevel"
+      SELECT "id", "sku", "name", "quantity", "minStockLevel"
       FROM "products"
       WHERE "quantity" <= "minStockLevel"
       LIMIT 10
@@ -326,7 +326,7 @@ export default async function DashboardPage() {
               ]}
               xKey="date"
               height={220}
-              formatY={(v) => `ETB ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 0 })}`}
+              format="currency"
             />
           </div>
           <div className="glass-card p-5">
@@ -336,7 +336,7 @@ export default async function DashboardPage() {
               bars={[{ key: 'amount', label: 'Expenses', color: 'var(--accent-red)' }]}
               xKey="date"
               height={220}
-              formatY={(v) => `ETB ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 0 })}`}
+              format="currency"
             />
           </div>
           <div className="glass-card p-5">
@@ -349,7 +349,7 @@ export default async function DashboardPage() {
               ]}
               xKey="date"
               height={220}
-              formatY={(v) => `ETB ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 0 })}`}
+              format="currency"
             />
           </div>
         </div>
@@ -416,7 +416,7 @@ export default async function DashboardPage() {
                 color: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'][i % 5],
               }))}
               height={220}
-              formatValue={(v) => `ETB ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 0 })}`}
+              format="currency"
             />
           </div>
           <div className="glass-card p-5">
@@ -432,7 +432,7 @@ export default async function DashboardPage() {
               ]}
               xKey="name"
               height={220}
-              formatY={(v) => `ETB ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 0 })}`}
+              format="currency"
             />
           </div>
           <div className="glass-card p-5">
@@ -444,7 +444,7 @@ export default async function DashboardPage() {
                 color: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981'][i % 4],
               }))}
               height={220}
-              formatValue={(v) => `ETB ${Number(v).toLocaleString('en-US', { minimumFractionDigits: 0 })}`}
+              format="currency"
             />
           </div>
           <div className="glass-card p-5">
@@ -456,7 +456,7 @@ export default async function DashboardPage() {
               ]}
               xKey="date"
               height={220}
-              formatY={(v) => `${v} units`}
+              format="units"
             />
           </div>
         </div>
