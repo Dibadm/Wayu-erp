@@ -16,7 +16,7 @@ export default async function CommissionPerformancePage() {
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1)
 
   const sales = await prisma.sale.findMany({
-    where: { status: 'COMPLETED', createdAt: { gte: monthStart }, salespersonId: { not: null } },
+    where: { status: 'COMPLETED', createdAt: { gte: monthStart }, salespersonId: { not: null as any } },
     include: {
       salesperson: { select: { id: true, name: true, email: true } },
       items: { select: { commissionAmount: true, lineTotal: true } },
