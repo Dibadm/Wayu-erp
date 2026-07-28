@@ -111,7 +111,7 @@ export default async function DashboardPage() {
       _sum: { commissionAmount: true },
     }),
     prisma.sale.findMany({
-      where: { status: 'COMPLETED', createdAt: { gte: new Date(today.getFullYear(), today.getMonth(), 1) }, salespersonId: { not: null as any } },
+      where: { status: 'COMPLETED', createdAt: { gte: new Date(today.getFullYear(), today.getMonth(), 1) } },
       select: { salespersonId: true, items: { select: { commissionAmount: true } } },
     }),
   ])
