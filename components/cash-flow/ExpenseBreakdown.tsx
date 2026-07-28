@@ -11,13 +11,13 @@ interface Segment {
 
 interface Props {
   data: { category: string; total: number }[]
-  formatValue?: (v: number) => string
+  format?: 'currency' | 'units' | 'number'
   height?: number
 }
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16', '#f97316', '#6366f1']
 
-export default function ExpenseBreakdown({ data, formatValue, height = 220 }: Props) {
+export default function ExpenseBreakdown({ data, format = 'number', height = 220 }: Props) {
   const segments = useMemo(() => {
     const valid = data.filter(d => (d.total ?? 0) > 0).slice(0, 10)
     return valid.map((d, i) => ({
@@ -36,6 +36,6 @@ export default function ExpenseBreakdown({ data, formatValue, height = 220 }: Pr
   }
 
   return (
-    <DonutChart data={segments} height={height} formatValue={formatValue} />
+    <DonutChart data={segments} height={height} format={format} />
   )
 }
