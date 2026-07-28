@@ -65,7 +65,6 @@ export default function AreaChart({ data, series, xKey = 'date', height = 220, f
           dataKey={xKey}
           tick={{ fill: 'var(--text-muted)', fontSize: 10, fontFamily: 'monospace' }}
           axisLine={false} tickLine={false}
-          tickFormatter={formatX}
           interval="preserveStartEnd"
         />
         <YAxis
