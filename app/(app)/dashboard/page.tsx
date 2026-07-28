@@ -53,6 +53,8 @@ export default async function DashboardPage() {
     expensesByCategory,
     arAging,
     movementsByDate,
+    commissionOwedThisMonth,
+    topSalesperson,
   ] = await Promise.all([
     prisma.product.count(),
     prisma.product.aggregate({ _sum: { quantity: true } }),
@@ -104,6 +106,14 @@ export default async function DashboardPage() {
       _sum: { quantity: true },
       orderBy: { timestamp: 'asc' },
     }),
+    prisma.saleItem.aggregate({
+      where: { sale: { status: 'COMPLETED', createdAt: { gte: new Date(today.getFullYear(), today.getMonth(), 1) } } },
+      _sum: { commissionAmount: true },
+    }),
+    prisma.sale.findMany({
+      where: { status: 'COMPLETED', createdAt: { gte: new Date(today.getFullYear(), today.getMonth(), 1) }, salespersonId: { not: null } },
+      select: { salespersonId: true, items: { select: { commissionAmount: true } } },
+    }),
   ])
 
   const salesTrend = await prisma.sale.findMany({
@@ -142,6 +152,26 @@ export default async function DashboardPage() {
   }, []).sort((a, b) => b.revenue - a.revenue).slice(0, 5)
 
   const totalCashPosition = bankAccounts.reduce((s, a) => s + Number(a.currentBalance), 0)
+
+  const commissionBySalesperson = new Map<string, number>()
+  for (const sale of topSalesperson) {
+    const spId = sale.salespersonId
+    const commission = sale.items.reduce((s: number, i: any) => s + Number(i.commissionAmount || 0), 0)
+    commissionBySalesperson.set(spId, (commissionBySalesperson.get(spId) || 0) + commission)
+  }
+
+  let topSalespersonId: string | null = null
+  let topSalespersonCommission = 0
+  commissionBySalesperson.forEach((commission, spId) => {
+    if (commission > topSalespersonCommission) {
+      topSalespersonCommission = commission
+      topSalespersonId = spId
+    }
+  })
+
+  const topSalespersonUser = topSalespersonId
+    ? await prisma.user.findUnique({ where: { id: topSalespersonId }, select: { name: true, email: true } })
+    : null
 
   const kpis = {
     totalInventoryValue: Number(totalStock._sum.quantity ?? 0),
@@ -312,6 +342,28 @@ export default async function DashboardPage() {
           </div>
         )}
       </div>
+
+      {(isAdmin || isFinance) && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="glass-card p-5">
+            <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
+              <BadgeDollarSign className="w-4 h-4 text-emerald-400" />
+            </div>
+            <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mb-2">Commission Owed This Month</p>
+            <p className="stat-num text-xl text-zinc-100">{formatCurrency(Number(commissionOwedThisMonth._sum.commissionAmount ?? 0))}</p>
+            <p className="text-xs font-mono text-zinc-500 mt-1">Total commission earned</p>
+          </div>
+          <div className="glass-card p-5">
+            <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
+              <Users className="w-4 h-4 text-blue-400" />
+            </div>
+            <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mb-2">Top Salesperson</p>
+            <p className="text-sm font-medium text-zinc-200">{topSalespersonUser?.name ?? topSalespersonUser?.email?.split('@')[0] ?? '—'}</p>
+            <p className="stat-num text-xl text-blue-200">{formatCurrency(topSalespersonCommission)}</p>
+            <p className="text-xs font-mono text-zinc-500 mt-1">Highest commission this month</p>
+          </div>
+        </div>
+      )}
 
       {/* Row 3: Charts - conditional */}
       {(isAdmin || isFinance) && (

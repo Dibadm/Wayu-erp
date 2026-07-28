@@ -11,10 +11,12 @@ interface SaleData {
   subtotal: number
   discountAmount: number
   taxAmount: number
-  items: { quantity: number; unitPrice: number; discount: number; lineTotal: number; product: { name: string; sku: string; unit: string } }[]
+  taxable: boolean
+  items: { quantity: number; unitPrice: number; discount: number; lineTotal: number; commissionAmount: number; product: { name: string; sku: string; unit: string } }[]
   payments: { method: string; amount: number; reference?: string | null }[]
   customer?: { name: string; phone?: string | null } | null
   cashier: { name?: string | null; email: string }
+  salesperson?: { name?: string | null; email: string } | null
 }
 
 const METHOD_LABELS: Record<string, string> = {
@@ -99,6 +101,11 @@ ${printContent.replace(/class="[^"]*"/g, attr => {
                   <span>Customer</span><span>{sale.customer.name}</span>
                 </div>
               )}
+              {sale.salesperson && (
+                <div className="flex justify-between text-zinc-400">
+                  <span>Salesperson</span><span>{sale.salesperson.name ?? sale.salesperson.email.split('@')[0]}</span>
+                </div>
+              )}
             </div>
 
             <div className="border-t border-dashed border-zinc-800 pt-2 space-y-2">
@@ -113,6 +120,17 @@ ${printContent.replace(/class="[^"]*"/g, attr => {
               ))}
             </div>
 
+            {(() => {
+              const totalCommission = sale.items.reduce((s, i) => s + Number(i.commissionAmount || 0), 0)
+              return totalCommission > 0 ? (
+                <div className="border-t border-dashed border-zinc-800 pt-2 space-y-1">
+                  <div className="flex justify-between text-emerald-400">
+                    <span>Commission (2%)</span><span>₱{totalCommission.toFixed(2)}</span>
+                  </div>
+                </div>
+              ) : null
+            })()}
+
             <div className="border-t border-dashed border-zinc-800 pt-2 space-y-1">
               <div className="flex justify-between text-zinc-500">
                 <span>Subtotal</span><span>₱{Number(sale.subtotal).toFixed(2)}</span>
@@ -122,11 +140,15 @@ ${printContent.replace(/class="[^"]*"/g, attr => {
                   <span>Discount</span><span>-₱{Number(sale.discountAmount).toFixed(2)}</span>
                 </div>
               )}
-              {Number(sale.taxAmount) > 0 && (
+              {!sale.taxable ? (
+                <div className="flex justify-between text-zinc-500">
+                  <span>Tax</span><span>VAT Exempt</span>
+                </div>
+              ) : Number(sale.taxAmount) > 0 ? (
                 <div className="flex justify-between text-zinc-500">
                   <span>Tax</span><span>₱{Number(sale.taxAmount).toFixed(2)}</span>
                 </div>
-              )}
+              ) : null}
               <div className="flex justify-between font-semibold text-base text-zinc-100 pt-1 border-t border-zinc-800">
                 <span>TOTAL</span><span>₱{Number(sale.total).toFixed(2)}</span>
               </div>

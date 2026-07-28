@@ -276,6 +276,7 @@ export async function importSellsSheet(
     salesToCreate.push({
       receiptNumber: group.receipt,
       customerId: customer?.id,
+      salespersonId: opts.importedBy,
       subtotal,
       discountAmount: 0,
       taxAmount,

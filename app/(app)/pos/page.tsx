@@ -11,6 +11,7 @@ import CustomerModal from '@/components/CustomerModal'
 import Breadcrumb from '@/components/Breadcrumb'
 
 interface Customer { id: string; name: string; phone?: string | null; email?: string | null }
+interface Salesperson { id: string; name: string; email?: string | null; role?: string }
 
 // Local product type from /api/pos/search
 interface SearchProduct {
@@ -23,8 +24,9 @@ interface SearchProduct {
 export default function POSPage() {
   const [cartItems,     setCartItems]     = useState<CartItem[]>([])
   const [customer,      setCustomer]      = useState<Customer | null>(null)
-  const [taxRate,       setTaxRate]       = useState(12)   // 12% VAT default
+  const [taxRate,       setTaxRate]       = useState(0)
   const [orderDiscount, setOrderDiscount] = useState(0)
+  const [taxable,       setTaxable]       = useState(false)
   const [notes,         setNotes]         = useState('')
   const [showPayment,   setShowPayment]   = useState(false)
   const [payLoading,    setPayLoading]    = useState(false)
@@ -35,6 +37,10 @@ export default function POSPage() {
   const [customerSearch, setCustomerSearch] = useState('')
   const [customerResults, setCustomerResults] = useState<Customer[]>([])
   const [customerLoading, setCustomerLoading] = useState(false)
+  const [salesperson, setSalesperson] = useState<Salesperson | null>(null)
+  const [salespersonSearch, setSalespersonSearch] = useState('')
+  const [salespersonResults, setSalespersonResults] = useState<Salesperson[]>([])
+  const [salespersonLoading, setSalespersonLoading] = useState(false)
 
   // Add product to cart (or increment qty if already there)
   const handleAddProduct = useCallback((product: SearchProduct) => {
@@ -74,6 +80,16 @@ export default function POSPage() {
     setCustomerLoading(false)
   }
 
+  // Salesperson search
+  async function searchSalespeople(q: string) {
+    setSalespersonSearch(q)
+    if (!q.trim()) { setSalespersonResults([]); return }
+    setSalespersonLoading(true)
+    const res = await fetch(`/api/pos/salespeople?search=${encodeURIComponent(q)}&take=5`)
+    if (res.ok) setSalespersonResults(await res.json())
+    setSalespersonLoading(false)
+  }
+
   // Complete sale
   async function handleCheckout(payments: Payment[]) {
     setPayLoading(true)
@@ -90,6 +106,8 @@ export default function POSPage() {
             discount:  i.discount,
           })),
           customerId:     customer?.id,
+          salespersonId:  salesperson?.id,
+          taxable:        taxable,
           discountAmount: orderDiscount,
           taxRate,
           notes,
@@ -119,7 +137,9 @@ export default function POSPage() {
     setShowReceipt(false)
     setCartItems([])
     setCustomer(null)
+    setSalesperson(null)
     setOrderDiscount(0)
+    setTaxable(false)
     setNotes('')
   }
 
@@ -141,7 +161,9 @@ export default function POSPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Point of Sale</h1>
-            <p className="text-xs font-mono text-zinc-500 mt-0.5">Scan or search products to add to cart</p>
+            <p className="text-xs font-mono text-zinc-500 mt-0.5">
+              {salesperson ? `Salesperson: ${salesperson.name}` : 'Scan or search products to add to cart'}
+            </p>
           </div>
           <button
             onClick={() => setShowSettings(v => !v)}
@@ -158,9 +180,10 @@ export default function POSPage() {
             <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3">Sale Settings</p>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Tax Rate %</label>
+                <label className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Withholding Tax Rate %</label>
                 <input className="input text-sm w-24" type="number" min={0} max={100} step={0.5}
-                  value={taxRate} onChange={e => setTaxRate(parseFloat(e.target.value) || 0)} />
+                  value={taxRate} onChange={e => setTaxRate(parseFloat(e.target.value) || 0)} disabled={!taxable} />
+                <p className="text-[10px] font-mono text-zinc-600">Default is 0%. Set to 2 if WHT applies.</p>
               </div>
               <div className="space-y-1.5">
                 <label className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Order Discount ₱</label>
@@ -168,6 +191,10 @@ export default function POSPage() {
                   value={orderDiscount || ''} placeholder="0.00"
                   onChange={e => setOrderDiscount(parseFloat(e.target.value) || 0)} />
               </div>
+            </div>
+            <div className="mt-3 flex items-center gap-2">
+              <input id="taxable" type="checkbox" checked={taxable} onChange={e => setTaxable(e.target.checked)} />
+              <label htmlFor="taxable" className="text-xs text-zinc-400">This sale is taxable (WHT applies)</label>
             </div>
             <div className="mt-3 space-y-1.5">
               <label className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Sale Notes</label>
@@ -234,6 +261,52 @@ export default function POSPage() {
           )}
         </div>
 
+        {/* Salesperson picker */}
+        <div className="glass-card p-4">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Salesperson</p>
+          </div>
+          {salesperson ? (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                  <User className="w-4 h-4 text-emerald-400" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-zinc-200">{salesperson.name}</p>
+                  <p className="text-[10px] font-mono text-zinc-500">{salesperson.email ?? salesperson.role ?? '—'}</p>
+                </div>
+              </div>
+              <button onClick={() => setSalesperson(null)} className="text-xs font-mono text-zinc-600 hover:text-zinc-400 transition-colors">
+                Remove
+              </button>
+            </div>
+          ) : (
+            <div className="relative">
+              <input
+                className="input text-sm"
+                placeholder="Search salesperson by name or email…"
+                value={salespersonSearch}
+                onChange={e => searchSalespeople(e.target.value)}
+              />
+              {salespersonResults.length > 0 && (
+                <div className="absolute top-full mt-1 left-0 right-0 z-20 bg-zinc-900 border border-zinc-700 rounded-xl shadow-xl overflow-hidden">
+                  {salespersonResults.map(u => (
+                    <button key={u.id} onClick={() => { setSalesperson(u); setSalespersonSearch(''); setSalespersonResults([]) }}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 transition-colors text-left border-b border-zinc-800/50 last:border-0">
+                      <User className="w-3.5 h-3.5 text-zinc-500 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-zinc-200">{u.name}</p>
+                        <p className="text-[10px] font-mono text-zinc-600">{u.email ?? u.role ?? '—'}</p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
         {/* Recent sales shortcut */}
         <div className="mt-auto">
           <a href="/sales" className="flex items-center gap-2 text-xs font-mono text-zinc-600 hover:text-zinc-400 transition-colors">
@@ -278,7 +351,7 @@ export default function POSPage() {
           )}
           <button
             onClick={() => setShowPayment(true)}
-            disabled={cartItems.length === 0}
+            disabled={cartItems.length === 0 || !salesperson}
             className="btn-primary w-full flex items-center justify-center gap-2 py-3 text-base font-semibold"
           >
             <CartIcon className="w-5 h-5" />

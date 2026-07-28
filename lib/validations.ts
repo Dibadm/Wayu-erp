@@ -98,6 +98,8 @@ export const checkoutItemSchema = z.object({
 export const checkoutSchema = z.object({
   items:          z.array(checkoutItemSchema).min(1, 'Cart cannot be empty'),
   customerId:     z.string().cuid().optional(),
+  salespersonId:  z.string().cuid(),
+  taxable:        z.boolean().default(false),
   discountAmount: z.number().min(0).default(0),
   taxRate:        z.number().min(0).max(100).default(0),
   notes:          z.string().optional(),

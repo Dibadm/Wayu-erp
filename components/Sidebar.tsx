@@ -13,11 +13,12 @@ import {
   Wallet, ArrowDownToLine, ArrowUpFromLine, CircleDollarSign, Target,
   CreditCard, FileText, AlertTriangle,
   UserCheck, FileCheck, CalendarDays, ClipboardList,
-  X, ChevronDown,
+  X, ChevronDown, Info,
 } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react'
 import { logoutAction } from '@/app/actions'
 import OCRScanner from '@/components/OCRScanner'
+import TipsTrigger from '@/components/TipsTrigger'
 
 const NAV = [
   { href: '/dashboard',       label: 'Dashboard',       icon: LayoutDashboard },
@@ -34,6 +35,7 @@ const NAV = [
 const FINANCE_NAV = [
   { href: '/gross-profit',       label: 'Gross Profit',  icon: TrendingUp },
   { href: '/commission',         label: 'Commission',    icon: Percent },
+  { href: '/commission/performance', label: 'Salesperson Performance', icon: Users },
   { href: '/weekly-gp',          label: 'Weekly GP',     icon: BarChart3 },
   { href: '/sales-plan',         label: 'Sales Plan',    icon: ShoppingBag },
   { href: '/ar',                 label: 'AR / Credit',   icon: Receipt },
@@ -359,7 +361,8 @@ export default function Sidebar() {
         )}
       </nav>
 
-      <div className="p-2 flex-shrink-0" style={{ borderTop: '1px solid var(--border)' }}>
+      <div className="p-2 flex-shrink-0 space-y-1" style={{ borderTop: '1px solid var(--border)' }}>
+        <TipsTrigger />
         <button
           onClick={async () => {
             await logoutAction()

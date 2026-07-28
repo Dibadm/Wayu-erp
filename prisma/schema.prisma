@@ -387,8 +387,8 @@ model Sale {
   cashierId      String
   cashier        User        @relation("cashier", fields: [cashierId], references: [id])
 
-  salespersonId  String?
-  salesperson    User?       @relation("salesperson", fields: [salespersonId], references: [id])
+  salespersonId  String
+  salesperson    User        @relation("salesperson", fields: [salespersonId], references: [id])
 
   importBatchId  String?
   importBatch    ImportBatch? @relation(fields: [importBatchId], references: [id])

@@ -6,6 +6,7 @@ import TopBar from '@/components/TopBar'
 import AIChat from '@/components/AIChat'
 import ExpiryNotificationBanner from '@/components/ExpiryNotificationBanner'
 import SidebarProvider from '@/components/SidebarProvider'
+import TipsWrapper from '@/components/TipsWrapper'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions)
@@ -26,6 +27,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         {/* AI Chat floats over all pages */}
         <AIChat />
       </div>
+      <TipsWrapper />
     </SidebarProvider>
   )
 }

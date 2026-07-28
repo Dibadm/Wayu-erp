@@ -7,6 +7,7 @@ import { Shield, Database } from 'lucide-react'
 import AppearanceSettings from '@/components/AppearanceSettings'
 import AdminSettings from '@/components/AdminSettings'
 import Breadcrumb from '@/components/Breadcrumb'
+import HowToUseSectionClient from '@/components/HowToUseSectionClient'
 
 export default async function SettingsPage() {
   const session = await getServerSession(authOptions)
@@ -33,6 +34,9 @@ export default async function SettingsPage() {
           System configuration and account management
         </p>
       </div>
+
+      {/* ── How to Use ── */}
+      <HowToUseSectionClient />
 
       {/* ── Appearance ── */}
       <AppearanceSettings />
@@ -86,3 +90,4 @@ export default async function SettingsPage() {
     </div>
   )
 }
+

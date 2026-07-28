@@ -23,6 +23,7 @@ export default async function SalesPage() {
       include: {
         customer: { select: { name: true } },
         cashier:  { select: { name: true, email: true } },
+        salesperson: { select: { name: true, email: true } },
         payments: { select: { method: true, amount: true } },
         _count:   { select: { items: true } },
       },

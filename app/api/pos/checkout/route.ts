@@ -15,6 +15,7 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { checkoutSchema } from '@/lib/validations'
 import { writeAuditLog } from '@/lib/audit'
+import { resolveCommissionRate } from '@/lib/commission'
 
 // Generate receipt number: RCP-YYYYMMDD-XXXX
 async function generateReceiptNumber(): Promise<string> {
@@ -53,7 +54,7 @@ export async function POST(req: NextRequest) {
   const parsed = checkoutSchema.safeParse(body)
   if (!parsed.success) return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 })
 
-  const { items, customerId, discountAmount, taxRate, notes, payments } = parsed.data
+  const { items, customerId, salespersonId, taxable, discountAmount, taxRate, notes, payments } = parsed.data
   const cashierId = (session.user as any).id
 
   // ── Step 1: Load products + FEFO batches ────────────────────────────────────
@@ -89,13 +90,21 @@ export async function POST(req: NextRequest) {
   // ── Step 3: Calculate totals ─────────────────────────────────────────────
   let subtotal  = 0
   let totalCost = 0
-  const saleItemsData = items.map(item => {
+  const commissionRates = await Promise.all(
+    items.map(item => resolveCommissionRate({
+      salespersonId: salespersonId || undefined,
+      productId:     item.productId,
+      quantity:      item.quantity,
+    }))
+  )
+  const saleItemsData = items.map((item, idx) => {
     const product   = productMap[item.productId]
     const unitPrice = item.unitPrice > 0 ? item.unitPrice : Number(product.sellingPrice ?? 0)
     const unitCost  = Number(product.costPrice ?? 0)
     const lineTotal = (unitPrice - item.discount) * item.quantity
     const lineCost  = unitCost * item.quantity
     const lineProfit= lineTotal - lineCost
+    const rate      = commissionRates[idx]
     subtotal  += lineTotal
     totalCost += lineCost
     return {
@@ -107,6 +116,7 @@ export async function POST(req: NextRequest) {
       discount:    item.discount,
       lineTotal,
       profit:      lineProfit,
+      commissionAmount: lineTotal * (rate.rate / 100),
       batchesUsed: fefoPlan[item.productId].length > 0
         ? JSON.stringify(fefoPlan[item.productId])
         : undefined,
@@ -114,7 +124,7 @@ export async function POST(req: NextRequest) {
   })
 
   const afterDiscount = subtotal - discountAmount
-  const taxAmount     = (afterDiscount * taxRate) / 100
+  const taxAmount     = taxable ? (afterDiscount * taxRate) / 100 : 0
   const total         = afterDiscount + taxAmount
   const profit        = total - totalCost - discountAmount
 
@@ -138,6 +148,8 @@ export async function POST(req: NextRequest) {
           receiptNumber,
           cashierId,
           customerId:     customerId || undefined,
+          salespersonId:  salespersonId || undefined,
+          taxable:        taxable,
           subtotal,
           discountAmount,
           taxAmount,
@@ -154,10 +166,11 @@ export async function POST(req: NextRequest) {
           }))},
         },
         include: {
-          items:    { include: { product: { select: { id: true, name: true, sku: true, unit: true } } } },
+          items:    { include: { commissionAmount: true, product: { select: { id: true, name: true, sku: true, unit: true } } } },
           payments: true,
           customer: { select: { name: true, phone: true } },
           cashier:  { select: { name: true, email: true } },
+          salesperson: { select: { name: true, email: true } },
         },
       })
     )

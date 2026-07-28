@@ -9,6 +9,7 @@ type Sale = {
   receiptNumber: string
   customer?: { name: string } | null
   cashier: { name?: string | null; email: string }
+  salesperson?: { name?: string | null; email: string } | null
   payments: { method: string; amount: any }[]
   _count: { items: number }
   discountAmount: any
@@ -19,7 +20,7 @@ type Sale = {
   createdAt: Date
 }
 
-type SortKey = 'receiptNumber' | 'customer' | 'status' | 'total' | 'profit' | 'createdAt'
+type SortKey = 'receiptNumber' | 'customer' | 'status' | 'total' | 'profit' | 'createdAt' | 'salesperson'
 type SortDir = 'asc' | 'desc'
 
 const STATUS_CLS: Record<string, string> = {
@@ -47,6 +48,9 @@ export default function SalesTable({ sales }: { sales: Sale[] }) {
       if (sortKey === 'customer') {
         aVal = (a.customer?.name ?? '').toLowerCase()
         bVal = (b.customer?.name ?? '').toLowerCase()
+      } else if (sortKey === 'salesperson') {
+        aVal = (a.salesperson?.name ?? a.salesperson?.email ?? '').toLowerCase()
+        bVal = (b.salesperson?.name ?? b.salesperson?.email ?? '').toLowerCase()
       } else if (sortKey === 'receiptNumber') {
         aVal = a.receiptNumber.toLowerCase()
         bVal = b.receiptNumber.toLowerCase()
@@ -116,6 +120,9 @@ export default function SalesTable({ sales }: { sales: Sale[] }) {
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Payment</th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Cashier</th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
+                <button onClick={() => handleSort('salesperson')} className="flex items-center gap-1 hover:text-zinc-400">Salesperson <SortIcon column="salesperson" /></button>
+              </th>
+              <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
                 <button onClick={() => handleSort('createdAt')} className="flex items-center gap-1 hover:text-zinc-400">Date <SortIcon column="createdAt" /></button>
               </th>
             </tr>
@@ -140,6 +147,9 @@ export default function SalesTable({ sales }: { sales: Sale[] }) {
                 </td>
                 <td className="px-4 py-3 text-xs font-mono text-zinc-500">
                   {sale.cashier.name ?? sale.cashier.email.split('@')[0]}
+                </td>
+                <td className="px-4 py-3 text-xs font-mono text-zinc-500">
+                  {sale.salesperson?.name ?? sale.salesperson?.email?.split('@')[0] ?? sale.cashier.name ?? sale.cashier.email.split('@')[0]}
                 </td>
                 <td className="px-4 py-3 text-xs font-mono text-zinc-600 whitespace-nowrap">{formatDate(sale.createdAt)}</td>
               </tr>
