@@ -24,6 +24,7 @@ export default async function CommissionPage() {
   const serializedRates = rates.map(r => ({
     ...r,
     rate: Number(r.rate),
+    createdAt: r.createdAt.toISOString(),
   }))
 
   return (
