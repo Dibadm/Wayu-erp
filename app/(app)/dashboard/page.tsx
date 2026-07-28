@@ -156,6 +156,7 @@ export default async function DashboardPage() {
   const commissionBySalesperson = new Map<string, number>()
   for (const sale of topSalesperson) {
     const spId = sale.salespersonId
+    if (!spId) continue
     const commission = sale.items.reduce((s: number, i: any) => s + Number(i.commissionAmount || 0), 0)
     commissionBySalesperson.set(spId, (commissionBySalesperson.get(spId) || 0) + commission)
   }

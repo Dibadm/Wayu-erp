@@ -166,7 +166,7 @@ export async function POST(req: NextRequest) {
           }))},
         },
         include: {
-          items:    { include: { commissionAmount: true, product: { select: { id: true, name: true, sku: true, unit: true } } } },
+          items:    { select: { commissionAmount: true, product: { select: { id: true, name: true, sku: true, unit: true } } } },
           payments: true,
           customer: { select: { name: true, phone: true } },
           cashier:  { select: { name: true, email: true } },
