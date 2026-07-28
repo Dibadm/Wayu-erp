@@ -8,7 +8,7 @@ interface Rate {
   id: string
   scope: CommissionScope
   salespersonId?: string | null
-  salesperson?: { id: string; name: string; email: string } | null
+  salesperson?: { id: string; name: string | null; email: string } | null
   productId?: string | null
   product?: { id: string; name: string; sku: string } | null
   tierFromQty: number
