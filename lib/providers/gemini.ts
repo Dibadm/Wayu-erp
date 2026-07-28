@@ -5,7 +5,7 @@
 
 import type { AIProvider, ChatMessage, ChatRequest, CompletionRequest, VisionRequest } from './types'
 
-const DEFAULT_MODEL = 'gemini-1.5-flash'
+const DEFAULT_MODEL = 'gemini-2.0-flash'
 const API_BASE = 'https://generativelanguage.googleapis.com/v1/models'
 
 function apiUrl(stream = false) {
