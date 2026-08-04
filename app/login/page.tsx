@@ -130,12 +130,40 @@ export default function LoginPage() {
               ) : 'Sign In'}
             </button>
            </form>
-        </div>
 
-        <p className="text-center text-xs font-mono mt-6" style={{ color: 'var(--text-muted)' }}>
-          v2.2.0 · WAYU Pharmaceutical Systems
-        </p>
-      </motion.div>
-    </div>
+           {/* Demo credentials */}
+           <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
+             <p className="text-xs font-mono text-center mb-2" style={{ color: 'var(--text-muted)' }}>
+               Demo credentials
+             </p>
+             <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+               {[
+                 { role: 'Admin', email: 'admin@wayu.ph', pass: 'ChangeMeNow!' },
+               ].map(c => (
+                 <button
+                   key={c.role}
+                   type="button"
+                   onClick={() => { setEmail(c.email); setPassword(c.pass) }}
+                   className="text-left px-2.5 py-2 rounded-lg transition-colors"
+                   style={{
+                     background: 'var(--bg-muted)',
+                     border:     '1px solid var(--border)',
+                     color:      'var(--text-secondary)',
+                   }}
+                 >
+                   <p style={{ color: 'var(--text-muted)' }}>{c.role}</p>
+                   <p>{c.email}</p>
+                   <p style={{ color: 'var(--text-muted)' }}>{c.pass}</p>
+                 </button>
+               ))}
+             </div>
+           </div>
+         </div>
+
+         <p className="text-center text-xs font-mono mt-6" style={{ color: 'var(--text-muted)' }}>
+           v2.2.0 · WAYU Pharmaceutical Systems
+         </p>
+       </motion.div>
+     </div>
   )
 }
