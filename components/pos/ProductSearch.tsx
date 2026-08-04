@@ -99,7 +99,7 @@ export default function ProductSearch({ onAdd }: Props) {
 
       {focused && query && !loading && results.length === 0 && (
         <div className="absolute top-full mt-1.5 left-0 right-0 z-30 bg-zinc-900 border border-zinc-700 rounded-xl p-4 text-center text-xs font-mono text-zinc-600">
-          No products found for "{query}"
+          No products found for &quot;{query}&quot;
         </div>
       )}
     </div>

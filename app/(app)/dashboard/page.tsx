@@ -242,7 +242,7 @@ export default async function DashboardPage() {
           </div>
           <p className="stat-num text-2xl text-amber-200">{formatCurrency(kpis.dailySales ?? 0)}</p>
           <p className="text-xs font-medium text-zinc-400 mt-1">Daily Sales</p>
-          <p className="text-[11px] font-mono text-zinc-600 mt-0.5">Today's revenue</p>
+          <p className="text-[11px] font-mono text-zinc-600 mt-0.5">Today&apos;s revenue</p>
         </div>
         {(isAdmin || isFinance || isCreditOfficer || isSales) && (
           <div className="glass-card p-5">
@@ -539,7 +539,7 @@ export default async function DashboardPage() {
           <div className="glass-card overflow-hidden">
             <div className="px-5 py-4 border-b border-zinc-800">
               <h2 className="text-sm font-semibold text-zinc-100">Expense Category Summary</h2>
-              <p className="text-xs font-mono text-zinc-500 mt-0.5">This month's expenses by category</p>
+              <p className="text-xs font-mono text-zinc-500 mt-0.5">This month&apos;s expenses by category</p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">

@@ -32,6 +32,16 @@ describe('ThemeProvider', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     document.documentElement.classList.remove('dark')
+    window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+      matches: true,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    }))
   })
 
   it('provides default theme of system', () => {
