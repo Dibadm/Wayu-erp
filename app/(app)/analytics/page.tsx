@@ -43,8 +43,8 @@ interface AnalyticsData {
 
 // ─── Formatters ────────────────────────────────────────────────────────────────
 
-const fmtPHP  = (n: number) => `₱${n >= 1000 ? (n / 1000).toFixed(1) + 'k' : n.toFixed(0)}`
-const fmtFull = (n: number) => `₱${n.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+const fmtETB  = (n: number) => `ETB ${n >= 1000 ? (n / 1000).toFixed(1) + 'k' : n.toFixed(0)}`
+const fmtFull = (n: number) => `ETB ${n.toLocaleString('en-ET', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 const fmtUnits = (n: number) => n.toLocaleString()
 
 // Donut colour palette
@@ -319,7 +319,7 @@ export default function AnalyticsPage() {
                             style={{ background: CAT_COLORS[i % CAT_COLORS.length] }} />
                           <span className="font-mono text-zinc-400 truncate">{cat.name}</span>
                         </div>
-                        <span className="font-mono text-zinc-300 flex-shrink-0">{fmtPHP(cat.revenue)}</span>
+                        <span className="font-mono text-zinc-300 flex-shrink-0">{fmtETB(cat.revenue)}</span>
                       </div>
                     ))}
                   </div>
@@ -352,7 +352,7 @@ export default function AnalyticsPage() {
           {c.expiringData.length > 0 && (
             <ChartCard
               title="Expiring Products — Inventory at Risk"
-              subtitle={`₱${k.expiryRisk.toLocaleString('en-PH', { minimumFractionDigits: 2 })} total value at risk`}
+              subtitle={`ETB ${k.expiryRisk.toLocaleString('en-ET', { minimumFractionDigits: 2 })} total value at risk`}
               action={
                 <div className="flex items-center gap-1.5 px-2.5 py-1 bg-red-500/10 border border-red-500/20 rounded-full">
                   <AlertTriangle className="w-3 h-3 text-red-400" />

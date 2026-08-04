@@ -28,7 +28,7 @@ export default async function CustomersPage() {
         <div>
           <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Customers</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">
-            {customers.length} registered · ₱{totalRevenue.toLocaleString('en-PH', { minimumFractionDigits: 2 })} total revenue
+            {customers.length} registered · ETB {totalRevenue.toLocaleString('en-ET', { minimumFractionDigits: 2 })} total revenue
           </p>
         </div>
         <CustomerModal />
@@ -76,7 +76,7 @@ export default async function CustomersPage() {
                     </td>
                     <td className="px-5 py-3 stat-num text-sm text-zinc-300">{c._count.sales}</td>
                     <td className="px-5 py-3 stat-num text-sm text-emerald-400">
-                      ₱{ltv.toLocaleString('en-PH', { minimumFractionDigits: 2 })}
+                      ETB {ltv.toLocaleString('en-ET', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-5 py-3 text-xs font-mono text-zinc-600">{formatDate(c.createdAt)}</td>
                     <td className="px-5 py-3">

@@ -10,7 +10,7 @@ export default function ARPage() {
     fetch('/api/reports/ar').then(r => r.json()).then(setData)
   }, [])
 
-  const fmt = (n: number) => `₱${Number(n).toLocaleString('en-PH', { minimumFractionDigits: 2 })}`
+  const fmt = (n: number) => `ETB ${Number(n).toLocaleString('en-ET', { minimumFractionDigits: 2 })}`
 
   return (
     <div className="space-y-6 animate-fade-in">

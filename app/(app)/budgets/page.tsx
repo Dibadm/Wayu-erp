@@ -28,7 +28,7 @@ export default function BudgetsPage() {
     if (res.ok) { setForm({ category: 'SALES', periodLabel: '', periodStart: '', periodEnd: '', plannedAmount: '' }); setShowForm(false); load() }
   }
 
-  const fmt = (n: number) => `ETB ${Number(n).toLocaleString('en-PH', { minimumFractionDigits: 2 })}`
+  const fmt = (n: number) => `ETB ${Number(n).toLocaleString('en-ET', { minimumFractionDigits: 2 })}`
 
   return (
     <div className="space-y-6 animate-fade-in">

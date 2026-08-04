@@ -20,7 +20,7 @@ CRITICAL RULES:
 - When quantities are concerning (low stock, expired), flag it clearly.
 - Never modify data or promise to take actions — you are read-only.
 - Always mention data is live/real-time when giving stock or sales figures.
-- For currency use ₱ (Philippine Peso).`
+- For currency use ETB (Ethiopian Birr).`
 
 function isPOSQuestion(msg: string) {
   return /sold today|today.*sal|profit.*today|today.*profit|best customer|top customer|who.*buy|revenue today|today.*revenue|average sale|daily sale|today.*transaction|what sold|highest profit product/i.test(msg)
@@ -97,7 +97,7 @@ ${productDetail}`
 }
 
 function buildPOSContext(pos: Awaited<ReturnType<typeof getPOSSnapshot>>) {
-  const f = (n: number) => `₱${n.toLocaleString('en-PH', { minimumFractionDigits: 2 })}`
+  const f = (n: number) => `ETB ${n.toLocaleString('en-ET', { minimumFractionDigits: 2 })}`
   return `
 
 LIVE POS / SALES DATA (${new Date().toISOString()}):
@@ -113,10 +113,10 @@ THIS WEEK: ${f(pos.week.revenue)} revenue · ${f(pos.week.profit)} profit · ${p
 THIS MONTH: ${f(pos.month.revenue)} revenue · ${f(pos.month.profit)} profit · ${pos.month.transactions} transactions
 
 BEST CUSTOMERS (by lifetime value):
-${pos.bestCustomers.map((c, i) => `${i + 1}. ${c.name}: ₱${c.totalSpent.toFixed(2)} spent · ${c.purchases} purchases · ₱${c.totalProfit.toFixed(2)} profit`).join('\n') || '- No customer data'}
+${pos.bestCustomers.map((c, i) => `${i + 1}. ${c.name}: ETB ${c.totalSpent.toFixed(2)} spent · ${c.purchases} purchases · ETB ${c.totalProfit.toFixed(2)} profit`).join('\n') || '- No customer data'}
 
 TOP PROFIT PRODUCTS (last 30 days):
-${pos.topProfitProducts.map((p, i) => `${i + 1}. ${p.name} (${p.sku}): ₱${p.profit.toFixed(2)} profit · ${p.unitsSold} units sold`).join('\n') || '- No data'}
+${pos.topProfitProducts.map((p, i) => `${i + 1}. ${p.name} (${p.sku}): ETB ${p.profit.toFixed(2)} profit · ${p.unitsSold} units sold`).join('\n') || '- No data'}
 
 TODAY'S TRANSACTIONS:
 ${pos.todayTransactions.slice(0, 10).map(s => `- ${s.receipt}: ${s.customer} · ${f(s.total)} · ${s.payments} · [${s.items.slice(0,3).join(', ')}${s.items.length > 3 ? '…' : ''}]`).join('\n') || '- No sales today yet'}`

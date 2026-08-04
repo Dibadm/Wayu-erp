@@ -189,7 +189,7 @@ export default function PODetailPage() {
             <div className="text-right">
               <p className="text-xs font-mono text-zinc-600">Total Cost</p>
               <p className="stat-num text-xl text-zinc-100">
-                ₱{Number(po.totalCost).toLocaleString('en-PH', { minimumFractionDigits: 2 })}
+                ETB {Number(po.totalCost).toLocaleString('en-ET', { minimumFractionDigits: 2 })}
               </p>
             </div>
             <div className="flex gap-2 flex-wrap justify-end">
@@ -363,10 +363,10 @@ export default function PODetailPage() {
                       {complete && <span className="ml-1.5 text-[10px] font-mono text-emerald-500">✓</span>}
                     </td>
                     <td className="px-5 py-3 stat-num text-xs text-zinc-400">
-                      ₱{Number(item.unitCost).toLocaleString('en-PH', { minimumFractionDigits: 2 })}
+                      ETB {Number(item.unitCost).toLocaleString('en-ET', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-5 py-3 stat-num text-xs text-zinc-300">
-                      ₱{Number(item.totalCost).toLocaleString('en-PH', { minimumFractionDigits: 2 })}
+                      ETB {Number(item.totalCost).toLocaleString('en-ET', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-5 py-3 font-mono text-xs text-zinc-500">{item.batchNumber ?? '—'}</td>
                     <td className="px-5 py-3 font-mono text-xs text-zinc-500">

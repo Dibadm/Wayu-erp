@@ -186,7 +186,7 @@ export default function POSPage() {
                 <p className="text-[10px] font-mono text-zinc-600">Default is 0%. Set to 2 if WHT applies.</p>
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Order Discount ₱</label>
+                <label className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Order Discount ETB </label>
                 <input className="input text-sm w-28" type="number" min={0} step={0.01}
                   value={orderDiscount || ''} placeholder="0.00"
                   onChange={e => setOrderDiscount(parseFloat(e.target.value) || 0)} />
@@ -355,7 +355,7 @@ export default function POSPage() {
             className="btn-primary w-full flex items-center justify-center gap-2 py-3 text-base font-semibold"
           >
             <CartIcon className="w-5 h-5" />
-            Checkout · ₱{total.toFixed(2)}
+            Checkout · ETB {total.toFixed(2)}
           </button>
         </div>
       </div>

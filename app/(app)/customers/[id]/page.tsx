@@ -89,9 +89,9 @@ export default async function CustomerDetailPage({ params }: { params: { id: str
         <div className="grid grid-cols-4 gap-4 mt-5 pt-4 border-t border-zinc-800">
           {[
             { label: 'Total Purchases', value: customer.sales.length.toString(),   mono: false },
-            { label: 'Lifetime Value',  value: `₱${totalSpent.toLocaleString('en-PH', { minimumFractionDigits: 2 })}`, mono: true },
-            { label: 'Avg Sale Value',  value: `₱${avgSale.toLocaleString('en-PH', { minimumFractionDigits: 2 })}`,    mono: true },
-            { label: 'Total Profit',    value: `₱${totalProfit.toLocaleString('en-PH', { minimumFractionDigits: 2 })}`, mono: true },
+            { label: 'Lifetime Value',  value: `ETB ${totalSpent.toLocaleString('en-ET', { minimumFractionDigits: 2 })}`, mono: true },
+            { label: 'Avg Sale Value',  value: `ETB ${avgSale.toLocaleString('en-ET', { minimumFractionDigits: 2 })}`,    mono: true },
+            { label: 'Total Profit',    value: `ETB ${totalProfit.toLocaleString('en-ET', { minimumFractionDigits: 2 })}`, mono: true },
           ].map(s => (
             <div key={s.label}>
               <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mb-1">{s.label}</p>
@@ -131,7 +131,7 @@ export default async function CustomerDetailPage({ params }: { params: { id: str
                     </td>
                     <td className="px-5 py-3 stat-num text-sm text-zinc-400">{sale.items.length}</td>
                     <td className="px-5 py-3 stat-num text-sm text-emerald-400">
-                      ₱{Number(sale.total).toLocaleString('en-PH', { minimumFractionDigits: 2 })}
+                      ETB {Number(sale.total).toLocaleString('en-ET', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-5 py-3 text-xs font-mono text-zinc-500">
                       {sale.payments.map(p => p.method.replace('_', ' ')).join(', ')}

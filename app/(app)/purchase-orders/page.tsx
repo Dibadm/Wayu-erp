@@ -103,7 +103,7 @@ export default async function PurchaseOrdersPage() {
                     </td>
                     <td className="px-5 py-3 stat-num text-sm text-zinc-400">{o._count.items}</td>
                     <td className="px-5 py-3 stat-num text-sm text-zinc-200">
-                      ₱{Number(o.totalCost).toLocaleString('en-PH', { minimumFractionDigits: 2 })}
+                      ETB {Number(o.totalCost).toLocaleString('en-ET', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-5 py-3 text-xs font-mono text-zinc-500">
                       {o.expectedDelivery ? formatDate(o.expectedDelivery) : '—'}

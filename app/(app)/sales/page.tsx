@@ -46,7 +46,7 @@ export default async function SalesPage() {
   ])
 
   const fmt = (n: number | null | undefined) =>
-    `₱${(n ?? 0).toLocaleString('en-PH', { minimumFractionDigits: 2 })}`
+    `ETB ${(n ?? 0).toLocaleString('en-ET', { minimumFractionDigits: 2 })}`
 
   return (
     <div className="space-y-6 animate-fade-in">

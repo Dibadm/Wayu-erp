@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     const watching = reorder.filter(r => r.status === 'REORDER_SOON' || r.status === 'WATCH')
 
     const statsContext = `
-WAYU PHARMACEUTICAL — INVENTORY STATISTICS (${new Date().toLocaleDateString('en-PH', { dateStyle: 'full' })})
+WAYU PHARMACEUTICAL — INVENTORY STATISTICS (${new Date().toLocaleDateString('en-ET', { dateStyle: 'full' })})
 
 INVENTORY: ${stats.totalProducts} products · ${stats.totalStockUnits.toLocaleString()} units total · ${stats.lowStockCount} low stock · ${stats.outOfStockCount} out of stock
 

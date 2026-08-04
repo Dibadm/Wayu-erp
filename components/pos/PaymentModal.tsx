@@ -54,7 +54,7 @@ export default function PaymentModal({ total, onConfirm, onClose, loading }: Pro
           <div>
             <h2 className="text-sm font-semibold text-zinc-100">Payment</h2>
             <p className="text-xs font-mono text-zinc-500 mt-0.5">
-              Total due: <span className="text-emerald-400 font-semibold">₱{total.toFixed(2)}</span>
+              Total due: <span className="text-emerald-400 font-semibold">ETB {total.toFixed(2)}</span>
             </p>
           </div>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors">
@@ -124,20 +124,20 @@ export default function PaymentModal({ total, onConfirm, onClose, loading }: Pro
           {/* Summary */}
           <div className="bg-zinc-900 rounded-xl p-4 space-y-2 font-mono text-xs border border-zinc-800">
             <div className="flex justify-between text-zinc-500">
-              <span>Total Due</span><span>₱{total.toFixed(2)}</span>
+              <span>Total Due</span><span>ETB {total.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-zinc-300">
               <span>Total Paid</span>
-              <span className={totalPaid >= total ? 'text-emerald-400' : 'text-red-400'}>₱{totalPaid.toFixed(2)}</span>
+              <span className={totalPaid >= total ? 'text-emerald-400' : 'text-red-400'}>ETB {totalPaid.toFixed(2)}</span>
             </div>
             {change > 0 && (
               <div className="flex justify-between font-semibold text-emerald-400 pt-1 border-t border-zinc-800">
-                <span>Change</span><span>₱{change.toFixed(2)}</span>
+                <span>Change</span><span>ETB {change.toFixed(2)}</span>
               </div>
             )}
             {totalPaid < total && (
               <div className="flex justify-between text-red-400 pt-1 border-t border-zinc-800">
-                <span>Still owed</span><span>₱{(total - totalPaid).toFixed(2)}</span>
+                <span>Still owed</span><span>ETB {(total - totalPaid).toFixed(2)}</span>
               </div>
             )}
           </div>
@@ -149,7 +149,7 @@ export default function PaymentModal({ total, onConfirm, onClose, loading }: Pro
           >
             {loading
               ? <><Loader2 className="w-4 h-4 animate-spin" />Processing…</>
-              : `Complete Sale · ₱${total.toFixed(2)}`
+              : `Complete Sale · ETB ${total.toFixed(2)}`
             }
           </button>
         </div>

@@ -6,11 +6,16 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatCurrency(n: number) {
-  return 'ETB ' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  return new Intl.NumberFormat('en-ET', {
+    style: 'currency',
+    currency: 'ETB',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(n)
 }
 
 export function formatDate(date: Date | string, includeYear = true) {
-  return new Intl.DateTimeFormat('en-PH', {
+  return new Intl.DateTimeFormat('en-ET', {
     year: includeYear ? 'numeric' : undefined,
     month: 'short',
     day: '2-digit',

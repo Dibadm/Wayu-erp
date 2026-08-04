@@ -99,18 +99,18 @@ export default function Cart({ items, onChange, taxRate, discount }: Props) {
                       title="Unit price"
                     />
                     {item.discount > 0 && (
-                      <p className="text-[10px] font-mono text-amber-400">-₱{item.discount.toFixed(2)} disc</p>
+                      <p className="text-[10px] font-mono text-amber-400">-ETB {item.discount.toFixed(2)} disc</p>
                     )}
                   </div>
                   <p className="text-sm font-mono font-semibold text-emerald-400 w-20 text-right">
-                    ₱{lineTotal.toFixed(2)}
+                    ETB {lineTotal.toFixed(2)}
                   </p>
                 </div>
               </div>
 
               {/* Per-item discount */}
               <div className="flex items-center gap-2 mt-2 pt-2 border-t border-zinc-800/50">
-                <span className="text-[10px] font-mono text-zinc-600 flex-shrink-0">Item discount ₱</span>
+                <span className="text-[10px] font-mono text-zinc-600 flex-shrink-0">Item discount ETB </span>
                 <input
                   type="number" min={0} step={0.01}
                   className="w-16 bg-zinc-800 border border-zinc-700 rounded px-1.5 py-0.5 text-xs font-mono text-zinc-300 outline-none focus:border-amber-500/50"
@@ -128,24 +128,24 @@ export default function Cart({ items, onChange, taxRate, discount }: Props) {
       {items.length > 0 && (
         <div className="pt-3 mt-3 border-t border-zinc-800 space-y-1.5 text-xs font-mono">
           <div className="flex justify-between text-zinc-500">
-            <span>Subtotal</span><span>₱{subtotal.toFixed(2)}</span>
+            <span>Subtotal</span><span>ETB {subtotal.toFixed(2)}</span>
           </div>
           {discount > 0 && (
             <div className="flex justify-between text-amber-400">
-              <span>Order discount</span><span>-₱{discount.toFixed(2)}</span>
+              <span>Order discount</span><span>-ETB {discount.toFixed(2)}</span>
             </div>
           )}
           {taxRate > 0 && (
             <div className="flex justify-between text-zinc-500">
-              <span>Tax ({taxRate}%)</span><span>₱{taxAmount.toFixed(2)}</span>
+              <span>Tax ({taxRate}%)</span><span>ETB {taxAmount.toFixed(2)}</span>
             </div>
           )}
           <div className="flex justify-between text-base font-semibold text-zinc-100 pt-1 border-t border-zinc-800">
-            <span>TOTAL</span><span>₱{total.toFixed(2)}</span>
+            <span>TOTAL</span><span>ETB {total.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-zinc-600 text-[10px] pt-1">
             <span>Est. profit</span>
-            <span className={profit >= 0 ? 'text-emerald-600' : 'text-red-600'}>₱{profit.toFixed(2)}</span>
+            <span className={profit >= 0 ? 'text-emerald-600' : 'text-red-600'}>ETB {profit.toFixed(2)}</span>
           </div>
         </div>
       )}

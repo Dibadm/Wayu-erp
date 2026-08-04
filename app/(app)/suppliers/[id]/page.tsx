@@ -87,7 +87,7 @@ export default async function SupplierDetailPage({ params }: { params: { id: str
           )}
           <div>
             <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Total Spend</p>
-            <p className="stat-num text-sm text-zinc-100 mt-1">₱{totalSpend.toLocaleString('en-PH', { minimumFractionDigits: 2 })}</p>
+            <p className="stat-num text-sm text-zinc-100 mt-1">ETB {totalSpend.toLocaleString('en-ET', { minimumFractionDigits: 2 })}</p>
           </div>
         </div>
 
@@ -123,7 +123,7 @@ export default async function SupplierDetailPage({ params }: { params: { id: str
                 </p>
               </div>
               <p className="stat-num text-sm text-zinc-300 flex-shrink-0">
-                ₱{Number(po.totalCost).toLocaleString('en-PH', { minimumFractionDigits: 2 })}
+                ETB {Number(po.totalCost).toLocaleString('en-ET', { minimumFractionDigits: 2 })}
               </p>
             </Link>
           ))}

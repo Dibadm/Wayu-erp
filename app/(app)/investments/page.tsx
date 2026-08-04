@@ -25,7 +25,7 @@ export default function InvestmentsPage() {
     if (res.ok) { setForm({ name: '', type: 'FIXED_DEPOSIT', amount: '', expectedReturn: '', startDate: '', maturityDate: '', status: 'ACTIVE', notes: '' }); setShowForm(false); load() }
   }
 
-  const fmt = (n: number) => `ETB ${Number(n).toLocaleString('en-PH', { minimumFractionDigits: 2 })}`
+  const fmt = (n: number) => `ETB ${Number(n).toLocaleString('en-ET', { minimumFractionDigits: 2 })}`
 
   return (
     <div className="space-y-6 animate-fade-in">

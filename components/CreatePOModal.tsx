@@ -207,7 +207,7 @@ export default function CreatePOModal() {
                     <div className="flex justify-end pt-2 border-t border-zinc-800">
                       <div className="text-right">
                         <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Total Cost</p>
-                        <p className="stat-num text-lg text-zinc-100">₱{total.toLocaleString('en-PH', { minimumFractionDigits: 2 })}</p>
+                        <p className="stat-num text-lg text-zinc-100">ETB {total.toLocaleString('en-ET', { minimumFractionDigits: 2 })}</p>
                       </div>
                     </div>
                   </div>

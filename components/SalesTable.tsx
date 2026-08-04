@@ -31,7 +31,7 @@ const STATUS_CLS: Record<string, string> = {
 }
 
 function fmt(n: number | string | null | undefined) {
-  return `₱${(Number(n ?? 0)).toLocaleString('en-PH', { minimumFractionDigits: 2 })}`
+  return `ETB ${(Number(n ?? 0)).toLocaleString('en-ET', { minimumFractionDigits: 2 })}`
 }
 
 export default function SalesTable({ sales }: { sales: Sale[] }) {

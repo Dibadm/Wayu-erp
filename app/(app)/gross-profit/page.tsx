@@ -22,7 +22,7 @@ export default function GrossProfitPage() {
     window.open(`/api/export?sheet=gp&calendar=${calendar}&amharic=${amharic}`)
   }
 
-  const fmt = (n: number) => `₱${Number(n).toLocaleString('en-PH', { minimumFractionDigits: 2 })}`
+  const fmt = (n: number) => `ETB ${Number(n).toLocaleString('en-ET', { minimumFractionDigits: 2 })}`
   const margin = totals.sell > 0 ? (totals.profit / totals.sell) * 100 : 0
 
   return (

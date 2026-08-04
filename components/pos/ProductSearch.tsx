@@ -88,7 +88,7 @@ export default function ProductSearch({ onAdd }: Props) {
               </div>
               <div className="text-right flex-shrink-0">
                 <p className="text-sm font-mono font-semibold text-emerald-400">
-                  ₱{Number(product.sellingPrice ?? 0).toFixed(2)}
+                  ETB {Number(product.sellingPrice ?? 0).toFixed(2)}
                 </p>
                 <p className="text-[10px] font-mono text-zinc-600">{product.category}</p>
               </div>

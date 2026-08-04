@@ -131,7 +131,7 @@ export async function POST(req: NextRequest) {
   // Validate payment covers total
   const totalPaid = payments.reduce((s, p) => s + p.amount, 0)
   if (totalPaid < total - 0.01) {  // 0.01 tolerance for floating point
-    return NextResponse.json({ error: `Payment of ₱${totalPaid.toFixed(2)} is less than total ₱${total.toFixed(2)}` }, { status: 400 })
+    return NextResponse.json({ error: `Payment of ETB ${totalPaid.toFixed(2)} is less than total ETB ${total.toFixed(2)}` }, { status: 400 })
   }
 
   // ── Step 4: Atomic transaction ───────────────────────────────────────────
@@ -239,7 +239,7 @@ export async function POST(req: NextRequest) {
       items:    { before: null, after: items.length },
       payment:  { before: null, after: payments.map(p => p.method).join(', ') },
     },
-    reason: `POS checkout — ${items.length} items, ₱${total.toFixed(2)}`,
+    reason: `POS checkout — ${items.length} items, ETB ${total.toFixed(2)}`,
   })
 
   return NextResponse.json({ success: true, sale }, { status: 201 })

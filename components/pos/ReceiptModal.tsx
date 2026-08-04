@@ -113,8 +113,8 @@ ${printContent.replace(/class="[^"]*"/g, attr => {
                 <div key={i}>
                   <p className="text-zinc-200 truncate">{item.product.name}</p>
                   <div className="flex justify-between text-zinc-500 text-[10px]">
-                    <span>{item.quantity} × ₱{Number(item.unitPrice).toFixed(2)}{item.discount > 0 ? ` (-₱${Number(item.discount).toFixed(2)})` : ''}</span>
-                    <span className="text-zinc-300">₱{Number(item.lineTotal).toFixed(2)}</span>
+                    <span>{item.quantity} × ETB {Number(item.unitPrice).toFixed(2)}{item.discount > 0 ? ` (-ETB ${Number(item.discount).toFixed(2)})` : ''}</span>
+                    <span className="text-zinc-300">ETB {Number(item.lineTotal).toFixed(2)}</span>
                   </div>
                 </div>
               ))}
@@ -125,7 +125,7 @@ ${printContent.replace(/class="[^"]*"/g, attr => {
               return totalCommission > 0 ? (
                 <div className="border-t border-dashed border-zinc-800 pt-2 space-y-1">
                   <div className="flex justify-between text-emerald-400">
-                    <span>Commission (2%)</span><span>₱{totalCommission.toFixed(2)}</span>
+                    <span>Commission (2%)</span><span>ETB {totalCommission.toFixed(2)}</span>
                   </div>
                 </div>
               ) : null
@@ -133,11 +133,11 @@ ${printContent.replace(/class="[^"]*"/g, attr => {
 
             <div className="border-t border-dashed border-zinc-800 pt-2 space-y-1">
               <div className="flex justify-between text-zinc-500">
-                <span>Subtotal</span><span>₱{Number(sale.subtotal).toFixed(2)}</span>
+                <span>Subtotal</span><span>ETB {Number(sale.subtotal).toFixed(2)}</span>
               </div>
               {Number(sale.discountAmount) > 0 && (
                 <div className="flex justify-between text-amber-400">
-                  <span>Discount</span><span>-₱{Number(sale.discountAmount).toFixed(2)}</span>
+                  <span>Discount</span><span>-ETB {Number(sale.discountAmount).toFixed(2)}</span>
                 </div>
               )}
               {!sale.taxable ? (
@@ -146,11 +146,11 @@ ${printContent.replace(/class="[^"]*"/g, attr => {
                 </div>
               ) : Number(sale.taxAmount) > 0 ? (
                 <div className="flex justify-between text-zinc-500">
-                  <span>Tax</span><span>₱{Number(sale.taxAmount).toFixed(2)}</span>
+                  <span>Tax</span><span>ETB {Number(sale.taxAmount).toFixed(2)}</span>
                 </div>
               ) : null}
               <div className="flex justify-between font-semibold text-base text-zinc-100 pt-1 border-t border-zinc-800">
-                <span>TOTAL</span><span>₱{Number(sale.total).toFixed(2)}</span>
+                <span>TOTAL</span><span>ETB {Number(sale.total).toFixed(2)}</span>
               </div>
             </div>
 
@@ -158,12 +158,12 @@ ${printContent.replace(/class="[^"]*"/g, attr => {
               {sale.payments.map((p, i) => (
                 <div key={i} className="flex justify-between text-zinc-400">
                   <span>{METHOD_LABELS[p.method] ?? p.method}{p.reference ? ` (${p.reference})` : ''}</span>
-                  <span>₱{Number(p.amount).toFixed(2)}</span>
+                  <span>ETB {Number(p.amount).toFixed(2)}</span>
                 </div>
               ))}
               {change > 0.01 && (
                 <div className="flex justify-between text-emerald-400 font-semibold">
-                  <span>Change</span><span>₱{change.toFixed(2)}</span>
+                  <span>Change</span><span>ETB {change.toFixed(2)}</span>
                 </div>
               )}
             </div>

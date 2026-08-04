@@ -104,13 +104,13 @@ export default function AddProductModal() {
           {/* Pricing fields */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Cost Price (₱)</label>
+              <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Cost Price (ETB)</label>
               <input className="input" type="number" min={0} step="0.01" placeholder="0.00"
                 value={(form as any).costPrice ?? ''}
                  onChange={e => set('costPrice', parseFloat(e.target.value) || 0)} />
             </div>
             <div className="space-y-1.5">
-              <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Selling Price (₱)</label>
+              <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Selling Price (ETB)</label>
               <input className="input" type="number" min={0} step="0.01" placeholder="0.00"
                 value={(form as any).sellingPrice ?? ''}
                  onChange={e => set('sellingPrice', parseFloat(e.target.value) || 0)} />
