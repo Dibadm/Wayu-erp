@@ -19,7 +19,7 @@ describe('loginSchema', () => {
 })
 
 describe('productSchema', () => {
-  it('validates a complete product', () => {
+  it('validates a complete product with pricing', () => {
     const result = productSchema.safeParse({
       sku: 'SKU-001',
       name: 'Aspirin',
@@ -28,8 +28,31 @@ describe('productSchema', () => {
       quantity: 100,
       minStockLevel: 10,
       unit: 'tablets',
+      costPrice: 5.0,
+      sellingPrice: 12.0,
     })
     expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.costPrice).toBe(5.0)
+      expect(result.data.sellingPrice).toBe(12.0)
+    }
+  })
+
+  it('accepts a product without pricing fields', () => {
+    const result = productSchema.safeParse({
+      sku: 'SKU-001',
+      name: 'Aspirin',
+      quantity: 100,
+      minStockLevel: 10,
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('rejects negative costPrice', () => {
+    const result = productSchema.safeParse({
+      sku: 'SKU-001', name: 'Aspirin', quantity: 100, minStockLevel: 10, costPrice: -1,
+    })
+    expect(result.success).toBe(false)
   })
 
   it('rejects empty SKU', () => {
