@@ -58,19 +58,18 @@ createdb wayu_inventory
 npm run db:push
 ```
 
-### 5. Seed with sample data
+### 5. Seed the database
 
 ```bash
 npm run db:seed
 ```
 
-This creates:
+Creates a default admin account and a main warehouse location.
 | Account | Email | Password | Role |
 |---|---|---|---|
-| Admin | admin@wayu.ph | admin123 | ADMIN |
-| Staff | staff@wayu.ph | staff123 | STAFF |
+| Admin | admin@wayu.ph | `ChangeMeNow!` *(or set via `WAYU_ADMIN_PASSWORD` env var)* | ADMIN |
 
-And 10 pharmaceutical products with realistic movement history.
+Add your real products, customers, suppliers, and stock via the application UI after logging in.
 
 ### 6. Run the dev server
 
@@ -102,8 +101,8 @@ Open [http://localhost:3000](http://localhost:3000) — you'll be redirected to 
 ```
 wayu-inventory/
 ├── prisma/
-│   ├── schema.prisma       # DB schema (User, Product, Movement)
-│   └── seed.ts             # Sample data seeder
+│   ├── schema.prisma       # DB schema
+│   └── seed.ts             # Minimal bootstrap seed (admin + warehouse)
 ├── app/
 │   ├── api/
 │   │   ├── auth/[...nextauth]/  # NextAuth handler
@@ -209,4 +208,4 @@ Add environment variables in the Vercel dashboard:
 
 ---
 
-*WAYU Pharmaceutical Inventory System — v1.0.0*
+*WAYU Pharmaceutical Inventory System — v2.2.0*

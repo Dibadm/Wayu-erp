@@ -6,9 +6,8 @@
 
 **How to start:**
 1. Open your browser and go to: **http://localhost:3000**
-2. Log in with one of these accounts:
-   - **Admin**: `admin@wayu.ph`
-   - **Staff**: `staff@wayu.ph`
+ 2. Log in with the admin account:
+    - **Admin**: `admin@wayu.ph`
 3. Use the sidebar on the left to navigate between pages (Dashboard, Inventory, POS, Purchase Orders, Import/Export, Reports, Settings).
 
 **What to do first:**
@@ -133,11 +132,9 @@
 - AI chat requires GEMINI_API_KEY environment variable
 
 ### Test Data
-- 10 sample products seeded (Paracetamol, Ibuprofen, etc.)
-- 1 admin user (admin@wayu.ph)
-- 1 staff user (staff@wayu.ph)
-- Imported 8 sales from sample Excel
-- Imported 46 purchase orders from sample Excel
+- 1 admin user (admin@wayu.ph) — seed creates with default password `ChangeMeNow!`
+- 1 default warehouse location (WH-MAIN)
+- Add real products, customers, and suppliers via the UI after login
 
 ---
 

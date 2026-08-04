@@ -692,7 +692,7 @@ All AI routes require authentication. All query DB before calling AI.
 | Path | Auth | What Users Can Do |
 |---|---|---|
 | `/` | Public | Auto-redirects to `/dashboard` (if session) or `/login` |
-| `/login` | Public | Email + password login. Shows demo credentials for development |
+| `/login` | Public | Email + password login page |
 | `/dashboard` | Required | View KPI stats, low-stock alert, recent movements, expiry widget, reorder recommendations |
 | `/inventory` | Required | Browse all products with stock status. Admin can add products via modal |
 | `/inventory/[id]` | Required | View product detail (stock, stats, last updated). Record IN/OUT/ADJUSTMENT. View per-product movement history |

@@ -129,36 +129,7 @@ export default function LoginPage() {
                 <><Loader2 className="w-4 h-4 animate-spin" />Authenticating…</>
               ) : 'Sign In'}
             </button>
-          </form>
-
-          {/* Demo credentials */}
-          <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
-            <p className="text-xs font-mono text-center mb-2" style={{ color: 'var(--text-muted)' }}>
-              Demo credentials
-            </p>
-            <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-              {[
-                { role: 'Admin',  email: 'admin@wayu.ph', pass: 'admin123' },
-                { role: 'Staff',  email: 'staff@wayu.ph', pass: 'staff123' },
-              ].map(c => (
-                <button
-                  key={c.role}
-                  type="button"
-                  onClick={() => { setEmail(c.email); setPassword(c.pass) }}
-                  className="text-left px-2.5 py-2 rounded-lg transition-colors"
-                  style={{
-                    background: 'var(--bg-muted)',
-                    border:     '1px solid var(--border)',
-                    color:      'var(--text-secondary)',
-                  }}
-                >
-                  <p style={{ color: 'var(--text-muted)' }}>{c.role}</p>
-                  <p>{c.email}</p>
-                  <p style={{ color: 'var(--text-muted)' }}>{c.pass}</p>
-                </button>
-              ))}
-            </div>
-          </div>
+           </form>
         </div>
 
         <p className="text-center text-xs font-mono mt-6" style={{ color: 'var(--text-muted)' }}>
