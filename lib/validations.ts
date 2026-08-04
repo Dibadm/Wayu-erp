@@ -6,13 +6,15 @@ export const loginSchema = z.object({
 })
 
 export const productSchema = z.object({
-  sku: z.string().min(1, 'SKU is required').max(50),
-  name: z.string().min(1, 'Product name is required').max(200),
-  description: z.string().optional(),
-  category: z.string().default('General'),
-  quantity: z.number().int().min(0, 'Quantity cannot be negative'),
-  minStockLevel: z.number().int().min(0, 'Min stock level cannot be negative'),
-  unit: z.string().default('units'),
+  sku:            z.string().min(1, 'SKU is required').max(50),
+  name:           z.string().min(1, 'Product name is required').max(200),
+  description:    z.string().optional(),
+  category:       z.string().default('General'),
+  quantity:       z.number().int().min(0, 'Quantity cannot be negative'),
+  minStockLevel:  z.number().int().min(0, 'Min stock level cannot be negative'),
+  unit:           z.string().default('units'),
+  costPrice:      z.number().min(0).optional(),
+  sellingPrice:   z.number().min(0).optional(),
 })
 
 export const movementSchema = z.object({
