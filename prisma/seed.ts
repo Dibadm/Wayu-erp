@@ -9,15 +9,15 @@ async function main() {
   // ─── Admin User ─────────────────────────────────────────────────────────────
   // A single admin account is created so the system is usable.
   // Set the password via environment variable WAYU_ADMIN_PASSWORD
-  // (falls back to a random value if unset — check the console output).
+  // (falls back to 'ChangeMeNow!' if unset — change it after first login).
 
   const adminPassword = process.env.WAYU_ADMIN_PASSWORD || 'ChangeMeNow!'
   const adminHash = await bcrypt.hash(adminPassword, 12)
 
   const admin = await prisma.user.upsert({
     where: { email: 'admin@wayu.ph' },
-    update: {},
-    create: { email: 'admin@wayu.ph', password: adminHash, name: 'Admin User', role: Role.ADMIN },
+   update: { password: adminHash },
+   create: { email: 'admin@wayu.ph', password: adminHash, name: 'Admin User', role: Role.ADMIN },
   })
 
   console.log(`   ✓ 1 admin user created`)
