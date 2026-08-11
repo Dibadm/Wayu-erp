@@ -108,7 +108,6 @@ export async function POST(req: NextRequest) {
     subtotal  += lineTotal
     totalCost += lineCost
     return {
-      productId:   item.productId,
       product:     { connect: { id: item.productId } },
       quantity:    item.quantity,
       unitPrice,
