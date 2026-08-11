@@ -6,7 +6,9 @@
 //   4. Creates OUT Movement per product (reuses existing movement model)
 //   5. Depletes batches in FEFO order
 //   6. Updates product.quantity
-//   7. Writes audit log
+//   7. For BANK_TRANSFER: creates CashInflow records
+//   8. For CREDIT: creates ARStatement records
+//   9. Writes audit log
 // Never duplicates inventory logic — updates same models as the movement system.
 
 import { NextRequest, NextResponse } from 'next/server'
@@ -36,7 +38,6 @@ function planFEFO(
 ): { batchId: string; qty: number }[] | null {
   const plan: { batchId: string; qty: number }[] = []
   let remaining = needed
-  // Batches already ordered by expiryDate asc from the query
   for (const b of batches) {
     if (remaining <= 0) break
     const take = Math.min(b.quantity, remaining)
@@ -77,6 +78,18 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Validate bank accounts for BANK_TRANSFER payments
+  const bankTransferPayments = payments.filter(p => p.method === 'BANK_TRANSFER')
+  for (const p of bankTransferPayments) {
+    if (!p.bankAccountId) {
+      return NextResponse.json({ error: 'Bank account is required for bank transfer payments.' }, { status: 400 })
+    }
+    const account = await prisma.bankAccount.findUnique({ where: { id: p.bankAccountId } })
+    if (!account) {
+      return NextResponse.json({ error: 'Selected bank account not found.' }, { status: 400 })
+    }
+  }
+
   // ── Step 1: Load products + FEFO batches ────────────────────────────────────
   const productIds = items.map(i => i.productId)
   const products   = await prisma.product.findMany({
@@ -84,7 +97,7 @@ export async function POST(req: NextRequest) {
     include: {
       batches: {
         where:   { status: 'ACTIVE', quantity: { gt: 0 } },
-        orderBy: { expiryDate: 'asc' },  // FEFO
+        orderBy: { expiryDate: 'asc' },
         select:  { id: true, quantity: true, expiryDate: true, batchNumber: true },
       },
     },
@@ -103,7 +116,6 @@ export async function POST(req: NextRequest) {
       }, { status: 400 })
     }
     const plan = planFEFO(product.batches, item.quantity)
-    // plan may be null if batches don't cover full qty (product.quantity covers it but batches may not be registered)
     fefoPlan[item.productId] = plan ?? []
   }
 
@@ -147,10 +159,11 @@ export async function POST(req: NextRequest) {
   const total         = afterDiscount + taxAmount
   const profit        = total - totalCost - discountAmount
 
-  // Validate payment covers total
-  const totalPaid = payments.reduce((s, p) => s + p.amount, 0)
-  if (totalPaid < total - 0.01) {  // 0.01 tolerance for floating point
-    return NextResponse.json({ error: `Payment of ETB ${totalPaid.toFixed(2)} is less than total ETB ${total.toFixed(2)}` }, { status: 400 })
+  // Validate payment covers total (cash + bank transfer + credit)
+  const totalPaid = payments.reduce((s, p) => s + (p.method === 'CREDIT' ? 0 : p.amount), 0)
+  const totalCredit = payments.reduce((s, p) => s + (p.method === 'CREDIT' ? p.amount : 0), 0)
+  if (totalPaid + totalCredit < total - 0.01) {
+    return NextResponse.json({ error: `Payment of ETB ${(totalPaid + totalCredit).toFixed(2)} is less than total ETB ${total.toFixed(2)}` }, { status: 400 })
   }
 
   // ── Step 4: Atomic transaction ───────────────────────────────────────────
@@ -207,14 +220,13 @@ export async function POST(req: NextRequest) {
         })
       )
 
-      // Deplete batches in FEFO order
       for (const { batchId, qty } of fefoPlan[item.productId]) {
         ops.push(
           prisma.batch.update({
             where: { id: batchId },
             data:  {
               quantity: { decrement: qty },
-              status:   undefined, // will be set to DEPLETED by the update below if qty reaches 0
+              status:   undefined,
             },
           })
         )
@@ -243,6 +255,40 @@ export async function POST(req: NextRequest) {
         if (b && b.quantity <= 0) {
           await prisma.batch.update({ where: { id: batchId }, data: { status: 'DEPLETED' } })
         }
+      }
+    }
+
+    // Post-transaction: create CashInflow for BANK_TRANSFER payments
+    for (const p of bankTransferPayments) {
+      await prisma.cashInflow.create({
+        data: {
+          amount: p.amount,
+          category: 'SALES',
+          reference: receiptNumber,
+          description: `POS Sale ${receiptNumber} — bank transfer`,
+          bankAccountId: p.bankAccountId!,
+          createdById: cashierId,
+          receivedAt: new Date(),
+        },
+      })
+    }
+
+    // Post-transaction: create ARStatement for CREDIT payments
+    for (const p of payments.filter(p => p.method === 'CREDIT')) {
+      if (customerId && p.creditDays) {
+        const dueDate = new Date()
+        dueDate.setDate(dueDate.getDate() + p.creditDays)
+        await prisma.aRStatement.create({
+          data: {
+            customerId,
+            saleId: sale.id,
+            invoiceNo: receiptNumber,
+            issuedAt: new Date(),
+            dueDate,
+            amount: p.amount,
+            status: 'OPEN',
+          },
+        })
       }
     }
   } catch (err: any) {

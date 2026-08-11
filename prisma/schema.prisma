@@ -445,9 +445,8 @@ enum SaleStatus {
 
 enum PaymentMethod {
   CASH
-  CARD
-  MOBILE_MONEY
   BANK_TRANSFER
+  CREDIT
 }
 
 // ─── Phase 1: Commission, Import/Sync, Settings ──────────────────────────────

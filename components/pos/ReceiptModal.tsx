@@ -20,7 +20,7 @@ interface SaleData {
 }
 
 const METHOD_LABELS: Record<string, string> = {
-  CASH: 'Cash', CARD: 'Card', MOBILE_MONEY: 'Mobile Money', BANK_TRANSFER: 'Bank Transfer',
+  CASH: 'Cash', BANK_TRANSFER: 'Bank Transfer', CREDIT: 'Credit',
 }
 
 interface Props {

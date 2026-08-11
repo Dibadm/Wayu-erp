@@ -106,9 +106,11 @@ export const checkoutSchema = z.object({
   taxRate:        z.number().min(0).max(100).default(0),
   notes:          z.string().optional(),
   payments: z.array(z.object({
-    method:    z.enum(['CASH', 'CARD', 'MOBILE_MONEY', 'BANK_TRANSFER']),
-    amount:    z.number().min(0),
-    reference: z.string().optional(),
+    method:         z.enum(['CASH', 'BANK_TRANSFER', 'CREDIT']),
+    amount:         z.number().min(0),
+    reference:      z.string().optional(),
+    bankAccountId:  z.string().cuid().optional(),
+    creditDays:     z.number().int().min(1).optional(),
   })).min(1, 'At least one payment is required'),
 })
 
