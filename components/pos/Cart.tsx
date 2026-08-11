@@ -67,25 +67,28 @@ export default function Cart({ items, onChange, taxRate, discount }: Props) {
 
               <div className="flex items-center justify-between gap-3">
                 {/* Quantity controls */}
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={() => setQty(idx, item.quantity - 1)}
-                    className="w-6 h-6 flex items-center justify-center rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 transition-colors"
-                  >
-                    <Minus className="w-3 h-3" />
-                  </button>
-                  <input
-                    type="number" min={1}
-                    className="w-12 text-center bg-zinc-800 border border-zinc-700 rounded text-xs font-mono text-zinc-200 py-0.5 outline-none focus:border-blue-500/50"
-                    value={item.quantity}
-                    onChange={e => setQty(idx, parseInt(e.target.value) || 1)}
-                  />
-                  <button
-                    onClick={() => setQty(idx, item.quantity + 1)}
-                    className="w-6 h-6 flex items-center justify-center rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 transition-colors"
-                  >
-                    <Plus className="w-3 h-3" />
-                  </button>
+                <div className="flex flex-col items-center gap-0.5">
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => setQty(idx, item.quantity - 1)}
+                      className="w-6 h-6 flex items-center justify-center rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 transition-colors"
+                    >
+                      <Minus className="w-3 h-3" />
+                    </button>
+                    <input
+                      type="number" min={1}
+                      className="w-10 text-center bg-zinc-800 border border-zinc-700 rounded text-xs font-mono text-zinc-200 py-0.5 outline-none focus:border-blue-500/50"
+                      value={item.quantity}
+                      onChange={e => setQty(idx, parseInt(e.target.value) || 1)}
+                    />
+                    <button
+                      onClick={() => setQty(idx, item.quantity + 1)}
+                      className="w-6 h-6 flex items-center justify-center rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 transition-colors"
+                    >
+                      <Plus className="w-3 h-3" />
+                    </button>
+                  </div>
+                  <span className="text-[9px] font-mono text-zinc-600 uppercase tracking-wider">qty</span>
                 </div>
 
                 {/* Price + per-unit discount */}
@@ -102,7 +105,7 @@ export default function Cart({ items, onChange, taxRate, discount }: Props) {
                       <p className="text-[10px] font-mono text-amber-400">-ETB {item.discount.toFixed(2)} disc</p>
                     )}
                   </div>
-                  <p className="text-sm font-mono font-semibold text-emerald-400 w-20 text-right">
+                  <p className="text-xs font-mono text-zinc-300 w-24 text-right">
                     ETB {lineTotal.toFixed(2)}
                   </p>
                 </div>

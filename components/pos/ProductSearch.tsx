@@ -87,7 +87,7 @@ export default function ProductSearch({ onAdd }: Props) {
                 <p className="text-[10px] font-mono text-zinc-500">{product.sku} · {product.quantity} {product.unit} in stock</p>
               </div>
               <div className="text-right flex-shrink-0">
-                <p className="text-sm font-mono font-semibold text-emerald-400">
+                <p className="text-xs font-mono text-zinc-400">
                   ETB {Number(product.sellingPrice ?? 0).toFixed(2)}
                 </p>
                 <p className="text-[10px] font-mono text-zinc-600">{product.category}</p>
