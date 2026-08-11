@@ -351,7 +351,7 @@ export default function POSPage() {
           )}
           <button
             onClick={() => setShowPayment(true)}
-            disabled={cartItems.length === 0 || !salesperson}
+            disabled={cartItems.length === 0}
             className="btn-primary w-full flex items-center justify-center gap-2 py-3 text-base font-semibold"
           >
             <CartIcon className="w-5 h-5" />
