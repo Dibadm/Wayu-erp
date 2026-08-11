@@ -69,6 +69,14 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Verify customer exists in DB if provided
+  if (customerId) {
+    const customer = await prisma.customer.findUnique({ where: { id: customerId } })
+    if (!customer) {
+      return NextResponse.json({ error: 'Selected customer account no longer exists.' }, { status: 400 })
+    }
+  }
+
   // ── Step 1: Load products + FEFO batches ────────────────────────────────────
   const productIds = items.map(i => i.productId)
   const products   = await prisma.product.findMany({
