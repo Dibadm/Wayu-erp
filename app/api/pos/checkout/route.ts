@@ -57,6 +57,18 @@ export async function POST(req: NextRequest) {
   const { items, customerId, salespersonId, taxable, discountAmount, taxRate, notes, payments } = parsed.data
   const cashierId = (session.user as any).id
 
+  // Verify cashier exists in DB (defensive against stale sessions / FK violations)
+  const cashier = await prisma.user.findUnique({ where: { id: cashierId } })
+  if (!cashier) return NextResponse.json({ error: 'Cashier account not found. Please log in again.' }, { status: 401 })
+
+  // Verify salesperson exists in DB if provided
+  if (salespersonId) {
+    const salesperson = await prisma.user.findUnique({ where: { id: salespersonId } })
+    if (!salesperson) {
+      return NextResponse.json({ error: 'Selected salesperson account no longer exists.' }, { status: 400 })
+    }
+  }
+
   // ── Step 1: Load products + FEFO batches ────────────────────────────────────
   const productIds = items.map(i => i.productId)
   const products   = await prisma.product.findMany({
