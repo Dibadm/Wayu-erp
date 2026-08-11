@@ -141,36 +141,28 @@ export async function POST(req: NextRequest) {
     const ops: any[] = []
 
     // Create Sale with items and payments
-    const saleData: any = {
-      receiptNumber,
-      cashier: { connect: { id: cashierId } },
-      ...(customerId ? { customer: { connect: { id: customerId } } } : {}),
-      ...(salespersonId ? { salesperson: { connect: { id: salespersonId } } } : {}),
-      taxable,
-      subtotal,
-      discountAmount,
-      taxAmount,
-      total,
-      totalCost,
-      profit,
-      notes,
-      status: 'COMPLETED',
-      items: { create: saleItemsData },
-      payments: { create: payments.map(p => ({
-        method: p.method,
-        amount: p.amount,
-        reference: p.reference || null,
-      }))},
-    }
     ops.push(
       prisma.sale.create({
-        data: saleData,
-        include: {
-          items:    { select: { commissionAmount: true, product: { select: { id: true, name: true, sku: true, unit: true } } } },
-          payments: true,
-          customer: { select: { name: true, phone: true } },
-          cashier:  { select: { name: true, email: true } },
-          salesperson: { select: { name: true, email: true } },
+        data: {
+          receiptNumber,
+          cashierId,
+          ...(customerId ? { customerId } : {}),
+          ...(salespersonId ? { salespersonId } : {}),
+          taxable,
+          subtotal,
+          discountAmount,
+          taxAmount,
+          total,
+          totalCost,
+          profit,
+          notes,
+          status: 'COMPLETED',
+          items: { create: saleItemsData },
+          payments: { create: payments.map(p => ({
+            method: p.method,
+            amount: p.amount,
+            reference: p.reference || null,
+          }))},
         },
       })
     )
@@ -211,6 +203,18 @@ export async function POST(req: NextRequest) {
 
     const results = await prisma.$transaction(ops)
     sale = results[0]
+
+    // Post-transaction: enrich sale with relations for the response
+    sale = await prisma.sale.findUnique({
+      where: { id: sale.id },
+      include: {
+        items:    { select: { commissionAmount: true, product: { select: { id: true, name: true, sku: true, unit: true } } } },
+        payments: true,
+        customer: { select: { name: true, phone: true } },
+        cashier:  { select: { name: true, email: true } },
+        salesperson: { select: { name: true, email: true } },
+      },
+    })
 
     // Post-transaction: mark depleted batches
     for (const item of items) {
