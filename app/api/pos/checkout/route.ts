@@ -144,9 +144,9 @@ export async function POST(req: NextRequest) {
     // Create Sale with items and payments
     const saleData: any = {
       receiptNumber,
-      cashierId,
-      ...(customerId ? { customerId } : {}),
-      ...(salespersonId ? { salespersonId } : {}),
+      cashier: { connect: { id: cashierId } },
+      ...(customerId ? { customer: { connect: { id: customerId } } } : {}),
+      ...(salespersonId ? { salesperson: { connect: { id: salespersonId } } } : {}),
       taxable,
       subtotal,
       discountAmount,
@@ -160,7 +160,7 @@ export async function POST(req: NextRequest) {
       payments: { create: payments.map(p => ({
         method: p.method,
         amount: p.amount,
-        reference: p.reference,
+        reference: p.reference || null,
       }))},
     }
     ops.push(
