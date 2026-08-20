@@ -13,6 +13,7 @@ export default function CreditDashboard() {
   const [applications, setApplications] = useState<any[]>([])
   const [cases, setCases] = useState<any[]>([])
   const [notifications, setNotifications] = useState<any[]>([])
+  const [upcoming, setUpcoming] = useState<{ counts: any } | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -23,13 +24,15 @@ export default function CreditDashboard() {
       fetch('/api/credit-applications').then(r => r.ok ? r.json() : Promise.reject(r.statusText)),
       fetch('/api/collection-cases').then(r => r.ok ? r.json() : Promise.reject(r.statusText)),
       fetch('/api/overdue-notifications').then(r => r.ok ? r.json() : Promise.reject(r.statusText)),
-    ]).then(([dashboard, risk, utilization, apps, cases, notifs]) => {
+      fetch('/api/credit/upcoming').then(r => r.ok ? r.json() : Promise.reject(r.statusText)),
+    ]).then(([dashboard, risk, utilization, apps, cases, notifs, upcm]) => {
       setData(dashboard)
       setRiskData(risk)
       setUtilizationData(utilization)
       setApplications(Array.isArray(apps) ? apps : [])
       setCases(Array.isArray(cases) ? cases : [])
       setNotifications(Array.isArray(notifs) ? notifs : [])
+      setUpcoming(upcm?.counts ? upcm : null)
     }).catch(() => {
       setData({ totalOutstanding: 0, activeCreditCustomers: 0, overdueCount: 0, openCollections: 0, pendingApplications: 0 })
       setRiskData({ data: { LOW: 0, MEDIUM: 0, HIGH: 0, CRITICAL: 0 } })
@@ -37,6 +40,7 @@ export default function CreditDashboard() {
       setApplications([])
       setCases([])
       setNotifications([])
+      setUpcoming(null)
     }).finally(() => setLoading(false))
   }, [])
 
@@ -138,6 +142,31 @@ export default function CreditDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Upcoming AR */}
+      {upcoming && (
+        <div className="glass-card p-5">
+          <h2 className="text-sm font-semibold text-zinc-100 mb-4">Upcoming AR (next 30 days)</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[
+              { key: 'overdue', label: 'Overdue', color: 'red', icon: AlertTriangle },
+              { key: 'critical', label: 'Due ≤7d', color: 'amber', icon: Clock },
+              { key: 'warning', label: 'Due ≤14d', color: 'yellow', icon: Clock },
+              { key: 'soon', label: 'Due ≤30d', color: 'blue', icon: Clock },
+            ].map(item => (
+              <div key={item.key} className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-${item.color}-500/10 border border-${item.color}-500/20 flex items-center justify-center">
+                  <item.icon className="w-4 h-4 text-${item.color}-400" />
+                </div>
+                <div>
+                  <p className="stat-num text-lg text-zinc-100">{upcoming.counts[item.key] ?? 0}</p>
+                  <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">{item.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Recent Applications & Collections Queue */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

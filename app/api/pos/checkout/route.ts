@@ -18,6 +18,7 @@ import { prisma } from '@/lib/db'
 import { checkoutSchema } from '@/lib/validations'
 import { writeAuditLog } from '@/lib/audit'
 import { resolveCommissionRate } from '@/lib/commission'
+import { recalcCreditProfile } from '@/lib/credit'
 
 // Generate receipt number: RCP-YYYYMMDD-XXXX
 async function generateReceiptNumber(): Promise<string> {
@@ -273,22 +274,81 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Post-transaction: create ARStatement for CREDIT payments
-    for (const p of payments.filter(p => p.method === 'CREDIT')) {
-      if (customerId && p.creditDays) {
-        const dueDate = new Date()
-        dueDate.setDate(dueDate.getDate() + p.creditDays)
-        await prisma.aRStatement.create({
-          data: {
+    // Post-transaction: create ARStatement + CreditProfile + CreditAging for CREDIT payments
+    if (customerId) {
+      const creditPayments = payments.filter(p => p.method === 'CREDIT' && p.creditDays)
+      const creditTotal = creditPayments.reduce((s, p) => s + p.amount, 0)
+
+      if (creditTotal > 0) {
+        const creditDays = creditPayments[0].creditDays!
+
+        // Create ARStatements per payment
+        for (const p of creditPayments) {
+          const dueDate = new Date()
+          dueDate.setDate(dueDate.getDate() + p.creditDays!)
+          await prisma.aRStatement.create({
+            data: {
+              customerId,
+              saleId: sale.id,
+              invoiceNo: receiptNumber,
+              issuedAt: new Date(),
+              dueDate,
+              amount: p.amount,
+              status: 'OPEN',
+            },
+          })
+        }
+
+        // Create or update CreditProfile
+        const existingProfile = await prisma.creditProfile.findUnique({
+          where: { customerId },
+        })
+
+        if (!existingProfile) {
+          const defaultLimit = Math.max(10000, Math.round(creditTotal * 2))
+          await prisma.creditProfile.create({
+            data: {
+              customerId,
+              creditLimit: defaultLimit,
+              availableCredit: defaultLimit - creditTotal,
+              utilizedCredit: creditTotal,
+              paymentTerms: creditDays,
+              approvedBy: cashierId,
+              approvedAt: new Date(),
+              riskLevel: 'LOW',
+            },
+          })
+        } else {
+          await prisma.creditProfile.update({
+            where: { customerId },
+            data: {
+              utilizedCredit: { increment: creditTotal },
+              availableCredit: { decrement: creditTotal },
+            },
+          })
+        }
+
+        // Create/update CreditAging snapshot
+        const now = new Date()
+        await prisma.creditAging.upsert({
+          where: { customerId_asOf: { customerId, asOf: now } },
+          update: {
+            bucket0to30: { increment: creditTotal },
+            total: { increment: creditTotal },
+          },
+          create: {
             customerId,
-            saleId: sale.id,
-            invoiceNo: receiptNumber,
-            issuedAt: new Date(),
-            dueDate,
-            amount: p.amount,
-            status: 'OPEN',
+            bucket0to30: creditTotal,
+            bucket31to60: 0,
+            bucket61to90: 0,
+            bucket90plus: 0,
+            total: creditTotal,
+            asOf: now,
           },
         })
+
+        // Recalculate credit profile (utilization, risk, etc.)
+        await recalcCreditProfile(customerId).catch(() => {})
       }
     }
   } catch (err: any) {

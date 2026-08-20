@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { FileText, Download, TrendingUp, Users, ShieldCheck, Receipt, AlertTriangle, Activity } from 'lucide-react'
+import { FileText, Download, TrendingUp, Users, ShieldCheck, Receipt, AlertTriangle, Activity, Clock } from 'lucide-react'
 import { canAccess } from '@/lib/permissions'
 import { useSession } from 'next-auth/react'
 
-type Tab = 'aging-summary' | 'customer-profiles' | 'collections' | 'applications' | 'risk-analysis' | 'utilization'
+type Tab = 'aging-summary' | 'customer-profiles' | 'collections' | 'applications' | 'risk-analysis' | 'utilization' | 'upcoming'
 
 const TABS: { key: Tab; label: string; icon: any }[] = [
   { key: 'aging-summary', label: 'Aging Summary', icon: TrendingUp },
@@ -14,6 +14,7 @@ const TABS: { key: Tab; label: string; icon: any }[] = [
   { key: 'applications', label: 'Applications', icon: Receipt },
   { key: 'risk-analysis', label: 'Risk Analysis', icon: AlertTriangle },
   { key: 'utilization', label: 'Utilization', icon: Activity },
+  { key: 'upcoming', label: 'Upcoming AR', icon: Clock },
 ]
 
 export default function CreditReportsPage() {
@@ -28,7 +29,9 @@ export default function CreditReportsPage() {
   useEffect(() => {
     if (!canView) return
     setLoading(true)
-    let url = `/api/credit/reports?type=${activeTab}`
+    let url = activeTab === 'upcoming'
+      ? `/api/credit/upcoming`
+      : `/api/credit/reports?type=${activeTab}`
     if (activeTab === 'customer-profiles') {
       url += '&id=all'
     }
@@ -118,6 +121,58 @@ export default function CreditReportsPage() {
                   {(data.data || []).length === 0 && <tr><td colSpan={6} className="px-4 py-10 text-center text-xs font-mono text-zinc-600">No data found.</td></tr>}
                 </tbody>
               </table>
+            </div>
+          )}
+
+          {activeTab === 'upcoming' && (
+            <div className="p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-sm font-semibold text-zinc-100">Upcoming AR</h2>
+                <div className="flex gap-3 text-[10px] font-mono text-zinc-500">
+                {data?.counts && Object.entries(data.counts).map(([tier, count]) => (
+                  <span key={tier} style={{ color: `var(--accent-${tier === 'overdue' ? 'red' : tier === 'critical' ? 'amber' : tier === 'warning' ? 'yellow' : tier === 'soon' ? 'blue' : 'emerald'})` }}>
+                    {tier.toUpperCase()}: {count as number}
+                  </span>
+                ))}
+                </div>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-zinc-800">
+                      {['Customer', 'Invoice', 'Receipt', 'Due Date', 'Days Left', 'Amount', 'Balance', 'Status'].map(h => (
+                        <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-800/50">
+                    {(data?.data || []).map((row: any) => (
+                      <tr key={row.id} className="hover:bg-white/[0.02]">
+                        <td className="px-4 py-2.5 text-sm text-zinc-300">{row.customerName}</td>
+                        <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{row.invoiceNo}</td>
+                        <td className="px-4 py-2.5 font-mono text-xs text-zinc-500">{row.receiptNumber ?? '—'}</td>
+                        <td className="px-4 py-2.5 text-xs text-zinc-500">{row.dueDate ? new Date(row.dueDate).toLocaleDateString() : '—'}</td>
+                        <td className="px-4 py-2.5 stat-num text-sm" style={{ color: `var(--accent-${row.tier === 'overdue' ? 'red' : row.tier === 'critical' ? 'amber' : row.tier === 'warning' ? 'yellow' : row.tier === 'soon' ? 'blue' : 'emerald'})` }}>
+                          {row.daysLeft < 0 ? `${Math.abs(row.daysLeft)}d ago` : `${row.daysLeft}d`}
+                        </td>
+                        <td className="px-4 py-2.5 stat-num text-sm text-amber-400">ETB {Number(row.amount).toLocaleString()}</td>
+                        <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {Number(row.balance).toLocaleString()}</td>
+                        <td className="px-4 py-2.5">
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
+                            row.tier === 'overdue' ? 'badge-warning' :
+                            row.tier === 'critical' ? 'badge-outline border-amber-500/30 text-amber-400' :
+                            row.tier === 'warning' ? 'badge-outline border-yellow-500/30 text-yellow-400' :
+                            row.tier === 'soon' ? 'badge-in' : 'badge-in'
+                          }`}>
+                            {row.tierLabel}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                    {(data?.data || []).length === 0 && <tr><td colSpan={8} className="px-4 py-10 text-center text-xs font-mono text-zinc-600">No upcoming AR found.</td></tr>}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
 
