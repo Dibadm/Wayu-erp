@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { FileSpreadsheet, Download, Loader2, Package, Receipt, TrendingUp, ShoppingBag } from 'lucide-react'
+import { FileSpreadsheet, Download, Loader2, Package, Receipt, TrendingUp, ShoppingBag, Eye } from 'lucide-react'
+import Link from 'next/link'
 import Breadcrumb from '@/components/Breadcrumb'
 
 const REPORTS = [
@@ -13,6 +14,7 @@ const REPORTS = [
     accent: 'emerald',
     format: 'excel',
     type: 'inventory-reports',
+    href: '/reports/inventory',
     tabs: ['Current Stock', 'Stock Valuation', 'Expiry Tracker', 'Dead Stock', 'Movements', 'Batches', 'Monthly Received', 'Monthly Sold', 'Gross Profit', 'Product Performance', 'Fast/Slow Moving', 'Adjustment History'],
   },
   {
@@ -23,6 +25,7 @@ const REPORTS = [
     accent: 'amber',
     format: 'excel',
     type: 'credit-reports',
+    href: '/reports/credit',
     tabs: ['Outstanding Receivables', 'Aging Analysis', 'Customer Credit Summary', 'Overdue Customers', 'Collection Performance', 'Payment History'],
   },
   {
@@ -33,6 +36,7 @@ const REPORTS = [
     accent: 'blue',
     format: 'excel',
     type: 'cashflow-reports',
+    href: '/reports/cashflow',
     tabs: ['Daily Cash Flow', 'Weekly Cash Flow', 'Monthly Cash Flow', 'Bank Balance', 'Expense Analysis', 'Budget vs Actual', 'Expense Category', 'Cash Position', 'Loan Repayment', 'Investment'],
     dateRange: true,
   },
@@ -44,6 +48,7 @@ const REPORTS = [
     accent: 'purple',
     format: 'excel',
     type: 'sales-reports',
+    href: '/reports/sales',
     tabs: ['Daily Sales', 'Weekly Sales', 'Monthly Sales', 'Product Sales Analysis', 'Customer Sales Analysis', 'Sales Trend', 'Top Selling Products', 'Salesperson Performance'],
     dateRange: true,
   },
@@ -146,17 +151,25 @@ export default function ReportsPage() {
                 </div>
               )}
 
-              <button
-                onClick={() => download(report)}
-                disabled={!!loading}
-                className="btn-primary flex items-center gap-2 w-fit mt-auto"
-              >
-                {isLoading ? (
-                  <><Loader2 className="w-4 h-4 animate-spin" />Generating…</>
-                ) : (
-                  <><Download className="w-4 h-4" />Download Excel</>
-                )}
-              </button>
+              <div className="flex items-center gap-2">
+                <Link
+                  href={report.href}
+                  className="flex items-center gap-2 px-4 py-2 text-xs font-mono bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-400 hover:text-zinc-200 hover:border-zinc-700 transition-colors"
+                >
+                  <Eye className="w-4 h-4" /> View Reports
+                </Link>
+                <button
+                  onClick={() => download(report)}
+                  disabled={!!loading}
+                  className="btn-primary flex items-center gap-2"
+                >
+                  {isLoading ? (
+                    <><Loader2 className="w-4 h-4 animate-spin" />Generating…</>
+                  ) : (
+                    <><Download className="w-4 h-4" />Download Excel</>
+                  )}
+                </button>
+              </div>
             </div>
           )
         })}
