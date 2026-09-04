@@ -51,7 +51,7 @@ export default function CashFlowReportsPage() {
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Cash Flow Reports</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Cash Flow Reports</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">
             Daily, weekly, and monthly cash flow statements; bank balances; expense analysis; budget vs actual; expense category summary; cash position; loan repayment; and investment reports.
           </p>
@@ -90,7 +90,7 @@ export default function CashFlowReportsPage() {
       </div>
 
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-zinc-100">{TABS.find(t => t.key === activeTab)?.label}</h2>
+        <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{TABS.find(t => t.key === activeTab)?.label}</h2>
         <button onClick={downloadExcel} className="btn-primary flex items-center gap-2">
           <Download className="w-4 h-4" /> Download Excel
         </button>
@@ -123,10 +123,10 @@ function CashFlowTable({ tab, data }: { tab: Tab; data: any }) {
       const keyMap = tab === 'daily-cashflow' ? { date: 'date', in: 'inflows', out: 'outflows', net: 'net' } : tab === 'weekly-cashflow' ? { date: 'start', in: 'inflows', out: 'outflows', net: 'net' } : { date: 'label', in: 'inflows', out: 'outflows', net: 'net' }
       return (
         <table className="w-full text-sm">
-          <thead><tr className="border-b border-zinc-800">
+          <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
             {columns.map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
           </tr></thead>
-          <tbody className="divide-y divide-zinc-800/50">
+          <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
             {rows.map((r: any) => (
               <tr key={keyMap.date in r ? r[keyMap.date] : r.label} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                 <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r[keyMap.date]}</td>
@@ -163,12 +163,12 @@ function BankBalanceTable({ data }: { data: any }) {
   const accounts = data.accounts ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Account Name', 'Account Number', 'Bank Name', 'Type', 'Opening Balance', 'Current Balance'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {accounts.map((a: any) => (
           <tr key={a.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{a.accountName}</td>
@@ -188,12 +188,12 @@ function ExpenseTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Category', 'Total', 'Percentage'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any) => (
           <tr key={r.category} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.category}</td>
@@ -210,12 +210,12 @@ function BudgetTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Period', 'Category', 'Planned', 'Actual In', 'Actual Out', 'Variance'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any) => (
           <tr key={`${r.period}-${r.category}`} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.period}</td>
@@ -235,12 +235,12 @@ function CashPositionTable({ data }: { data: any }) {
   const accounts = data.accounts ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Account', 'Bank', 'Opening', 'Current'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {accounts.map((a: any) => (
           <tr key={a.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{a.accountName} ({a.accountNumber})</td>
@@ -258,12 +258,12 @@ function LoanTable({ data }: { data: any }) {
   const loans = data.loans ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Lender', 'Principal', 'Interest Rate', 'Start Date', 'End Date', 'Status'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {loans.map((l: any) => (
           <tr key={l.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{l.lender}</td>
@@ -287,12 +287,12 @@ function InvestmentTable({ data }: { data: any }) {
   const investments = data.investments ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Name', 'Type', 'Amount', 'Expected Return', 'Start Date', 'Maturity', 'Status'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {investments.map((inv: any) => (
           <tr key={inv.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{inv.name}</td>

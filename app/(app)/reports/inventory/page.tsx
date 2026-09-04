@@ -54,7 +54,7 @@ export default function InventoryReportsPage() {
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Inventory Reports</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Inventory Reports</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">
             Current stock, valuation, expiry, dead stock, movements, batches, monthly received/sold, gross profit, product performance, fast/slow moving, and adjustment history.
           </p>
@@ -98,7 +98,7 @@ export default function InventoryReportsPage() {
 
       {/* Action bar */}
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-zinc-100">{TABS.find(t => t.key === activeTab)?.label}</h2>
+        <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{TABS.find(t => t.key === activeTab)?.label}</h2>
         <button onClick={downloadExcel} className="btn-primary flex items-center gap-2">
           <Download className="w-4 h-4" /> Download Excel
         </button>
@@ -157,12 +157,12 @@ function CurrentStockTable({ data }: { data: any }) {
   const products = data.products ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['SKU', 'Product Name', 'Category', 'Qty', 'Min', 'Unit', 'Status', 'Nearest Expiry'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {products.map((p: any) => (
           <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{p.sku}</td>
@@ -190,12 +190,12 @@ function ValuationTable({ data }: { data: any }) {
   const products = data.products ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['SKU', 'Product', 'Qty', 'Cost', 'Sell', 'Profit/Unit', 'Margin', 'Inv Cost', 'Inv Value', 'Est Profit'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {products.map((p: any) => {
           const cost = Number(p.costPrice ?? 0); const sell = Number(p.sellingPrice ?? 0)
           const profit = sell - cost; const margin = cost > 0 ? ((profit / cost) * 100) : 0
@@ -227,12 +227,12 @@ function ExpiryTable({ data }: { data: any }) {
   const now = new Date()
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['SKU', 'Product', 'Batch', 'Qty', 'Location', 'Received', 'Expiry', 'Days Left', 'Alert'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {batches.map((b: any) => {
           const daysLeft = Math.floor((new Date(b.expiryDate).getTime() - now.getTime()) / 86400000)
           const alert = daysLeft < 0 ? 'EXPIRED' : daysLeft <= 30 ? 'CRITICAL' : daysLeft <= 90 ? 'WARNING' : 'OK'
@@ -263,12 +263,12 @@ function DeadStockTable({ data }: { data: any }) {
   const items = data.deadStock ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['SKU', 'Product', 'Category', 'Qty', 'Unit', 'Last Movement', 'Days Stagnant', 'Est. Value'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {items.map((p: any) => (
           <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{p.sku}</td>
@@ -290,12 +290,12 @@ function MovementsTable({ data }: { data: any }) {
   const movements = data.movements ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Date/Time', 'Type', 'SKU', 'Product', 'Qty', 'Location', 'Batch', 'Performed By', 'Notes'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {movements.map((m: any) => (
           <tr key={m.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(m.timestamp)}</td>
@@ -321,12 +321,12 @@ function BatchesTable({ data }: { data: any }) {
   const now = new Date()
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['SKU', 'Product', 'Batch', 'Qty', 'Location', 'Received', 'Expiry', 'Days Left', 'Alert'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {batches.map((b: any) => {
           const daysLeft = Math.floor((new Date(b.expiryDate).getTime() - now.getTime()) / 86400000)
           const alert = daysLeft < 0 ? 'EXPIRED' : daysLeft <= 30 ? 'CRITICAL' : daysLeft <= 90 ? 'WARNING' : 'OK'
@@ -357,12 +357,12 @@ function MonthlyReceivedTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Month', 'SKU', 'Product', 'Category', 'Total Qty', 'Locations'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any, i: number) => (
           <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.month}</td>
@@ -382,12 +382,12 @@ function MonthlySoldTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Month', 'SKU', 'Product', 'Category', 'Total Qty', 'Revenue'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any, i: number) => (
           <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.month}</td>
@@ -412,12 +412,12 @@ function ProductPerformanceTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['SKU', 'Product', 'Category', 'Qty Sold', 'Txns', 'Revenue', 'Cost', 'Profit', 'Margin'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any, i: number) => (
           <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
@@ -443,12 +443,12 @@ function FastSlowMovingTable({ data }: { data: any }) {
         <h3 className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-3">Fast Moving (≤30 days)</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead><tr className="border-b border-zinc-800">
+            <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
               {['SKU', 'Product', 'Stock', 'Sold', 'Days', 'Velocity'].map(h => (
                 <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
               ))}
             </tr></thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
               {(data.fastMoving ?? []).map((r: any) => (
                 <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                   <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
@@ -467,12 +467,12 @@ function FastSlowMovingTable({ data }: { data: any }) {
         <h3 className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-3">Slow Moving (&gt;60 days)</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead><tr className="border-b border-zinc-800">
+            <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
               {['SKU', 'Product', 'Stock', 'Sold', 'Days', 'Velocity'].map(h => (
                 <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
               ))}
             </tr></thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
               {(data.slowMoving ?? []).map((r: any) => (
                 <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                   <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
@@ -495,12 +495,12 @@ function AdjustmentHistoryTable({ data }: { data: any }) {
   const movements = data.movements ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Date/Time', 'SKU', 'Product', 'Qty', 'Location', 'Performed By', 'Notes'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {movements.map((m: any) => (
           <tr key={m.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(m.timestamp)}</td>

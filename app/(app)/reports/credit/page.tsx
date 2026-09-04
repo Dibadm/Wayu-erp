@@ -50,7 +50,7 @@ export default function CreditReportsPage() {
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Credit Reports</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Credit Reports</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">
             Outstanding receivables, aging analysis, customer credit summary, overdue customers, collection performance, credit exposure, payment history, and daily collection.
           </p>
@@ -91,7 +91,7 @@ export default function CreditReportsPage() {
       </div>
 
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-zinc-100">{TABS.find(t => t.key === activeTab)?.label}</h2>
+        <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{TABS.find(t => t.key === activeTab)?.label}</h2>
         <button onClick={downloadExcel} className="btn-primary flex items-center gap-2">
           <Download className="w-4 h-4" /> Download Excel
         </button>
@@ -141,12 +141,12 @@ function OutstandingTable({ data }: { data: any }) {
   const statements = data.statements ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Customer', 'Invoice', 'Receipt', 'Issued', 'Due Date', 'Amount', 'Paid', 'Balance', 'Status'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {statements.map((s: any) => {
           const balance = Number(s.amount) - Number(s.paid)
           return (
@@ -177,12 +177,12 @@ function AgingTable({ data }: { data: any }) {
   const totals = data.totals ?? {}
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Customer', 'Current', '31-60', '61-90', '90+', 'Total', 'Terms', 'Risk'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {report.map((r: any) => (
           <tr key={r.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
@@ -199,16 +199,16 @@ function AgingTable({ data }: { data: any }) {
             </td>
           </tr>
         ))}
-        <tr className="border-t border-zinc-700 bg-zinc-900/50">
-          <td className="px-4 py-2.5 text-sm font-semibold text-zinc-200">TOTALS</td>
-          <td className="px-4 py-2.5 stat-num text-sm font-semibold text-emerald-400">{Number(totals.current ?? 0).toLocaleString()}</td>
-          <td className="px-4 py-2.5 stat-num text-sm font-semibold text-amber-400">{Number(totals.bucket31to60 ?? 0).toLocaleString()}</td>
-          <td className="px-4 py-2.5 stat-num text-sm font-semibold text-orange-400">{Number(totals.bucket61to90 ?? 0).toLocaleString()}</td>
-          <td className="px-4 py-2.5 stat-num text-sm font-semibold text-red-400">{Number(totals.bucket90plus ?? 0).toLocaleString()}</td>
-          <td className="px-4 py-2.5 stat-num text-sm font-semibold">{Number(totals.total ?? 0).toLocaleString()}</td>
-          <td className="px-4 py-2.5 text-xs text-zinc-500">—</td>
-          <td className="px-4 py-2.5">—</td>
-        </tr>
+          <tr className="border-t border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900/50">
+            <td className="px-4 py-2.5 text-sm font-semibold text-zinc-900 dark:text-zinc-200">TOTALS</td>
+            <td className="px-4 py-2.5 stat-num text-sm font-semibold text-emerald-400">{Number(totals.current ?? 0).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm font-semibold text-amber-400">{Number(totals.bucket31to60 ?? 0).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm font-semibold text-orange-400">{Number(totals.bucket61to90 ?? 0).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm font-semibold text-red-400">{Number(totals.bucket90plus ?? 0).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm font-semibold">{Number(totals.total ?? 0).toLocaleString()}</td>
+            <td className="px-4 py-2.5 text-xs text-zinc-500 dark:text-zinc-500">—</td>
+            <td className="px-4 py-2.5">—</td>
+          </tr>
       </tbody>
     </table>
   )
@@ -218,12 +218,12 @@ function CreditSummaryTable({ data }: { data: any }) {
   const profiles = data.profiles ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Customer', 'Email', 'Phone', 'Limit', 'Utilized', 'Available', 'Util%', 'Risk', 'Terms', 'Status'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {profiles.map((p: any) => {
           const utilPct = Number(p.creditLimit) > 0 ? Math.round((Number(p.utilizedCredit) / Number(p.creditLimit)) * 100) : 0
           return (
@@ -254,12 +254,12 @@ function OverdueTable({ data }: { data: any }) {
   const overdue = data.overdue ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Customer', '31-60 Days', '61-90 Days', '90+ Days', 'Total Overdue', 'Risk'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {overdue.map((r: any) => {
           const totalOverdue = Number(r.bucket31to60) + Number(r.bucket61to90) + Number(r.bucket90plus)
           return (
@@ -286,12 +286,12 @@ function CollectionTable({ data }: { data: any }) {
   const cases = data.cases ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Case No', 'Customer', 'Amount', 'Paid', 'Outstanding', 'Priority', 'Status', 'Assigned To', 'Opened', 'Resolved'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {cases.map((c: any) => {
           const outstanding = Number(c.arStatement?.amount ?? 0) - Number(c.arStatement?.paid ?? 0)
           return (
@@ -322,12 +322,12 @@ function ExposureTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Customer', 'Email', 'Phone', 'Exposure', 'Invoices', 'Limit', 'Utilized', 'Available', 'Risk'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any) => (
           <tr key={r.customer?.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.customer?.name ?? '—'}</td>
@@ -354,12 +354,12 @@ function PaymentTable({ data }: { data: any }) {
   const payments = data.payments ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Date', 'Receipt', 'Customer', 'Method', 'Amount', 'Reference', 'Sale Total'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {payments.map((p: any) => (
           <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(p.sale.createdAt)}</td>
@@ -384,12 +384,12 @@ function DailyCollectionTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Date', 'Transactions', 'Cash', 'Bank Transfer', 'Total Sales', 'Other', 'Grand Total'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any) => (
           <tr key={r.date} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.date}</td>

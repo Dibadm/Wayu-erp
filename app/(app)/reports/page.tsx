@@ -97,7 +97,7 @@ export default function ReportsPage() {
     <div className="space-y-6 animate-fade-in">
       <Breadcrumb />
       <div>
-        <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Reports & Export</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Reports & Export</h1>
         <p className="text-sm text-zinc-500 font-mono mt-0.5">
           Generate Excel and PDF reports for management, regulatory submission, and accounting
         </p>
@@ -135,7 +135,7 @@ export default function ReportsPage() {
                   <Icon className="w-5 h-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-semibold text-zinc-100">{report.title}</h3>
+                  <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{report.title}</h3>
                   <p className="text-xs text-zinc-500 mt-0.5 leading-relaxed">{report.desc}</p>
                 </div>
               </div>

@@ -50,7 +50,7 @@ export default function SalesReportsPage() {
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Sales Reports</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Sales Reports</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">
             Daily, weekly, and monthly sales; product and customer sales analysis; sales trend; top selling products; and salesperson performance.
           </p>
@@ -91,7 +91,7 @@ export default function SalesReportsPage() {
       </div>
 
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-zinc-100">{TABS.find(t => t.key === activeTab)?.label}</h2>
+        <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{TABS.find(t => t.key === activeTab)?.label}</h2>
         <button onClick={downloadExcel} className="btn-primary flex items-center gap-2">
           <Download className="w-4 h-4" /> Download Excel
         </button>
@@ -123,10 +123,10 @@ function SalesTable({ tab, data }: { tab: Tab; data: any }) {
       const columns = tab === 'daily-sales' ? ['Period', 'Transactions', 'Items Sold', 'Revenue', 'Gross Profit'] : tab === 'weekly-sales' ? ['Period', 'Transactions', 'Items Sold', 'Revenue', 'Gross Profit'] : ['Period', 'Transactions', 'Items Sold', 'Revenue', 'Gross Profit']
       return (
         <table className="w-full text-sm">
-          <thead><tr className="border-b border-zinc-800">
+          <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
             {columns.map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
           </tr></thead>
-          <tbody className="divide-y divide-zinc-800/50">
+          <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
             {rows.map((r: any) => (
               <tr key={r.period} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                 <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.period}</td>
@@ -161,12 +161,12 @@ function ProductSalesTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['SKU', 'Product', 'Category', 'Qty Sold', 'Txns', 'Revenue', 'Cost', 'Profit', 'Margin'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any) => (
           <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
@@ -189,12 +189,12 @@ function CustomerSalesTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Customer', 'Email', 'Phone', 'Txns', 'Total Sales', 'Total Paid', 'Avg Order', 'Gross Profit'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any) => (
           <tr key={r.customerName} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.customerName}</td>
@@ -220,12 +220,12 @@ function SalesTrendTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Date', 'Transactions', 'Revenue', 'Gross Profit'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any) => (
           <tr key={r.date} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.date}</td>
@@ -243,12 +243,12 @@ function TopProductsTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['SKU', 'Product', 'Category', 'Qty Sold', 'Revenue'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any) => (
           <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
@@ -267,12 +267,12 @@ function SalespersonTable({ data }: { data: any }) {
   const rows = data.data ?? []
   return (
     <table className="w-full text-sm">
-      <thead><tr className="border-b border-zinc-800">
+      <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
         {['Salesperson', 'Email', 'Transactions', 'Total Sales', 'Avg Sale', 'Gross Profit', 'Commission'].map(h => (
           <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
         ))}
       </tr></thead>
-      <tbody className="divide-y divide-zinc-800/50">
+      <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any) => (
           <tr key={r.name} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
