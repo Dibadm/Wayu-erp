@@ -38,7 +38,7 @@ export default function SalesReportsPage() {
   }, [activeTab, dateFrom, dateTo])
 
   const downloadExcel = () => {
-    const params = new URLSearchParams({ type: activeTab, format: 'excel', from: dateFrom, to: dateTo })
+    const params = new URLSearchParams({ type: 'sales-reports', format: 'excel', from: dateFrom, to: dateTo })
     window.open(`/api/reports?${params}`, '_blank')
   }
 
