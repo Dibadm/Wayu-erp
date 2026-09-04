@@ -39,7 +39,7 @@ export default function CashFlowReportsPage() {
   }, [activeTab, dateFrom, dateTo])
 
   const downloadExcel = () => {
-    const params = new URLSearchParams({ type: 'cashflow-reports', format: 'excel' })
+    const params = new URLSearchParams({ type: 'cashflow-reports', format: 'excel', from: dateFrom, to: dateTo })
     window.open(`/api/reports?${params}`, '_blank')
   }
 

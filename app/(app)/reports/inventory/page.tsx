@@ -42,7 +42,7 @@ export default function InventoryReportsPage() {
   }, [activeTab, dateFrom, dateTo])
 
   const downloadExcel = () => {
-    const params = new URLSearchParams({ type: 'inventory-reports', format: 'excel' })
+    const params = new URLSearchParams({ type: 'inventory-reports', format: 'excel', from: dateFrom, to: dateTo })
     window.open(`/api/reports?${params}`, '_blank')
   }
 

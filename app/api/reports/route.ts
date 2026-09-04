@@ -56,20 +56,20 @@ export async function GET(req: NextRequest) {
         filename = `wayu-valuation-${new Date().toISOString().split('T')[0]}.xlsx`
         break
       case 'inventory-reports':
-        buffer   = await generateInventoryReportsExcel()
-        filename = `wayu-inventory-reports-${new Date().toISOString().split('T')[0]}.xlsx`
-        break
-      case 'credit-reports':
-        buffer   = await generateCreditReportsExcel()
-        filename = `wayu-credit-reports-${new Date().toISOString().split('T')[0]}.xlsx`
-        break
-      case 'cashflow-reports':
-        buffer   = await generateCashFlowReportsExcel()
-        filename = `wayu-cashflow-reports-${new Date().toISOString().split('T')[0]}.xlsx`
-        break
-      case 'sales-reports':
-        buffer   = await generateSalesReportsExcel(dateFrom, dateTo)
-        filename = `wayu-sales-reports-${dateFrom.toISOString().split('T')[0]}.xlsx`
+         buffer   = await generateInventoryReportsExcel(dateFrom, dateTo)
+         filename = `wayu-inventory-reports-${new Date().toISOString().split('T')[0]}.xlsx`
+         break
+       case 'credit-reports':
+         buffer   = await generateCreditReportsExcel(dateFrom, dateTo)
+         filename = `wayu-credit-reports-${new Date().toISOString().split('T')[0]}.xlsx`
+         break
+       case 'cashflow-reports':
+         buffer   = await generateCashFlowReportsExcel(dateFrom, dateTo)
+         filename = `wayu-cashflow-reports-${new Date().toISOString().split('T')[0]}.xlsx`
+         break
+       case 'sales-reports':
+         buffer   = await generateSalesReportsExcel(dateFrom, dateTo)
+         filename = `wayu-sales-reports-${dateFrom.toISOString().split('T')[0]}.xlsx`
         break
       case 'inventory':
       default:

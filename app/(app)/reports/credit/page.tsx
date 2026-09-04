@@ -38,7 +38,7 @@ export default function CreditReportsPage() {
   }, [activeTab, dateFrom, dateTo])
 
   const downloadExcel = () => {
-    const params = new URLSearchParams({ type: 'credit-reports', format: 'excel' })
+    const params = new URLSearchParams({ type: 'credit-reports', format: 'excel', from: dateFrom, to: dateTo })
     window.open(`/api/reports?${params}`, '_blank')
   }
 

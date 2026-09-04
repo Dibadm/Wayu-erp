@@ -1013,7 +1013,7 @@ export async function generateSalespersonPerformanceExcel(dateFrom: Date, dateTo
 
 // ─── Bundled Report Generators ────────────────────────────────────────────
 
-export async function generateInventoryReportsExcel(): Promise<Buffer> {
+export async function generateInventoryReportsExcel(dateFrom: Date, dateTo: Date): Promise<Buffer> {
   const [products, movements, batches, valuations] = await Promise.all([
     prisma.product.findMany({
       orderBy: { name: 'asc' },
@@ -1164,7 +1164,7 @@ export async function generateInventoryReportsExcel(): Promise<Buffer> {
   return Buffer.from(buffer)
 }
 
-export async function generateCreditReportsExcel(): Promise<Buffer> {
+export async function generateCreditReportsExcel(dateFrom: Date, dateTo: Date): Promise<Buffer> {
   const [statements, profiles, cases] = await Promise.all([
     prisma.aRStatement.findMany({
       where: { status: { not: 'PAID' } },
@@ -1188,6 +1188,7 @@ export async function generateCreditReportsExcel(): Promise<Buffer> {
   const overdueCustomers = agingReport.filter(r => (Number(r.bucket31to60) + Number(r.bucket61to90) + Number(r.bucket90plus)) > 0)
 
   const payments = await prisma.salePayment.findMany({
+    where: { sale: { status: { in: ['COMPLETED', 'PARTIAL_REFUND'] }, createdAt: { gte: dateFrom, lte: dateTo } } },
     orderBy: { id: 'desc' },
     include: { sale: { select: { createdAt: true, total: true, receiptNumber: true, customer: { select: { name: true } } } } },
   })
@@ -1342,12 +1343,12 @@ export async function generateCreditReportsExcel(): Promise<Buffer> {
   return Buffer.from(buffer)
 }
 
-export async function generateCashFlowReportsExcel(): Promise<Buffer> {
+export async function generateCashFlowReportsExcel(dateFrom: Date, dateTo: Date): Promise<Buffer> {
   const [inflows, outflows, bankAccounts, expenses, budgets, loans, investments] = await Promise.all([
-    prisma.cashInflow.findMany({ include: { bankAccount: { select: { bankName: true, accountNumber: true } }, createdBy: { select: { name: true } } } }),
-    prisma.cashOutflow.findMany({ include: { bankAccount: { select: { bankName: true, accountNumber: true } }, createdBy: { select: { name: true } } } }),
+    prisma.cashInflow.findMany({ where: { receivedAt: { gte: dateFrom, lte: dateTo } }, include: { bankAccount: { select: { bankName: true, accountNumber: true } }, createdBy: { select: { name: true } } } }),
+    prisma.cashOutflow.findMany({ where: { paidAt: { gte: dateFrom, lte: dateTo } }, include: { bankAccount: { select: { bankName: true, accountNumber: true } }, createdBy: { select: { name: true } } } }),
     prisma.bankAccount.findMany({ where: { isActive: true }, orderBy: { bankName: 'asc' } }),
-    prisma.expense.findMany({ orderBy: { incurredAt: 'desc' }, include: { createdBy: { select: { name: true } } } }),
+    prisma.expense.findMany({ where: { incurredAt: { gte: dateFrom, lte: dateTo } }, orderBy: { incurredAt: 'desc' }, include: { createdBy: { select: { name: true } } } }),
     prisma.budget.findMany({ orderBy: { periodStart: 'asc' } }),
     prisma.loan.findMany({ orderBy: { startDate: 'desc' }, include: { repayments: { orderBy: { paidAt: 'desc' } }, createdBy: { select: { name: true } } } }),
     prisma.investment.findMany({ orderBy: { startDate: 'desc' }, include: { createdBy: { select: { name: true } } } }),
