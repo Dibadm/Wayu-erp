@@ -50,7 +50,7 @@ export default function InventoryReportsPage() {
     <div className="space-y-6 animate-fade-in">
       <Breadcrumb />
       <div className="flex items-center gap-4">
-        <Link href="/reports" className="text-zinc-500 hover:text-zinc-300 transition-colors">
+        <Link href="/reports" className="text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors">
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div>
@@ -88,7 +88,7 @@ export default function InventoryReportsPage() {
             className={`px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
               activeTab === tab.key
                 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-                : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:text-zinc-300'
+                : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300'
             }`}
           >
             {tab.label}
@@ -164,9 +164,9 @@ function CurrentStockTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {products.map((p: any) => (
-          <tr key={p.id} className="hover:bg-white/[0.02]">
+          <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{p.sku}</td>
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{p.name}</td>
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{p.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{p.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{p.quantity}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{p.minStockLevel}</td>
@@ -201,9 +201,9 @@ function ValuationTable({ data }: { data: any }) {
           const profit = sell - cost; const margin = cost > 0 ? ((profit / cost) * 100) : 0
           const invCost = p.quantity * cost; const invVal = p.quantity * sell; const estProfit = invVal - invCost
           return (
-            <tr key={p.id} className="hover:bg-white/[0.02]">
+            <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
               <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{p.sku}</td>
-              <td className="px-4 py-2.5 text-sm text-zinc-300">{p.name}</td>
+              <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{p.name}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{p.quantity}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{cost > 0 ? cost.toFixed(2) : '—'}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{sell > 0 ? sell.toFixed(2) : '—'}</td>
@@ -237,9 +237,9 @@ function ExpiryTable({ data }: { data: any }) {
           const daysLeft = Math.floor((new Date(b.expiryDate).getTime() - now.getTime()) / 86400000)
           const alert = daysLeft < 0 ? 'EXPIRED' : daysLeft <= 30 ? 'CRITICAL' : daysLeft <= 90 ? 'WARNING' : 'OK'
           return (
-            <tr key={b.id} className="hover:bg-white/[0.02]">
+            <tr key={b.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
               <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{b.product.sku}</td>
-              <td className="px-4 py-2.5 text-sm text-zinc-300">{b.product.name}</td>
+              <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{b.product.name}</td>
               <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{b.batchNumber}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{b.quantity}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{b.location.name}</td>
@@ -270,9 +270,9 @@ function DeadStockTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {items.map((p: any) => (
-          <tr key={p.id} className="hover:bg-white/[0.02]">
+          <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{p.sku}</td>
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{p.name}</td>
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{p.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{p.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{p.totalQty}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{p.unit}</td>
@@ -297,13 +297,13 @@ function MovementsTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {movements.map((m: any) => (
-          <tr key={m.id} className="hover:bg-white/[0.02]">
+          <tr key={m.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(m.timestamp)}</td>
             <td className="px-4 py-2.5"><span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
               m.type === 'IN' ? 'badge-in' : m.type === 'OUT' ? 'badge-outline border-red-500/30 text-red-400' : 'badge-warning'
             }`}>{m.type}</span></td>
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{m.product.sku}</td>
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{m.product.name}</td>
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{m.product.name}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{m.quantity}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{m.location ? `${m.location.code} – ${m.location.name}` : '—'}</td>
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-500">{m.batch?.batchNumber ?? '—'}</td>
@@ -331,9 +331,9 @@ function BatchesTable({ data }: { data: any }) {
           const daysLeft = Math.floor((new Date(b.expiryDate).getTime() - now.getTime()) / 86400000)
           const alert = daysLeft < 0 ? 'EXPIRED' : daysLeft <= 30 ? 'CRITICAL' : daysLeft <= 90 ? 'WARNING' : 'OK'
           return (
-            <tr key={b.id} className="hover:bg-white/[0.02]">
+            <tr key={b.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
               <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{b.product.sku}</td>
-              <td className="px-4 py-2.5 text-sm text-zinc-300">{b.product.name}</td>
+              <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{b.product.name}</td>
               <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{b.batchNumber}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{b.quantity}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{b.location.name}</td>
@@ -364,10 +364,10 @@ function MonthlyReceivedTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any, i: number) => (
-          <tr key={i} className="hover:bg-white/[0.02]">
+          <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.month}</td>
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.name}</td>
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.totalQty}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.locations?.join(', ')}</td>
@@ -389,10 +389,10 @@ function MonthlySoldTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any, i: number) => (
-          <tr key={i} className="hover:bg-white/[0.02]">
+          <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.month}</td>
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.name}</td>
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.totalQty}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.totalRevenue).toLocaleString()}</td>
@@ -419,9 +419,9 @@ function ProductPerformanceTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any, i: number) => (
-          <tr key={i} className="hover:bg-white/[0.02]">
+          <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.name}</td>
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.totalQty}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
@@ -450,9 +450,9 @@ function FastSlowMovingTable({ data }: { data: any }) {
             </tr></thead>
             <tbody className="divide-y divide-zinc-800/50">
               {(data.fastMoving ?? []).map((r: any) => (
-                <tr key={r.sku} className="hover:bg-white/[0.02]">
+                <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                   <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
-                  <td className="px-4 py-2.5 text-sm text-zinc-300">{r.name}</td>
+                  <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.currentStock}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.totalSold}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.daysSinceLastSale}</td>
@@ -474,9 +474,9 @@ function FastSlowMovingTable({ data }: { data: any }) {
             </tr></thead>
             <tbody className="divide-y divide-zinc-800/50">
               {(data.slowMoving ?? []).map((r: any) => (
-                <tr key={r.sku} className="hover:bg-white/[0.02]">
+                <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                   <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
-                  <td className="px-4 py-2.5 text-sm text-zinc-300">{r.name}</td>
+                  <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.currentStock}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.totalSold}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.daysSinceLastSale}</td>
@@ -502,10 +502,10 @@ function AdjustmentHistoryTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {movements.map((m: any) => (
-          <tr key={m.id} className="hover:bg-white/[0.02]">
+          <tr key={m.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(m.timestamp)}</td>
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{m.product.sku}</td>
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{m.product.name}</td>
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{m.product.name}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{m.quantity}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{m.location ? `${m.location.code} – ${m.location.name}` : '—'}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{m.user?.name ?? m.user?.email}</td>

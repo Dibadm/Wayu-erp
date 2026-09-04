@@ -46,7 +46,7 @@ export default function SalesReportsPage() {
     <div className="space-y-6 animate-fade-in">
       <Breadcrumb />
       <div className="flex items-center gap-4">
-        <Link href="/reports" className="text-zinc-500 hover:text-zinc-300 transition-colors">
+        <Link href="/reports" className="text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors">
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div>
@@ -82,7 +82,7 @@ export default function SalesReportsPage() {
             className={`px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
               activeTab === tab.key
                 ? 'bg-purple-500/10 border-purple-500/30 text-purple-400'
-                : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:text-zinc-300'
+                : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300'
             }`}
           >
             {tab.label}
@@ -128,8 +128,8 @@ function SalesTable({ tab, data }: { tab: Tab; data: any }) {
           </tr></thead>
           <tbody className="divide-y divide-zinc-800/50">
             {rows.map((r: any) => (
-              <tr key={r.period} className="hover:bg-white/[0.02]">
-                <td className="px-4 py-2.5 text-sm text-zinc-300">{r.period}</td>
+              <tr key={r.period} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+                <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.period}</td>
                 <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
                 <td className="px-4 py-2.5 stat-num text-sm">{r.items}</td>
                 <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.revenue).toLocaleString()}</td>
@@ -168,9 +168,9 @@ function ProductSalesTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any) => (
-          <tr key={r.sku} className="hover:bg-white/[0.02]">
+          <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.name}</td>
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.totalQty}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
@@ -196,8 +196,8 @@ function CustomerSalesTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any) => (
-          <tr key={r.customerName} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.customerName}</td>
+          <tr key={r.customerName} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.customerName}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.email}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.phone}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
@@ -227,8 +227,8 @@ function SalesTrendTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any) => (
-          <tr key={r.date} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.date}</td>
+          <tr key={r.date} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.date}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.revenue).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-blue-400">ETB {Number(r.profit).toLocaleString()}</td>
@@ -250,9 +250,9 @@ function TopProductsTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any) => (
-          <tr key={r.sku} className="hover:bg-white/[0.02]">
+          <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.name}</td>
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.totalQty}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.totalRevenue).toLocaleString()}</td>
@@ -274,8 +274,8 @@ function SalespersonTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any) => (
-          <tr key={r.name} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.name}</td>
+          <tr key={r.name} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.email}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.totalSales).toLocaleString()}</td>

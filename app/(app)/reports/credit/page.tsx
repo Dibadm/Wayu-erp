@@ -46,7 +46,7 @@ export default function CreditReportsPage() {
     <div className="space-y-6 animate-fade-in">
       <Breadcrumb />
       <div className="flex items-center gap-4">
-        <Link href="/reports" className="text-zinc-500 hover:text-zinc-300 transition-colors">
+        <Link href="/reports" className="text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors">
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div>
@@ -82,7 +82,7 @@ export default function CreditReportsPage() {
             className={`px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
               activeTab === tab.key
                 ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-                : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:text-zinc-300'
+                : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300'
             }`}
           >
             {tab.label}
@@ -150,8 +150,8 @@ function OutstandingTable({ data }: { data: any }) {
         {statements.map((s: any) => {
           const balance = Number(s.amount) - Number(s.paid)
           return (
-            <tr key={s.id} className="hover:bg-white/[0.02]">
-              <td className="px-4 py-2.5 text-sm text-zinc-300">{s.customer?.name ?? '—'}</td>
+            <tr key={s.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+              <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{s.customer?.name ?? '—'}</td>
               <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{s.invoiceNo}</td>
               <td className="px-4 py-2.5 font-mono text-xs text-zinc-500">{s.sale?.receiptNumber ?? '—'}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(s.issuedAt)}</td>
@@ -184,8 +184,8 @@ function AgingTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {report.map((r: any) => (
-          <tr key={r.id} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.name}</td>
+          <tr key={r.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(r.current).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-amber-400">{Number(r.bucket31to60).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-orange-400">{Number(r.bucket61to90).toLocaleString()}</td>
@@ -227,8 +227,8 @@ function CreditSummaryTable({ data }: { data: any }) {
         {profiles.map((p: any) => {
           const utilPct = Number(p.creditLimit) > 0 ? Math.round((Number(p.utilizedCredit) / Number(p.creditLimit)) * 100) : 0
           return (
-            <tr key={p.id} className="hover:bg-white/[0.02]">
-              <td className="px-4 py-2.5 text-sm text-zinc-300">{p.customer.name}</td>
+            <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+              <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{p.customer.name}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{p.customer.email ?? '—'}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{p.customer.phone ?? '—'}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{Number(p.creditLimit).toLocaleString()}</td>
@@ -263,8 +263,8 @@ function OverdueTable({ data }: { data: any }) {
         {overdue.map((r: any) => {
           const totalOverdue = Number(r.bucket31to60) + Number(r.bucket61to90) + Number(r.bucket90plus)
           return (
-            <tr key={r.id} className="hover:bg-white/[0.02]">
-              <td className="px-4 py-2.5 text-sm text-zinc-300">{r.name}</td>
+            <tr key={r.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+              <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
               <td className="px-4 py-2.5 stat-num text-sm text-amber-400">{Number(r.bucket31to60).toLocaleString()}</td>
               <td className="px-4 py-2.5 stat-num text-sm text-orange-400">{Number(r.bucket61to90).toLocaleString()}</td>
               <td className="px-4 py-2.5 stat-num text-sm text-red-400">{Number(r.bucket90plus).toLocaleString()}</td>
@@ -295,9 +295,9 @@ function CollectionTable({ data }: { data: any }) {
         {cases.map((c: any) => {
           const outstanding = Number(c.arStatement?.amount ?? 0) - Number(c.arStatement?.paid ?? 0)
           return (
-            <tr key={c.id} className="hover:bg-white/[0.02]">
+            <tr key={c.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
               <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{c.caseNo}</td>
-              <td className="px-4 py-2.5 text-sm text-zinc-300">{c.customer?.name ?? '—'}</td>
+              <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{c.customer?.name ?? '—'}</td>
               <td className="px-4 py-2.5 stat-num text-sm text-amber-400">ETB {Number(c.amount).toLocaleString()}</td>
               <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(c.arStatement?.paid ?? 0).toLocaleString()}</td>
               <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {outstanding.toLocaleString()}</td>
@@ -329,8 +329,8 @@ function ExposureTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any) => (
-          <tr key={r.customer?.id} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.customer?.name ?? '—'}</td>
+          <tr key={r.customer?.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.customer?.name ?? '—'}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.customer?.email ?? '—'}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.customer?.phone ?? '—'}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {r.totalExposure.toLocaleString()}</td>
@@ -361,10 +361,10 @@ function PaymentTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {payments.map((p: any) => (
-          <tr key={p.id} className="hover:bg-white/[0.02]">
+          <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(p.sale.createdAt)}</td>
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{p.sale.receiptNumber}</td>
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{p.sale.customer?.name ?? '—'}</td>
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{p.sale.customer?.name ?? '—'}</td>
             <td className="px-4 py-2.5">
               <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
                 p.method === 'CREDIT' ? 'badge-outline border-blue-500/30 text-blue-400' : p.method === 'CASH' ? 'badge-in' : 'badge-outline border-amber-500/30 text-amber-400'
@@ -391,8 +391,8 @@ function DailyCollectionTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any) => (
-          <tr key={r.date} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.date}</td>
+          <tr key={r.date} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.date}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.cash).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-blue-400">ETB {Number(r.bank).toLocaleString()}</td>

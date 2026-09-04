@@ -144,7 +144,7 @@ export default function ReportsPage() {
               {report.tabs && (
                 <div className="flex flex-wrap gap-1.5">
                   {report.tabs.map(tab => (
-                    <span key={tab} className="px-2 py-0.5 text-[10px] font-mono bg-zinc-900 border border-zinc-800 rounded text-zinc-500">
+                    <span key={tab} className="px-2 py-0.5 text-[10px] font-mono bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 rounded text-zinc-500 dark:text-zinc-500">
                       {tab}
                     </span>
                   ))}
@@ -154,7 +154,7 @@ export default function ReportsPage() {
               <div className="flex items-center gap-2">
                 <Link
                   href={report.href}
-                  className="flex items-center gap-2 px-4 py-2 text-xs font-mono bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-400 hover:text-zinc-200 hover:border-zinc-700 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 text-xs font-mono bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:text-zinc-200 dark:hover:border-zinc-700 transition-colors"
                 >
                   <Eye className="w-4 h-4" /> View Reports
                 </Link>

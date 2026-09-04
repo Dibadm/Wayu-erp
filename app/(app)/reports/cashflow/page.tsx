@@ -47,7 +47,7 @@ export default function CashFlowReportsPage() {
     <div className="space-y-6 animate-fade-in">
       <Breadcrumb />
       <div className="flex items-center gap-4">
-        <Link href="/reports" className="text-zinc-500 hover:text-zinc-300 transition-colors">
+        <Link href="/reports" className="text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors">
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div>
@@ -81,7 +81,7 @@ export default function CashFlowReportsPage() {
             className={`px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
               activeTab === tab.key
                 ? 'bg-blue-500/10 border-blue-500/30 text-blue-400'
-                : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:text-zinc-300'
+                : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300'
             }`}
           >
             {tab.label}
@@ -128,8 +128,8 @@ function CashFlowTable({ tab, data }: { tab: Tab; data: any }) {
           </tr></thead>
           <tbody className="divide-y divide-zinc-800/50">
             {rows.map((r: any) => (
-              <tr key={keyMap.date in r ? r[keyMap.date] : r.label} className="hover:bg-white/[0.02]">
-                <td className="px-4 py-2.5 text-sm text-zinc-300">{r[keyMap.date]}</td>
+              <tr key={keyMap.date in r ? r[keyMap.date] : r.label} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+                <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r[keyMap.date]}</td>
                 <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r[keyMap.in]).toLocaleString()}</td>
                 <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {Number(r[keyMap.out]).toLocaleString()}</td>
                 <td className="px-4 py-2.5 stat-num text-sm font-semibold" style={{ color: (Number(r[keyMap.net]) >= 0 ? 'var(--accent-emerald)' : 'var(--accent-red)') }}>ETB {Number(r[keyMap.net]).toLocaleString()}</td>
@@ -170,10 +170,10 @@ function BankBalanceTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {accounts.map((a: any) => (
-          <tr key={a.id} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{a.accountName}</td>
+          <tr key={a.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{a.accountName}</td>
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{a.accountNumber}</td>
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{a.bankName}</td>
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{a.bankName}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{a.accountType}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(a.openingBalance).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(a.currentBalance).toLocaleString()}</td>
@@ -195,8 +195,8 @@ function ExpenseTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any) => (
-          <tr key={r.category} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.category}</td>
+          <tr key={r.category} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {Number(r.total).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.pct}</td>
           </tr>
@@ -217,8 +217,8 @@ function BudgetTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {rows.map((r: any) => (
-          <tr key={`${r.period}-${r.category}`} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{r.period}</td>
+          <tr key={`${r.period}-${r.category}`} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.period}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(r.planned).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(r.actualIn).toLocaleString()}</td>
@@ -242,8 +242,8 @@ function CashPositionTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {accounts.map((a: any) => (
-          <tr key={a.id} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{a.accountName} ({a.accountNumber})</td>
+          <tr key={a.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{a.accountName} ({a.accountNumber})</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{a.bankName}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(a.openingBalance).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(a.currentBalance).toLocaleString()}</td>
@@ -265,8 +265,8 @@ function LoanTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {loans.map((l: any) => (
-          <tr key={l.id} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{l.lender}</td>
+          <tr key={l.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{l.lender}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(l.principal).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{l.interestRate}%</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(l.startDate)}</td>
@@ -294,8 +294,8 @@ function InvestmentTable({ data }: { data: any }) {
       </tr></thead>
       <tbody className="divide-y divide-zinc-800/50">
         {investments.map((inv: any) => (
-          <tr key={inv.id} className="hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 text-sm text-zinc-300">{inv.name}</td>
+          <tr key={inv.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+            <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{inv.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{inv.type}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(inv.amount).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(inv.expectedReturn).toLocaleString()}</td>
