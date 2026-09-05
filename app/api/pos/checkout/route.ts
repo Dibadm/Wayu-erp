@@ -52,7 +52,7 @@ function planFEFO(
 }
 
 export async function POST(req: NextRequest) {
-  const rl = rateLimit(`${getClientKey(req)}:checkout`, CHECKOUT_RATE.max, CHECKOUT_RATE.window)
+  const rl = await rateLimit(`${getClientKey(req)}:checkout`, CHECKOUT_RATE.max, CHECKOUT_RATE.window)
   if (!rl.success) {
     return NextResponse.json({ error: 'Rate limit exceeded. Slow down.' }, { status: 429 })
   }

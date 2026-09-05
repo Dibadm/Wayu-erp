@@ -20,7 +20,7 @@ import { rateLimit, getClientKey } from '@/lib/rate-limit'
 const REPORT_RATE = { max: 20, window: 60_000 }
 
 export async function GET(req: NextRequest) {
-  const rl = rateLimit(`${getClientKey(req)}:reports`, REPORT_RATE.max, REPORT_RATE.window)
+  const rl = await rateLimit(`${getClientKey(req)}:reports`, REPORT_RATE.max, REPORT_RATE.window)
   if (!rl.success) {
     return NextResponse.json({ error: 'Rate limit exceeded. Slow down.' }, { status: 429 })
   }

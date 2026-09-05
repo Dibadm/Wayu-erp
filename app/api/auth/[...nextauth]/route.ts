@@ -13,7 +13,7 @@ export async function GET(req: NextRequest, context: { params: { nextauth: strin
 
 export async function POST(req: NextRequest, context: { params: { nextauth: string[] } }) {
   const key = `${getClientKey(req)}:login`
-  const rl = rateLimit(key, LOGIN_RATE.max, LOGIN_RATE.window)
+  const rl = await rateLimit(key, LOGIN_RATE.max, LOGIN_RATE.window)
   if (!rl.success) {
     return NextResponse.json({ error: 'Too many login attempts. Try again later.' }, { status: 429 })
   }
