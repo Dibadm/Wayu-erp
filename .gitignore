@@ -16,7 +16,8 @@ build/
 .env.production.local
 
 # prisma
-prisma/migrations/
+prisma/*.sqlite
+prisma/db/
 
 # misc
 .DS_Store
