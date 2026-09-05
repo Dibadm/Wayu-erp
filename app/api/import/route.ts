@@ -8,8 +8,14 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { importSellsSheet, importReceivedSheet } from '@/lib/excel'
 import { writeAuditLog } from '@/lib/audit'
+import { rateLimit, getClientKey } from '@/lib/rate-limit'
+
+const IMPORT_RATE = { max: 10, window: 60 * 60_000 }
 
 export async function POST(req: NextRequest) {
+  const rl = await rateLimit(`${getClientKey(req)}:import`, IMPORT_RATE.max, IMPORT_RATE.window)
+  if (!rl.success) return NextResponse.json({ error: 'Rate limit exceeded. Slow down.' }, { status: 429 })
+
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if ((session.user as any).role !== 'ADMIN') {

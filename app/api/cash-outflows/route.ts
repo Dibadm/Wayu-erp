@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { writeAuditLog } from '@/lib/audit'
+import { rateLimit, getClientKey } from '@/lib/rate-limit'
 import { CashFlowCategory } from '@prisma/client'
 
 export async function GET(req: NextRequest) {
@@ -28,7 +29,12 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(outflows)
 }
 
+const CASH_RATE = { max: 60, window: 60_000 }
+
 export async function POST(req: NextRequest) {
+  const rl = await rateLimit(`${getClientKey(req)}:cash-outflow`, CASH_RATE.max, CASH_RATE.window)
+  if (!rl.success) return NextResponse.json({ error: 'Rate limit exceeded. Slow down.' }, { status: 429 })
+
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const body = await req.json()

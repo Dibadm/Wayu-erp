@@ -4,6 +4,9 @@ import { authOptions } from '@/lib/auth'
 import { requirePermission } from '@/lib/with-auth'
 import { prisma } from '@/lib/db'
 import { writeAuditLog } from '@/lib/audit'
+import { rateLimit, getClientKey } from '@/lib/rate-limit'
+
+const CREDIT_APP_RATE = { max: 10, window: 60 * 60_000 }
 
 function getPagination(req: NextRequest) {
   const { searchParams } = new URL(req.url)
@@ -54,6 +57,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const rl = await rateLimit(`${getClientKey(req)}:credit-app`, CREDIT_APP_RATE.max, CREDIT_APP_RATE.window)
+  if (!rl.success) return NextResponse.json({ error: 'Rate limit exceeded. Slow down.' }, { status: 429 })
+
   const guard = await requirePermission('credit:manage')(null as any)
   if (guard) return guard
   const session = await getServerSession(authOptions)

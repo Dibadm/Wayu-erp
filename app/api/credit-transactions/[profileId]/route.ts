@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { requirePermission } from '@/lib/with-auth'
 import { prisma } from '@/lib/db'
 import { writeAuditLog } from '@/lib/audit'
+import { rateLimit, getClientKey } from '@/lib/rate-limit'
 
 export async function GET(_: NextRequest, { params }: { params: { profileId: string } }) {
   const guard = await requirePermission('credit:view')(null as any)
@@ -20,7 +21,12 @@ export async function GET(_: NextRequest, { params }: { params: { profileId: str
   return NextResponse.json(transactions)
 }
 
+const TXN_RATE = { max: 20, window: 60 * 60_000 }
+
 export async function POST(req: NextRequest, { params }: { params: { profileId: string } }) {
+  const rl = await rateLimit(`${getClientKey(req)}:credit-txn`, TXN_RATE.max, TXN_RATE.window)
+  if (!rl.success) return NextResponse.json({ error: 'Rate limit exceeded. Slow down.' }, { status: 429 })
+
   const guard = await requirePermission('credit:manage')(null as any)
   if (guard) return guard
   const session = await getServerSession(authOptions)

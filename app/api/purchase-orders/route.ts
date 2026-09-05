@@ -4,6 +4,9 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { purchaseOrderSchema } from '@/lib/validations'
 import { writeAuditLog } from '@/lib/audit'
+import { rateLimit, getClientKey } from '@/lib/rate-limit'
+
+const PO_RATE = { max: 30, window: 60_000 }
 
 // Auto-generate PO number: PO-YYYY-NNNN
 async function generatePONumber(): Promise<string> {
@@ -44,6 +47,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const rl = await rateLimit(`${getClientKey(req)}:po`, PO_RATE.max, PO_RATE.window)
+  if (!rl.success) return NextResponse.json({ error: 'Rate limit exceeded. Slow down.' }, { status: 429 })
+
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (session.user.role === 'VIEWER') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
