@@ -161,21 +161,9 @@ function SectionHeader({
   )
 }
 
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(false)
-  useEffect(() => {
-    setIsDesktop(window.innerWidth >= 1024)
-    const handler = () => setIsDesktop(window.innerWidth >= 1024)
-    window.addEventListener('resize', handler)
-    return () => window.removeEventListener('resize', handler)
-  }, [])
-  return isDesktop
-}
-
 export default function Sidebar() {
   const { data: session } = useSession()
   const { isOpen, setOpen } = useSidebar()
-  const isDesktop = useIsDesktop()
   const role = session?.user.role ?? ''
   const isAdmin = role === 'ADMIN'
   const showFinance = ['ADMIN', 'FINANCE', 'CREDIT_OFFICER', 'SALES'].includes(role)
@@ -194,18 +182,6 @@ export default function Sidebar() {
     ai: false,
     admin: false,
   })
-
-  useEffect(() => {
-    setOpenSections({
-      main: true,
-      pos: isDesktop,
-      finance: isDesktop,
-      cashFlow: isDesktop,
-      credit: isDesktop,
-      ai: isDesktop,
-      admin: isDesktop,
-    })
-  }, [isDesktop])
 
   function toggleSection(key: string) {
     setOpenSections(prev => ({ ...prev, [key]: !prev[key] }))
