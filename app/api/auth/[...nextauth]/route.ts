@@ -3,7 +3,7 @@ import { authOptions } from '@/lib/auth'
 import { NextResponse } from 'next/server'
 import { rateLimit, getClientKey } from '@/lib/rate-limit'
 
-const LOGIN_RATE = { max: 5, window: 15 * 60_000 }
+const LOGIN_RATE = { max: 20, window: 15 * 60_000 }
 
 const handler = NextAuth(authOptions)
 
