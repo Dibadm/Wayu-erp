@@ -55,7 +55,7 @@ export default function DashboardKPI({
   return (
     <div
       className={cn(
-        'glass-card p-5 transition-all duration-200',
+        'glass-intense p-5 transition-all duration-200',
         zeroState && 'opacity-60',
       )}
     >

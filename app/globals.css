@@ -199,6 +199,53 @@
     box-shadow: var(--shadow);
   }
 
+  .glass-intense {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .glass-intense::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 0%, transparent 100%);
+    opacity: 0.5;
+    border-radius: 12px 12px 0 0;
+    pointer-events: none;
+  }
+
+  .glass-intense:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+    transform: translateY(-1px);
+  }
+
+  .dark .glass-intense {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .dark .glass-intense::before {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
+    opacity: 0.6;
+  }
+
+  .dark .glass-intense:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  }
+
   /* Card sections */
   .card-header {
     padding: 16px 20px;
