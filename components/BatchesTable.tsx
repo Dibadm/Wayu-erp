@@ -74,50 +74,50 @@ export default function BatchesTable({ batches }: { batches: Batch[] }) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-zinc-800">
+            <tr className="border-b border-zinc-200 dark:border-zinc-800">
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('product')} className="flex items-center gap-1 hover:text-zinc-400">Product <SortIcon column="product" /></button>
+                <button onClick={() => handleSort('product')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Product <SortIcon column="product" /></button>
               </th>
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('batchNumber')} className="flex items-center gap-1 hover:text-zinc-400">Batch No. <SortIcon column="batchNumber" /></button>
+                <button onClick={() => handleSort('batchNumber')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Batch No. <SortIcon column="batchNumber" /></button>
               </th>
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Location</th>
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('quantity')} className="flex items-center gap-1 hover:text-zinc-400">Qty <SortIcon column="quantity" /></button>
+                <button onClick={() => handleSort('quantity')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Qty <SortIcon column="quantity" /></button>
               </th>
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('expiryDate')} className="flex items-center gap-1 hover:text-zinc-400">Expiry Date <SortIcon column="expiryDate" /></button>
+                <button onClick={() => handleSort('expiryDate')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Expiry Date <SortIcon column="expiryDate" /></button>
               </th>
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('daysLeft')} className="flex items-center gap-1 hover:text-zinc-400">Days Left <SortIcon column="daysLeft" /></button>
+                <button onClick={() => handleSort('daysLeft')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Days Left <SortIcon column="daysLeft" /></button>
               </th>
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('tier')} className="flex items-center gap-1 hover:text-zinc-400">Status <SortIcon column="tier" /></button>
+                <button onClick={() => handleSort('tier')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Status <SortIcon column="tier" /></button>
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800/50">
+          <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
             {paginated.map(b => {
               const { badge, row } = expiryTierColors(b.tier)
               return (
-                <tr key={b.id} className={`hover:bg-white/[0.02] transition-colors ${row}`}>
+                <tr key={b.id} className={`hover:bg-zinc-100 dark:hover:bg-white/[0.02] transition-colors ${row}`}>
                   <td className="px-5 py-3">
-                    <p className="text-zinc-200 font-medium text-xs">{b.product.name}</p>
+                    <p className="text-zinc-700 dark:text-zinc-200 font-medium text-xs">{b.product.name}</p>
                     <p className="sku mt-0.5">{b.product.sku}</p>
                   </td>
-                  <td className="px-5 py-3 font-mono text-xs text-zinc-300">{b.batchNumber}</td>
+                  <td className="px-5 py-3 font-mono text-xs text-zinc-600 dark:text-zinc-300">{b.batchNumber}</td>
                   <td className="px-5 py-3">
-                    <p className="text-xs text-zinc-400">{b.location.name}</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400">{b.location.name}</p>
                     <p className="sku mt-0.5">{b.location.code}</p>
                   </td>
-                  <td className="px-5 py-3 stat-num text-sm text-zinc-200">{b.quantity.toLocaleString()}</td>
-                  <td className="px-5 py-3 text-xs font-mono text-zinc-300">{b.expiryDate}</td>
+                  <td className="px-5 py-3 stat-num text-sm text-zinc-700 dark:text-zinc-200">{b.quantity.toLocaleString()}</td>
+                  <td className="px-5 py-3 text-xs font-mono text-zinc-600 dark:text-zinc-300">{b.expiryDate}</td>
                   <td className="px-5 py-3">
                     <span className={`stat-num text-sm ${
-                      b.tier === 'expired'  ? 'text-red-400'    :
+                      b.tier === 'expired'  ? 'text-red-500 dark:text-red-400'    :
                       b.tier === 'critical' ? 'text-orange-400' :
-                      b.tier === 'warning'  ? 'text-amber-400'  :
-                      b.tier === 'soon'     ? 'text-yellow-400' : 'text-zinc-400'
+                      b.tier === 'warning'  ? 'text-amber-500 dark:text-amber-400'  :
+                      b.tier === 'soon'     ? 'text-yellow-400' : 'text-zinc-500 dark:text-zinc-400'
                     }`}>
                       {b.daysLeft < 0 ? `${Math.abs(b.daysLeft)}d ago` : `${b.daysLeft}d`}
                     </span>
@@ -141,7 +141,7 @@ export default function BatchesTable({ batches }: { batches: Batch[] }) {
         />
       )}
 
-      <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-800">
+      <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-200 dark:border-zinc-800">
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Rows per page</span>
           <select
@@ -159,7 +159,7 @@ export default function BatchesTable({ batches }: { batches: Batch[] }) {
           <button
             onClick={() => setPage(p => Math.max(0, p - 1))}
             disabled={page === 0}
-            className="px-2 py-1 text-xs font-mono rounded border border-zinc-800 disabled:opacity-40 hover:bg-white/5 transition-colors"
+            className="px-2 py-1 text-xs font-mono rounded border border-zinc-200 dark:border-zinc-800 disabled:opacity-40 hover:bg-zinc-200 dark:hover:bg-white/5 transition-colors"
             style={{ color: 'var(--text-secondary)' }}
           >
             Prev
@@ -167,7 +167,7 @@ export default function BatchesTable({ batches }: { batches: Batch[] }) {
           <button
             onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
-            className="px-2 py-1 text-xs font-mono rounded border border-zinc-800 disabled:opacity-40 hover:bg-white/5 transition-colors"
+            className="px-2 py-1 text-xs font-mono rounded border border-zinc-200 dark:border-zinc-800 disabled:opacity-40 hover:bg-zinc-200 dark:hover:bg-white/5 transition-colors"
             style={{ color: 'var(--text-secondary)' }}
           >
             Next

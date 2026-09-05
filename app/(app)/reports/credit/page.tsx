@@ -81,7 +81,7 @@ export default function CreditReportsPage() {
             onClick={() => setActiveTab(tab.key)}
             className={`px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
               activeTab === tab.key
-                ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                ? 'bg-amber-500/10 border-amber-500/30 text-amber-500 dark:text-amber-400'
                 : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300'
             }`}
           >
@@ -152,16 +152,16 @@ function OutstandingTable({ data }: { data: any }) {
           return (
             <tr key={s.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
               <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{s.customer?.name ?? '—'}</td>
-              <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{s.invoiceNo}</td>
+              <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{s.invoiceNo}</td>
               <td className="px-4 py-2.5 font-mono text-xs text-zinc-500">{s.sale?.receiptNumber ?? '—'}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(s.issuedAt)}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{s.dueDate ? formatDate(new Date(s.dueDate)) : '—'}</td>
-              <td className="px-4 py-2.5 stat-num text-sm text-amber-400">ETB {Number(s.amount).toLocaleString()}</td>
-              <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(s.paid).toLocaleString()}</td>
-              <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {balance.toLocaleString()}</td>
+              <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">ETB {Number(s.amount).toLocaleString()}</td>
+              <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(s.paid).toLocaleString()}</td>
+              <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">ETB {balance.toLocaleString()}</td>
               <td className="px-4 py-2.5">
                 <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                  s.status === 'OVERDUE' ? 'badge-warning' : s.status === 'OPEN' ? 'badge-outline border-amber-500/30 text-amber-400' : 'badge-in'
+                  s.status === 'OVERDUE' ? 'badge-warning' : s.status === 'OPEN' ? 'badge-outline border-amber-500/30 text-amber-500 dark:text-amber-400' : 'badge-in'
                 }`}>{s.status}</span>
               </td>
             </tr>
@@ -186,25 +186,25 @@ function AgingTable({ data }: { data: any }) {
         {report.map((r: any) => (
           <tr key={r.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(r.current).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-amber-400">{Number(r.bucket31to60).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{Number(r.current).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">{Number(r.bucket31to60).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm text-orange-400">{Number(r.bucket61to90).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-red-400">{Number(r.bucket90plus).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">{Number(r.bucket90plus).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(r.total).toLocaleString()}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.terms} days</td>
             <td className="px-4 py-2.5">
               <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                r.riskLevel === 'CRITICAL' ? 'badge-warning' : r.riskLevel === 'HIGH' ? 'badge-outline border-amber-500/30 text-amber-400' : r.riskLevel === 'MEDIUM' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
+                r.riskLevel === 'CRITICAL' ? 'badge-warning' : r.riskLevel === 'HIGH' ? 'badge-outline border-amber-500/30 text-amber-500 dark:text-amber-400' : r.riskLevel === 'MEDIUM' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
               }`}>{r.riskLevel}</span>
             </td>
           </tr>
         ))}
           <tr className="border-t border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900/50">
             <td className="px-4 py-2.5 text-sm font-semibold text-zinc-900 dark:text-zinc-200">TOTALS</td>
-            <td className="px-4 py-2.5 stat-num text-sm font-semibold text-emerald-400">{Number(totals.current ?? 0).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm font-semibold text-amber-400">{Number(totals.bucket31to60 ?? 0).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm font-semibold text-emerald-500 dark:text-emerald-400">{Number(totals.current ?? 0).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm font-semibold text-amber-500 dark:text-amber-400">{Number(totals.bucket31to60 ?? 0).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm font-semibold text-orange-400">{Number(totals.bucket61to90 ?? 0).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm font-semibold text-red-400">{Number(totals.bucket90plus ?? 0).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm font-semibold text-red-500 dark:text-red-400">{Number(totals.bucket90plus ?? 0).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm font-semibold">{Number(totals.total ?? 0).toLocaleString()}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500 dark:text-zinc-500">—</td>
             <td className="px-4 py-2.5">—</td>
@@ -232,12 +232,12 @@ function CreditSummaryTable({ data }: { data: any }) {
               <td className="px-4 py-2.5 text-xs text-zinc-500">{p.customer.email ?? '—'}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{p.customer.phone ?? '—'}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{Number(p.creditLimit).toLocaleString()}</td>
-              <td className="px-4 py-2.5 stat-num text-sm text-amber-400">{Number(p.utilizedCredit).toLocaleString()}</td>
-              <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(p.availableCredit).toLocaleString()}</td>
+              <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">{Number(p.utilizedCredit).toLocaleString()}</td>
+              <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{Number(p.availableCredit).toLocaleString()}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{utilPct}%</td>
               <td className="px-4 py-2.5">
                 <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                  p.riskLevel === 'CRITICAL' ? 'badge-warning' : p.riskLevel === 'HIGH' ? 'badge-outline border-amber-500/30 text-amber-400' : p.riskLevel === 'MEDIUM' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
+                  p.riskLevel === 'CRITICAL' ? 'badge-warning' : p.riskLevel === 'HIGH' ? 'badge-outline border-amber-500/30 text-amber-500 dark:text-amber-400' : p.riskLevel === 'MEDIUM' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
                 }`}>{p.riskLevel}</span>
               </td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{p.paymentTerms} days</td>
@@ -265,13 +265,13 @@ function OverdueTable({ data }: { data: any }) {
           return (
             <tr key={r.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
               <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
-              <td className="px-4 py-2.5 stat-num text-sm text-amber-400">{Number(r.bucket31to60).toLocaleString()}</td>
+              <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">{Number(r.bucket31to60).toLocaleString()}</td>
               <td className="px-4 py-2.5 stat-num text-sm text-orange-400">{Number(r.bucket61to90).toLocaleString()}</td>
-              <td className="px-4 py-2.5 stat-num text-sm text-red-400">{Number(r.bucket90plus).toLocaleString()}</td>
+              <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">{Number(r.bucket90plus).toLocaleString()}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{totalOverdue.toLocaleString()}</td>
               <td className="px-4 py-2.5">
                 <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                  r.riskLevel === 'CRITICAL' ? 'badge-warning' : r.riskLevel === 'HIGH' ? 'badge-outline border-amber-500/30 text-amber-400' : r.riskLevel === 'MEDIUM' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
+                  r.riskLevel === 'CRITICAL' ? 'badge-warning' : r.riskLevel === 'HIGH' ? 'badge-outline border-amber-500/30 text-amber-500 dark:text-amber-400' : r.riskLevel === 'MEDIUM' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
                 }`}>{r.riskLevel}</span>
               </td>
             </tr>
@@ -296,15 +296,15 @@ function CollectionTable({ data }: { data: any }) {
           const outstanding = Number(c.arStatement?.amount ?? 0) - Number(c.arStatement?.paid ?? 0)
           return (
             <tr key={c.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
-              <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{c.caseNo}</td>
+              <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{c.caseNo}</td>
               <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{c.customer?.name ?? '—'}</td>
-              <td className="px-4 py-2.5 stat-num text-sm text-amber-400">ETB {Number(c.amount).toLocaleString()}</td>
-              <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(c.arStatement?.paid ?? 0).toLocaleString()}</td>
-              <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {outstanding.toLocaleString()}</td>
+              <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">ETB {Number(c.amount).toLocaleString()}</td>
+              <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(c.arStatement?.paid ?? 0).toLocaleString()}</td>
+              <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">ETB {outstanding.toLocaleString()}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{c.priority}</td>
               <td className="px-4 py-2.5">
                 <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                  c.status === 'RESOLVED' ? 'badge-in' : c.status === 'IN_PROGRESS' ? 'badge-outline border-blue-500/30 text-blue-400' : 'badge-warning'
+                  c.status === 'RESOLVED' ? 'badge-in' : c.status === 'IN_PROGRESS' ? 'badge-outline border-blue-500/30 text-blue-600 dark:text-blue-400' : 'badge-warning'
                 }`}>{c.status}</span>
               </td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{c.assignedTo ?? '—'}</td>
@@ -333,14 +333,14 @@ function ExposureTable({ data }: { data: any }) {
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.customer?.name ?? '—'}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.customer?.email ?? '—'}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.customer?.phone ?? '—'}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {r.totalExposure.toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">ETB {r.totalExposure.toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.openInvoices}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(r.creditLimit).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-amber-400">{Number(r.utilized).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(r.available).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">{Number(r.utilized).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{Number(r.available).toLocaleString()}</td>
             <td className="px-4 py-2.5">
               <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                r.riskLevel === 'CRITICAL' ? 'badge-warning' : r.riskLevel === 'HIGH' ? 'badge-outline border-amber-500/30 text-amber-400' : r.riskLevel === 'MEDIUM' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
+                r.riskLevel === 'CRITICAL' ? 'badge-warning' : r.riskLevel === 'HIGH' ? 'badge-outline border-amber-500/30 text-amber-500 dark:text-amber-400' : r.riskLevel === 'MEDIUM' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
               }`}>{r.riskLevel}</span>
             </td>
           </tr>
@@ -363,14 +363,14 @@ function PaymentTable({ data }: { data: any }) {
         {payments.map((p: any) => (
           <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(p.sale.createdAt)}</td>
-            <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{p.sale.receiptNumber}</td>
+            <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{p.sale.receiptNumber}</td>
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{p.sale.customer?.name ?? '—'}</td>
             <td className="px-4 py-2.5">
               <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                p.method === 'CREDIT' ? 'badge-outline border-blue-500/30 text-blue-400' : p.method === 'CASH' ? 'badge-in' : 'badge-outline border-amber-500/30 text-amber-400'
+                p.method === 'CREDIT' ? 'badge-outline border-blue-500/30 text-blue-600 dark:text-blue-400' : p.method === 'CASH' ? 'badge-in' : 'badge-outline border-amber-500/30 text-amber-500 dark:text-amber-400'
               }`}>{p.method}</span>
             </td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(p.amount).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(p.amount).toLocaleString()}</td>
             <td className="px-4 py-2.5 font-mono text-xs text-zinc-500">{p.reference ?? '—'}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(p.sale.total).toLocaleString()}</td>
           </tr>
@@ -394,10 +394,10 @@ function DailyCollectionTable({ data }: { data: any }) {
           <tr key={r.date} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.date}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.cash).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-blue-400">ETB {Number(r.bank).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(r.cash).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-blue-600 dark:text-blue-400">ETB {Number(r.bank).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(r.sales).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-amber-400">{Number(r.other).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">{Number(r.other).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm font-semibold">{(Number(r.cash) + Number(r.bank) + Number(r.other)).toLocaleString()}</td>
           </tr>
         ))}

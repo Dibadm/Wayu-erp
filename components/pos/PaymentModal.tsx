@@ -20,9 +20,9 @@ interface BankAccount {
 }
 
 const METHODS = [
-  { id: 'CASH',          label: 'Cash',          icon: Banknote,    color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' },
-  { id: 'BANK_TRANSFER', label: 'Bank Transfer', icon: Building2,   color: 'text-amber-400 bg-amber-500/10 border-amber-500/20' },
-  { id: 'CREDIT',        label: 'Credit',        icon: FileText,    color: 'text-blue-400 bg-blue-500/10 border-blue-500/20' },
+  { id: 'CASH',          label: 'Cash',          icon: Banknote,    color: 'text-emerald-500 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20' },
+  { id: 'BANK_TRANSFER', label: 'Bank Transfer', icon: Building2,   color: 'text-amber-500 dark:text-amber-400 bg-amber-500/10 border-amber-500/20' },
+  { id: 'CREDIT',        label: 'Credit',        icon: FileText,    color: 'text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20' },
 ]
 
 interface Props {
@@ -87,14 +87,14 @@ export default function PaymentModal({ total, onConfirm, onClose, loading }: Pro
         className="glass-card w-full max-w-md shadow-2xl overflow-hidden"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200 dark:border-zinc-800">
           <div>
-            <h2 className="text-sm font-semibold text-zinc-100">Payment</h2>
+            <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Payment</h2>
             <p className="text-xs font-mono text-zinc-500 mt-0.5">
-              Total due: <span className="text-emerald-400 font-semibold">ETB {total.toFixed(2)}</span>
+              Total due: <span className="text-emerald-500 dark:text-emerald-400 font-semibold">ETB {total.toFixed(2)}</span>
             </p>
           </div>
-          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors">
+          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -110,7 +110,7 @@ export default function PaymentModal({ total, onConfirm, onClose, loading }: Pro
                   key={m.id}
                   onClick={() => selectMethod(m.id)}
                   className={`flex flex-col items-center gap-1.5 p-2.5 rounded-lg border text-xs font-mono transition-all ${
-                    selected ? m.color : 'border-zinc-800 text-zinc-600 hover:border-zinc-700 hover:text-zinc-400'
+                    selected ? m.color : 'border-zinc-200 dark:border-zinc-800 text-zinc-600 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-500 dark:hover:text-zinc-400'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -155,7 +155,7 @@ export default function PaymentModal({ total, onConfirm, onClose, loading }: Pro
                       onChange={e => updatePayment(idx, { amount: parseFloat(e.target.value) || 0 })}
                     />
                     {payments.length > 1 && (
-                      <button onClick={() => removePayment(idx)} className="text-zinc-700 hover:text-red-400 transition-colors">
+                      <button onClick={() => removePayment(idx)} className="text-zinc-700 hover:text-red-500 dark:hover:text-red-400 transition-colors">
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
                     )}
@@ -177,7 +177,7 @@ export default function PaymentModal({ total, onConfirm, onClose, loading }: Pro
                         ))}
                       </select>
                       {bankAccounts.length === 0 && !loadingAccounts && (
-                        <p className="text-[10px] font-mono text-amber-400 mt-1">No bank accounts configured. Add one in Settings.</p>
+                        <p className="text-[10px] font-mono text-amber-500 dark:text-amber-400 mt-1">No bank accounts configured. Add one in Settings.</p>
                       )}
                     </div>
                   )}
@@ -201,34 +201,34 @@ export default function PaymentModal({ total, onConfirm, onClose, loading }: Pro
             })}
           </div>
 
-          <button onClick={addPayment} className="flex items-center gap-1.5 text-xs font-mono text-zinc-500 hover:text-zinc-300 transition-colors">
+          <button onClick={addPayment} className="flex items-center gap-1.5 text-xs font-mono text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
             <Plus className="w-3.5 h-3.5" /> Add payment method
           </button>
 
           {/* Summary */}
-          <div className="bg-zinc-900 rounded-xl p-4 space-y-2 font-mono text-xs border border-zinc-800">
+          <div className="bg-zinc-900 rounded-xl p-4 space-y-2 font-mono text-xs border border-zinc-200 dark:border-zinc-800">
             <div className="flex justify-between text-zinc-500">
               <span>Total Due</span><span>ETB {total.toFixed(2)}</span>
             </div>
             {totalPaid > 0 && (
-              <div className="flex justify-between text-zinc-300">
+              <div className="flex justify-between text-zinc-600 dark:text-zinc-300">
                 <span>Paid Now</span>
-                <span className="text-emerald-400">ETB {totalPaid.toFixed(2)}</span>
+                <span className="text-emerald-500 dark:text-emerald-400">ETB {totalPaid.toFixed(2)}</span>
               </div>
             )}
             {totalCredit > 0 && (
-              <div className="flex justify-between text-zinc-300">
+              <div className="flex justify-between text-zinc-600 dark:text-zinc-300">
                 <span>On Credit</span>
-                <span className="text-blue-400">ETB {totalCredit.toFixed(2)}</span>
+                <span className="text-blue-600 dark:text-blue-400">ETB {totalCredit.toFixed(2)}</span>
               </div>
             )}
             {change > 0 && (
-              <div className="flex justify-between font-semibold text-emerald-400 pt-1 border-t border-zinc-800">
+              <div className="flex justify-between font-semibold text-emerald-500 dark:text-emerald-400 pt-1 border-t border-zinc-200 dark:border-zinc-800">
                 <span>Change</span><span>ETB {change.toFixed(2)}</span>
               </div>
             )}
             {(totalPaid + totalCredit) < total && (
-              <div className="flex justify-between text-red-400 pt-1 border-t border-zinc-800">
+              <div className="flex justify-between text-red-500 dark:text-red-400 pt-1 border-t border-zinc-200 dark:border-zinc-800">
                 <span>Still owed</span><span>ETB {(total - totalPaid - totalCredit).toFixed(2)}</span>
               </div>
             )}

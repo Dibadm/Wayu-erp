@@ -60,19 +60,19 @@ export default function CreditReportsPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Credit Reports</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Credit Reports</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Detailed credit analytics and exports</p>
         </div>
         {data?.data?.length > 0 && (
-          <button onClick={exportCSV} className="flex items-center gap-1.5 px-3 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-sm text-emerald-400 hover:bg-emerald-500/20 transition-colors">
+          <button onClick={exportCSV} className="flex items-center gap-1.5 px-3 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-sm text-emerald-500 dark:text-emerald-400 hover:bg-emerald-500/20 transition-colors">
             <Download className="w-4 h-4" /> Export CSV
           </button>
         )}
       </div>
 
-      <div className="flex gap-2 border-b border-zinc-800">
+      <div className="flex gap-2 border-b border-zinc-200 dark:border-zinc-800">
         {TABS.map(tab => (
-          <button key={tab.key} onClick={() => setActiveTab(tab.key)} className={`px-4 py-2 text-sm font-medium transition-colors ${activeTab === tab.key ? 'border-b-2 border-blue-500 text-blue-400' : 'text-zinc-500 hover:text-zinc-300'}`}>
+          <button key={tab.key} onClick={() => setActiveTab(tab.key)} className={`px-4 py-2 text-sm font-medium transition-colors ${activeTab === tab.key ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400' : 'text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300'}`}>
             <span className="flex items-center gap-1.5"><tab.icon className="w-4 h-4" />{tab.label}</span>
           </button>
         ))}
@@ -84,11 +84,11 @@ export default function CreditReportsPage() {
         <div className="glass-card overflow-hidden">
           {activeTab === 'risk-analysis' && (
             <div className="p-5">
-              <h2 className="text-sm font-semibold text-zinc-100 mb-4">Risk Distribution</h2>
+              <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Risk Distribution</h2>
               <div className="grid grid-cols-4 gap-4">
                 {Object.entries(data.data || {}).map(([level, count]) => (
                   <div key={level} className="text-center">
-                    <p className="stat-num text-xl text-zinc-100">{count as number}</p>
+                    <p className="stat-num text-xl text-zinc-900 dark:text-zinc-100">{count as number}</p>
                     <p className="text-[10px] font-mono uppercase tracking-widest mt-1" style={{ color: `var(--accent-${level === 'LOW' ? 'emerald' : level === 'MEDIUM' ? 'blue' : level === 'HIGH' ? 'amber' : 'red'})` }}>{level}</p>
                   </div>
                 ))}
@@ -101,19 +101,19 @@ export default function CreditReportsPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-200 dark:border-zinc-800">
                     {['Customer', 'Credit Limit', 'Utilized', 'Available', 'Utilization %', 'Risk Level'].map(h => (
                       <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-800/50">
+                <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                   {(data.data || []).map((u: any) => (
-                    <tr key={u.customerId} className="hover:bg-white/[0.02]">
-                      <td className="px-4 py-2.5 text-sm text-zinc-300">{u.customerName}</td>
+                    <tr key={u.customerId} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+                      <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{u.customerName}</td>
                       <td className="px-4 py-2.5 stat-num text-sm">ETB {Number(u.creditLimit).toLocaleString()}</td>
-                      <td className="px-4 py-2.5 stat-num text-sm text-amber-400">ETB {Number(u.utilized).toLocaleString()}</td>
-                      <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(u.available).toLocaleString()}</td>
+                      <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">ETB {Number(u.utilized).toLocaleString()}</td>
+                      <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(u.available).toLocaleString()}</td>
                       <td className="px-4 py-2.5 stat-num text-sm">{u.utilizationPct}%</td>
                       <td className="px-4 py-2.5"><span className={`badge ${u.riskLevel === 'HIGH' || u.riskLevel === 'CRITICAL' ? 'badge-warning' : 'badge-in'}`}>{u.riskLevel}</span></td>
                     </tr>
@@ -127,7 +127,7 @@ export default function CreditReportsPage() {
           {activeTab === 'upcoming' && (
             <div className="p-5">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-semibold text-zinc-100">Upcoming AR</h2>
+                <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Upcoming AR</h2>
                 <div className="flex gap-3 text-[10px] font-mono text-zinc-500">
                 {data?.counts && Object.entries(data.counts).map(([tier, count]) => (
                   <span key={tier} style={{ color: `var(--accent-${tier === 'overdue' ? 'red' : tier === 'critical' ? 'amber' : tier === 'warning' ? 'yellow' : tier === 'soon' ? 'blue' : 'emerald'})` }}>
@@ -139,28 +139,28 @@ export default function CreditReportsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-zinc-800">
+                    <tr className="border-b border-zinc-200 dark:border-zinc-800">
                       {['Customer', 'Invoice', 'Receipt', 'Due Date', 'Days Left', 'Amount', 'Balance', 'Status'].map(h => (
                         <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-zinc-800/50">
+                  <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                     {(data?.data || []).map((row: any) => (
-                      <tr key={row.id} className="hover:bg-white/[0.02]">
-                        <td className="px-4 py-2.5 text-sm text-zinc-300">{row.customerName}</td>
-                        <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{row.invoiceNo}</td>
+                      <tr key={row.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+                        <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{row.customerName}</td>
+                        <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{row.invoiceNo}</td>
                         <td className="px-4 py-2.5 font-mono text-xs text-zinc-500">{row.receiptNumber ?? '—'}</td>
                         <td className="px-4 py-2.5 text-xs text-zinc-500">{row.dueDate ? new Date(row.dueDate).toLocaleDateString() : '—'}</td>
                         <td className="px-4 py-2.5 stat-num text-sm" style={{ color: `var(--accent-${row.tier === 'overdue' ? 'red' : row.tier === 'critical' ? 'amber' : row.tier === 'warning' ? 'yellow' : row.tier === 'soon' ? 'blue' : 'emerald'})` }}>
                           {row.daysLeft < 0 ? `${Math.abs(row.daysLeft)}d ago` : `${row.daysLeft}d`}
                         </td>
-                        <td className="px-4 py-2.5 stat-num text-sm text-amber-400">ETB {Number(row.amount).toLocaleString()}</td>
-                        <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {Number(row.balance).toLocaleString()}</td>
+                        <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">ETB {Number(row.amount).toLocaleString()}</td>
+                        <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">ETB {Number(row.balance).toLocaleString()}</td>
                         <td className="px-4 py-2.5">
                           <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
                             row.tier === 'overdue' ? 'badge-warning' :
-                            row.tier === 'critical' ? 'badge-outline border-amber-500/30 text-amber-400' :
+                            row.tier === 'critical' ? 'badge-outline border-amber-500/30 text-amber-500 dark:text-amber-400' :
                             row.tier === 'warning' ? 'badge-outline border-yellow-500/30 text-yellow-400' :
                             row.tier === 'soon' ? 'badge-in' : 'badge-in'
                           }`}>
@@ -180,32 +180,32 @@ export default function CreditReportsPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-200 dark:border-zinc-800">
                     {data.type === 'aging-summary' && ['Customer', 'Current', '31-60', '61-90', '90+', 'Total', 'Terms', 'As Of'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
                     {data.type === 'collections' && ['Case No', 'Customer', 'Amount', 'Priority', 'Status', 'Assigned To', 'Due Date'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
                     {data.type === 'applications' && ['App No', 'Customer', 'Requested', 'Terms', 'Status', 'Date'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-800/50">
+                <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                   {(data.data || []).map((row: any) => (
-                    <tr key={row.id || row.customerId} className="hover:bg-white/[0.02]">
+                    <tr key={row.id || row.customerId} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                       {data.type === 'aging-summary' && (
                         <>
-                          <td className="px-4 py-2.5 text-sm text-zinc-300">{row.name}</td>
-                          <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(row.current).toLocaleString()}</td>
-                          <td className="px-4 py-2.5 stat-num text-sm text-blue-400">ETB {Number(row.bucket31to60).toLocaleString()}</td>
-                          <td className="px-4 py-2.5 stat-num text-sm text-amber-400">ETB {Number(row.bucket61to90).toLocaleString()}</td>
-                          <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {Number(row.bucket90plus).toLocaleString()}</td>
-                          <td className="px-4 py-2.5 stat-num text-sm text-zinc-200">ETB {Number(row.total).toLocaleString()}</td>
+                          <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{row.name}</td>
+                          <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(row.current).toLocaleString()}</td>
+                          <td className="px-4 py-2.5 stat-num text-sm text-blue-600 dark:text-blue-400">ETB {Number(row.bucket31to60).toLocaleString()}</td>
+                          <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">ETB {Number(row.bucket61to90).toLocaleString()}</td>
+                          <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">ETB {Number(row.bucket90plus).toLocaleString()}</td>
+                          <td className="px-4 py-2.5 stat-num text-sm text-zinc-700 dark:text-zinc-200">ETB {Number(row.total).toLocaleString()}</td>
                           <td className="px-4 py-2.5 text-xs text-zinc-500">{row.terms} days</td>
                           <td className="px-4 py-2.5 text-xs text-zinc-500">{row.asOf ? new Date(row.asOf).toLocaleDateString() : '—'}</td>
                         </>
                       )}
                       {data.type === 'collections' && (
                         <>
-                          <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{row.caseNo}</td>
-                          <td className="px-4 py-2.5 text-sm text-zinc-300">{row.customer?.name}</td>
-                          <td className="px-4 py-2.5 stat-num text-sm text-amber-400">ETB {Number(row.amount).toLocaleString()}</td>
+                          <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{row.caseNo}</td>
+                          <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{row.customer?.name}</td>
+                          <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">ETB {Number(row.amount).toLocaleString()}</td>
                           <td className="px-4 py-2.5"><span className={`badge ${row.priority === 'URGENT' ? 'badge-warning' : row.priority === 'HIGH' ? 'badge-outline' : 'badge-in'}`}>{row.priority}</span></td>
                           <td className="px-4 py-2.5"><span className={`badge ${row.status === 'RESOLVED' ? 'badge-in' : 'badge-outline'}`}>{row.status}</span></td>
                           <td className="px-4 py-2.5 text-xs text-zinc-500">{row.assignedToUser?.name || '—'}</td>
@@ -214,8 +214,8 @@ export default function CreditReportsPage() {
                       )}
                       {data.type === 'applications' && (
                         <>
-                          <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{row.applicationNo}</td>
-                          <td className="px-4 py-2.5 text-sm text-zinc-300">{row.customer?.name}</td>
+                          <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{row.applicationNo}</td>
+                          <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{row.customer?.name}</td>
                           <td className="px-4 py-2.5 stat-num text-sm">ETB {Number(row.requestedLimit).toLocaleString()}</td>
                           <td className="px-4 py-2.5 text-xs text-zinc-500">{row.requestedTerms} days</td>
                           <td className="px-4 py-2.5"><span className={`badge ${row.status === 'APPROVED' ? 'badge-in' : row.status === 'REJECTED' ? 'badge-warning' : 'badge-outline'}`}>{row.status}</span></td>
@@ -232,7 +232,7 @@ export default function CreditReportsPage() {
 
           {activeTab === 'customer-profiles' && data.data && (
             <div className="p-5">
-              <pre className="text-xs font-mono text-zinc-400 whitespace-pre-wrap">{JSON.stringify(data.data, null, 2)}</pre>
+              <pre className="text-xs font-mono text-zinc-500 dark:text-zinc-400 whitespace-pre-wrap">{JSON.stringify(data.data, null, 2)}</pre>
             </div>
           )}
         </div>

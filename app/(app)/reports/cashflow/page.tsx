@@ -80,7 +80,7 @@ export default function CashFlowReportsPage() {
             onClick={() => setActiveTab(tab.key)}
             className={`px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
               activeTab === tab.key
-                ? 'bg-blue-500/10 border-blue-500/30 text-blue-400'
+                ? 'bg-blue-500/10 border-blue-500/30 text-blue-600 dark:text-blue-400'
                 : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300'
             }`}
           >
@@ -130,8 +130,8 @@ function CashFlowTable({ tab, data }: { tab: Tab; data: any }) {
             {rows.map((r: any) => (
               <tr key={keyMap.date in r ? r[keyMap.date] : r.label} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                 <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r[keyMap.date]}</td>
-                <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r[keyMap.in]).toLocaleString()}</td>
-                <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {Number(r[keyMap.out]).toLocaleString()}</td>
+                <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(r[keyMap.in]).toLocaleString()}</td>
+                <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">ETB {Number(r[keyMap.out]).toLocaleString()}</td>
                 <td className="px-4 py-2.5 stat-num text-sm font-semibold" style={{ color: (Number(r[keyMap.net]) >= 0 ? 'var(--accent-emerald)' : 'var(--accent-red)') }}>ETB {Number(r[keyMap.net]).toLocaleString()}</td>
               </tr>
             ))}
@@ -172,11 +172,11 @@ function BankBalanceTable({ data }: { data: any }) {
         {accounts.map((a: any) => (
           <tr key={a.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{a.accountName}</td>
-            <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{a.accountNumber}</td>
+            <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{a.accountNumber}</td>
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{a.bankName}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{a.accountType}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(a.openingBalance).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(a.currentBalance).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{Number(a.currentBalance).toLocaleString()}</td>
           </tr>
         ))}
       </tbody>
@@ -197,7 +197,7 @@ function ExpenseTable({ data }: { data: any }) {
         {rows.map((r: any) => (
           <tr key={r.category} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.category}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-red-400">ETB {Number(r.total).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">ETB {Number(r.total).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.pct}</td>
           </tr>
         ))}
@@ -221,8 +221,8 @@ function BudgetTable({ data }: { data: any }) {
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.period}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(r.planned).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(r.actualIn).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-red-400">{Number(r.actualOut).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{Number(r.actualIn).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">{Number(r.actualOut).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm" style={{ color: Number(r.variance) >= 0 ? 'var(--accent-emerald)' : 'var(--accent-red)' }}>{Number(r.variance).toLocaleString()}</td>
           </tr>
         ))}
@@ -246,7 +246,7 @@ function CashPositionTable({ data }: { data: any }) {
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{a.accountName} ({a.accountNumber})</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{a.bankName}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(a.openingBalance).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(a.currentBalance).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{Number(a.currentBalance).toLocaleString()}</td>
           </tr>
         ))}
       </tbody>
@@ -273,7 +273,7 @@ function LoanTable({ data }: { data: any }) {
             <td className="px-4 py-2.5 text-xs text-zinc-500">{l.endDate ? formatDate(l.endDate) : '—'}</td>
             <td className="px-4 py-2.5">
               <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                l.status === 'PAID_OFF' ? 'badge-in' : l.status === 'ACTIVE' ? 'badge-outline border-blue-500/30 text-blue-400' : 'badge-warning'
+                l.status === 'PAID_OFF' ? 'badge-in' : l.status === 'ACTIVE' ? 'badge-outline border-blue-500/30 text-blue-600 dark:text-blue-400' : 'badge-warning'
               }`}>{l.status}</span>
             </td>
           </tr>
@@ -298,12 +298,12 @@ function InvestmentTable({ data }: { data: any }) {
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{inv.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{inv.type}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(inv.amount).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(inv.expectedReturn).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{Number(inv.expectedReturn).toLocaleString()}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(inv.startDate)}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{inv.maturityDate ? formatDate(inv.maturityDate) : '—'}</td>
             <td className="px-4 py-2.5">
               <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                inv.status === 'ACTIVE' ? 'badge-in' : inv.status === 'MATURED' ? 'badge-outline border-emerald-500/30 text-emerald-400' : 'badge-warning'
+                inv.status === 'ACTIVE' ? 'badge-in' : inv.status === 'MATURED' ? 'badge-outline border-emerald-500/30 text-emerald-500 dark:text-emerald-400' : 'badge-warning'
               }`}>{inv.status}</span>
             </td>
           </tr>

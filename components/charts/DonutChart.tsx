@@ -21,9 +21,9 @@ const CustomTooltip = ({ active, payload, format }: any) => {
   }
   const p = payload[0]
   return (
-    <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3 shadow-xl text-xs font-mono">
+    <div className="bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg p-3 shadow-xl text-xs font-mono">
       <p style={{ color: p.payload.color }} className="font-semibold">{p.name}</p>
-      <p className="text-zinc-300 mt-1">{formatValue(p.value)}</p>
+      <p className="text-zinc-600 dark:text-zinc-300 mt-1">{formatValue(p.value)}</p>
     </div>
   )
 }
@@ -50,7 +50,7 @@ export default function DonutChart({ data, height = 200, innerRadius = 55, outer
 
       {/* Centre label */}
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-        <p className="stat-num text-lg text-zinc-100">{data.length}</p>
+        <p className="stat-num text-lg text-zinc-900 dark:text-zinc-100">{data.length}</p>
         <p className="text-[10px] font-mono text-zinc-600">categories</p>
       </div>
     </div>

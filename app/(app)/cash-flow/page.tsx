@@ -63,7 +63,7 @@ export default async function CashFlowDashboardPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Cash Position</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Cash Position</h1>
         <p className="text-sm text-zinc-500 font-mono mt-0.5">
           {today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
@@ -80,37 +80,37 @@ export default async function CashFlowDashboardPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <Link href="/cash-flow/inflows" className="glass-card p-4 hover:border-white/10 transition-colors group flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-            <ArrowDownToLine className="w-4 h-4 text-emerald-400" />
+            <ArrowDownToLine className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
           </div>
           <div>
-            <p className="text-sm font-medium text-zinc-200">New Inflow</p>
+            <p className="text-sm font-medium text-zinc-700 dark:text-zinc-200">New Inflow</p>
             <p className="text-[10px] font-mono text-zinc-600 group-hover:text-zinc-500">Record cash received</p>
           </div>
         </Link>
         <Link href="/cash-flow/outflows" className="glass-card p-4 hover:border-white/10 transition-colors group flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-            <ArrowUpFromLine className="w-4 h-4 text-red-400" />
+            <ArrowUpFromLine className="w-4 h-4 text-red-500 dark:text-red-400" />
           </div>
           <div>
-            <p className="text-sm font-medium text-zinc-200">New Outflow</p>
+            <p className="text-sm font-medium text-zinc-700 dark:text-zinc-200">New Outflow</p>
             <p className="text-[10px] font-mono text-zinc-600 group-hover:text-zinc-500">Record cash paid</p>
           </div>
         </Link>
         <Link href="/cash-flow/transfers" className="glass-card p-4 hover:border-white/10 transition-colors group flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-            <ArrowTransfer className="w-4 h-4 text-blue-400" />
+            <ArrowTransfer className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <p className="text-sm font-medium text-zinc-200">New Transfer</p>
+            <p className="text-sm font-medium text-zinc-700 dark:text-zinc-200">New Transfer</p>
             <p className="text-[10px] font-mono text-zinc-600 group-hover:text-zinc-500">Move between accounts</p>
           </div>
         </Link>
         <Link href="/cash-flow/budgets" className="glass-card p-4 hover:border-white/10 transition-colors group flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-            <PiggyBank className="w-4 h-4 text-purple-400" />
+            <PiggyBank className="w-4 h-4 text-purple-600 dark:text-purple-400" />
           </div>
           <div>
-            <p className="text-sm font-medium text-zinc-200">New Budget</p>
+            <p className="text-sm font-medium text-zinc-700 dark:text-zinc-200">New Budget</p>
             <p className="text-[10px] font-mono text-zinc-600 group-hover:text-zinc-500">Set budget targets</p>
           </div>
         </Link>
@@ -118,18 +118,18 @@ export default async function CashFlowDashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="glass-card overflow-hidden">
-          <div className="px-5 py-4 border-b border-zinc-800 flex items-center justify-between">
+          <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
             <div>
-              <h2 className="text-sm font-semibold text-zinc-100">Bank Accounts</h2>
+              <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Bank Accounts</h2>
               <p className="text-xs font-mono text-zinc-500 mt-0.5">{bankAccounts.length} active</p>
             </div>
-            <Link href="/cash-flow/bank-accounts" className="text-xs font-mono text-blue-400 hover:text-blue-300">View all →</Link>
+            <Link href="/cash-flow/bank-accounts" className="text-xs font-mono text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">View all →</Link>
           </div>
-          <div className="divide-y divide-zinc-800/50">
+          <div className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
             {bankAccounts.map(acct => (
-              <div key={acct.id} className="px-5 py-3 flex items-center justify-between hover:bg-white/[0.02]">
+              <div key={acct.id} className="px-5 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                 <div>
-                  <p className="text-sm text-zinc-200">{acct.accountName}</p>
+                  <p className="text-sm text-zinc-700 dark:text-zinc-200">{acct.accountName}</p>
                   <p className="text-[10px] font-mono text-zinc-600">{acct.bankName} · {acct.accountType.replace('_', ' ')}</p>
                 </div>
                 <p className="stat-num text-sm" style={{ color: Number(acct.currentBalance) >= 0 ? 'var(--accent-emerald)' : 'var(--accent-red)' }}>{formatCurrency(Number(acct.currentBalance))}</p>
@@ -142,28 +142,28 @@ export default async function CashFlowDashboardPage() {
         </div>
 
         <div className="glass-card overflow-hidden">
-          <div className="px-5 py-4 border-b border-zinc-800 flex items-center justify-between">
+          <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
             <div>
-              <h2 className="text-sm font-semibold text-zinc-100">Recent Transactions</h2>
+              <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Recent Transactions</h2>
               <p className="text-xs font-mono text-zinc-500 mt-0.5">Last {combinedTransactions.length} today</p>
             </div>
-            <Link href="/cash-flow/reports" className="text-xs font-mono text-blue-400 hover:text-blue-300">Reports →</Link>
+            <Link href="/cash-flow/reports" className="text-xs font-mono text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">Reports →</Link>
           </div>
           {combinedTransactions.length > 0 ? (
-            <div className="divide-y divide-zinc-800/50">
+            <div className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {combinedTransactions.map(tx => (
-                <div key={tx.id} className="px-5 py-3 flex items-center justify-between hover:bg-white/[0.02]">
+                <div key={tx.id} className="px-5 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                   <div className="flex items-center gap-3">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center border ${tx.type === 'inflow' ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-red-500/10 border-red-500/20'}`}>
-                      {tx.type === 'inflow' ? <TrendingUp className="w-4 h-4 text-emerald-400" /> : <TrendingDown className="w-4 h-4 text-red-400" />}
+                      {tx.type === 'inflow' ? <TrendingUp className="w-4 h-4 text-emerald-500 dark:text-emerald-400" /> : <TrendingDown className="w-4 h-4 text-red-500 dark:text-red-400" />}
                     </div>
                     <div>
-                      <p className="text-sm text-zinc-200">{(tx as any).bankAccount?.accountName ?? '—'}</p>
+                      <p className="text-sm text-zinc-700 dark:text-zinc-200">{(tx as any).bankAccount?.accountName ?? '—'}</p>
                       <p className="text-[10px] font-mono text-zinc-600">{(tx as any).category?.replace('_', ' ') ?? (tx.type === 'inflow' ? 'Inflow' : 'Outflow')}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                     <p className={`stat-num text-sm ${tx.type === 'inflow' ? 'text-emerald-400' : 'text-red-400'}`}>{formatCurrency(Number((tx as any).amount))}</p>
+                     <p className={`stat-num text-sm ${tx.type === 'inflow' ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>{formatCurrency(Number((tx as any).amount))}</p>
                     <p className="text-[10px] font-mono text-zinc-600">{(tx as any).createdBy?.name ?? '—'}</p>
                   </div>
                 </div>

@@ -31,7 +31,7 @@ export default function InvestmentsPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Investments</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Investments</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Track company investments</p>
         </div>
         <button onClick={() => setShowForm(!showForm)} className="btn-primary flex items-center gap-2"><Plus className="w-4 h-4" /> New Investment</button>
@@ -63,16 +63,16 @@ export default function InvestmentsPage() {
           <div key={inv.id} className="glass-card p-5">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <h3 className="text-sm font-semibold text-zinc-100">{inv.name}</h3>
+                <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{inv.name}</h3>
                 <p className="text-xs font-mono text-zinc-500">{inv.type}</p>
               </div>
               <span className="badge badge-in">{inv.status}</span>
             </div>
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div><span className="text-zinc-600">Amount</span><p className="stat-num text-sm">{fmt(inv.amount)}</p></div>
-              <div><span className="text-zinc-600">Expected Return</span><p className="stat-num text-sm text-emerald-400">{fmt(inv.expectedReturn)}</p></div>
-              <div><span className="text-zinc-600">Start Date</span><p className="text-xs font-mono text-zinc-400">{new Date(inv.startDate).toLocaleDateString()}</p></div>
-              <div><span className="text-zinc-600">Maturity</span><p className="text-xs font-mono text-zinc-400">{inv.maturityDate ? new Date(inv.maturityDate).toLocaleDateString() : '—'}</p></div>
+              <div><span className="text-zinc-600">Expected Return</span><p className="stat-num text-sm text-emerald-500 dark:text-emerald-400">{fmt(inv.expectedReturn)}</p></div>
+              <div><span className="text-zinc-600">Start Date</span><p className="text-xs font-mono text-zinc-500 dark:text-zinc-400">{new Date(inv.startDate).toLocaleDateString()}</p></div>
+              <div><span className="text-zinc-600">Maturity</span><p className="text-xs font-mono text-zinc-500 dark:text-zinc-400">{inv.maturityDate ? new Date(inv.maturityDate).toLocaleDateString() : '—'}</p></div>
             </div>
           </div>
         ))}

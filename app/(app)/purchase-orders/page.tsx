@@ -9,13 +9,13 @@ import CreatePOModal from '@/components/CreatePOModal'
 
 // Status display config
 const STATUS_CONFIG: Record<string, { label: string; cls: string }> = {
-  DRAFT:              { label: 'Draft',              cls: 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20' },
-  PENDING:            { label: 'Pending',            cls: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
-  APPROVED:           { label: 'Approved',           cls: 'bg-purple-500/10 text-purple-400 border-purple-500/20' },
-  ORDERED:            { label: 'Ordered',            cls: 'bg-amber-500/10 text-amber-400 border-amber-500/20' },
+  DRAFT:              { label: 'Draft',              cls: 'bg-zinc-500/10 text-zinc-500 dark:text-zinc-400 border-zinc-500/20' },
+  PENDING:            { label: 'Pending',            cls: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20' },
+  APPROVED:           { label: 'Approved',           cls: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20' },
+  ORDERED:            { label: 'Ordered',            cls: 'bg-amber-500/10 text-amber-500 dark:text-amber-400 border-amber-500/20' },
   PARTIALLY_RECEIVED: { label: 'Partial',            cls: 'bg-orange-500/10 text-orange-400 border-orange-500/20' },
-  COMPLETED:          { label: 'Completed',          cls: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
-  CANCELLED:          { label: 'Cancelled',          cls: 'bg-red-500/10 text-red-400 border-red-500/20' },
+  COMPLETED:          { label: 'Completed',          cls: 'bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border-emerald-500/20' },
+  CANCELLED:          { label: 'Cancelled',          cls: 'bg-red-500/10 text-red-500 dark:text-red-400 border-red-500/20' },
 }
 
 export default async function PurchaseOrdersPage() {
@@ -43,7 +43,7 @@ export default async function PurchaseOrdersPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Purchase Orders</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Purchase Orders</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">
             {orders.length} orders · {openCount} open
           </p>
@@ -61,9 +61,9 @@ export default async function PurchaseOrdersPage() {
         ].map(t => {
           const Icon = t.icon
           const colors: Record<string, string> = {
-            blue:   'bg-blue-500/10 border-blue-500/20 text-blue-400',
-            amber:  'bg-amber-500/10 border-amber-500/20 text-amber-400',
-            emerald:'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
+            blue:   'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',
+            amber:  'bg-amber-500/10 border-amber-500/20 text-amber-500 dark:text-amber-400',
+            emerald:'bg-emerald-500/10 border-emerald-500/20 text-emerald-500 dark:text-emerald-400',
             zinc:   'bg-zinc-500/10 border-zinc-500/20 text-zinc-500',
           }
           return (
@@ -81,28 +81,28 @@ export default async function PurchaseOrdersPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800">
+              <tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['PO Number', 'Supplier', 'Status', 'Items', 'Total Cost', 'Expected Delivery', 'Created By', 'Date', ''].map(h => (
                   <th key={h} className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {orders.map(o => {
                 const cfg = STATUS_CONFIG[o.status] ?? STATUS_CONFIG.DRAFT
                 return (
-                  <tr key={o.id} className="hover:bg-white/[0.02] transition-colors group">
+                  <tr key={o.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02] transition-colors group">
                     <td className="px-5 py-3">
-                      <span className="font-mono text-xs text-blue-400">{o.poNumber}</span>
+                      <span className="font-mono text-xs text-blue-600 dark:text-blue-400">{o.poNumber}</span>
                     </td>
-                    <td className="px-5 py-3 text-xs text-zinc-300">{o.supplier.name}</td>
+                    <td className="px-5 py-3 text-xs text-zinc-600 dark:text-zinc-300">{o.supplier.name}</td>
                     <td className="px-5 py-3">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono border ${cfg.cls}`}>
                         {cfg.label}
                       </span>
                     </td>
-                    <td className="px-5 py-3 stat-num text-sm text-zinc-400">{o._count.items}</td>
-                    <td className="px-5 py-3 stat-num text-sm text-zinc-200">
+                    <td className="px-5 py-3 stat-num text-sm text-zinc-500 dark:text-zinc-400">{o._count.items}</td>
+                    <td className="px-5 py-3 stat-num text-sm text-zinc-700 dark:text-zinc-200">
                       ETB {Number(o.totalCost).toLocaleString('en-ET', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-5 py-3 text-xs font-mono text-zinc-500">
@@ -117,7 +117,7 @@ export default async function PurchaseOrdersPage() {
                     <td className="px-5 py-3">
                       <Link
                         href={`/purchase-orders/${o.id}`}
-                        className="text-xs font-mono text-blue-500 hover:text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="text-xs font-mono text-blue-500 hover:text-blue-500 dark:hover:text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         VIEW →
                       </Link>

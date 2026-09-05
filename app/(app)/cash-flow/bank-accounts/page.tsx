@@ -51,7 +51,7 @@ export default function BankAccountsPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Bank Accounts</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Bank Accounts</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Manage bank accounts and current balances</p>
         </div>
         <button onClick={() => { setEditing(null); setForm({ accountName: '', accountNumber: '', bankName: '', accountType: 'SAVINGS', currency: 'ETB', openingBalance: '' }); setShowForm(!showForm) }} className="btn-primary flex items-center gap-2"><Plus className="w-4 h-4" /> {editing ? 'Cancel' : 'New Account'}</button>
@@ -79,25 +79,25 @@ export default function BankAccountsPage() {
       <div className="glass-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead><tr className="border-b border-zinc-800">
+            <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
               {['Account Name', 'Bank', 'Account Number', 'Type', 'Opening Balance', 'Current Balance', 'Actions'].map(h => (
                 <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
               ))}
             </tr></thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {loading ? (
                 <tr><td colSpan={7} className="px-4 py-10 flex justify-center"><RefreshCw className="w-5 h-5 animate-spin text-zinc-500" /></td></tr>
               ) : accounts.map(a => (
-                <tr key={a.id} className="hover:bg-white/[0.02]">
-                  <td className="px-4 py-3 text-sm text-zinc-200">{a.accountName}</td>
-                  <td className="px-4 py-3 text-xs text-zinc-400">{a.bankName}</td>
+                <tr key={a.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+                  <td className="px-4 py-3 text-sm text-zinc-700 dark:text-zinc-200">{a.accountName}</td>
+                  <td className="px-4 py-3 text-xs text-zinc-500 dark:text-zinc-400">{a.bankName}</td>
                   <td className="px-4 py-3 text-xs font-mono text-zinc-500">{a.accountNumber}</td>
                   <td className="px-4 py-3"><span className="badge badge-in">{a.accountType.replace('_', ' ')}</span></td>
-                  <td className="px-4 py-3 stat-num text-sm text-zinc-400">{fmt(a.openingBalance)}</td>
+                  <td className="px-4 py-3 stat-num text-sm text-zinc-500 dark:text-zinc-400">{fmt(a.openingBalance)}</td>
                   <td className="px-4 py-3 stat-num text-sm" style={{ color: Number(a.currentBalance) >= 0 ? 'var(--accent-emerald)' : 'var(--accent-red)' }}>{fmt(a.currentBalance)}</td>
                   <td className="px-4 py-3 flex gap-2">
-                    <button onClick={() => startEdit(a)} className="text-blue-400 hover:text-blue-300"><Pencil className="w-3.5 h-3.5" /></button>
-                    <button onClick={() => remove(a.id)} className="text-red-400 hover:text-red-300"><Trash2 className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => startEdit(a)} className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"><Pencil className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => remove(a.id)} className="text-red-500 dark:text-red-400 hover:text-red-400 dark:hover:text-red-300"><Trash2 className="w-3.5 h-3.5" /></button>
                   </td>
                 </tr>
               ))}

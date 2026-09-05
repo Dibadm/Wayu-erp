@@ -81,7 +81,7 @@ export default function SalesReportsPage() {
             onClick={() => setActiveTab(tab.key)}
             className={`px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
               activeTab === tab.key
-                ? 'bg-purple-500/10 border-purple-500/30 text-purple-400'
+                ? 'bg-purple-500/10 border-purple-500/30 text-purple-600 dark:text-purple-400'
                 : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300'
             }`}
           >
@@ -132,8 +132,8 @@ function SalesTable({ tab, data }: { tab: Tab; data: any }) {
                 <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.period}</td>
                 <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
                 <td className="px-4 py-2.5 stat-num text-sm">{r.items}</td>
-                <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.revenue).toLocaleString()}</td>
-                <td className="px-4 py-2.5 stat-num text-sm text-blue-400">ETB {Number(r.profit).toLocaleString()}</td>
+                <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(r.revenue).toLocaleString()}</td>
+                <td className="px-4 py-2.5 stat-num text-sm text-blue-600 dark:text-blue-400">ETB {Number(r.profit).toLocaleString()}</td>
               </tr>
             ))}
           </tbody>
@@ -169,14 +169,14 @@ function ProductSalesTable({ data }: { data: any }) {
       <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any) => (
           <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
+            <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{r.sku}</td>
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.totalQty}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(r.totalRevenue).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{Number(r.totalRevenue).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(r.totalCost).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-blue-400">{(r.totalRevenue - r.totalCost).toFixed(2)}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-blue-600 dark:text-blue-400">{(r.totalRevenue - r.totalCost).toFixed(2)}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.margin}</td>
           </tr>
         ))}
@@ -201,8 +201,8 @@ function CustomerSalesTable({ data }: { data: any }) {
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.email}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.phone}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.totalSales).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-blue-400">ETB {Number(r.totalPaid).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(r.totalSales).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-blue-600 dark:text-blue-400">ETB {Number(r.totalPaid).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(r.avgOrderValue).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{(r.totalProfit).toFixed(2)}</td>
           </tr>
@@ -230,8 +230,8 @@ function SalesTrendTable({ data }: { data: any }) {
           <tr key={r.date} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.date}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.revenue).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-blue-400">ETB {Number(r.profit).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(r.revenue).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-blue-600 dark:text-blue-400">ETB {Number(r.profit).toLocaleString()}</td>
           </tr>
         ))}
       </tbody>
@@ -251,11 +251,11 @@ function TopProductsTable({ data }: { data: any }) {
       <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any) => (
           <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
+            <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{r.sku}</td>
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.totalQty}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.totalRevenue).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(r.totalRevenue).toLocaleString()}</td>
           </tr>
         ))}
       </tbody>
@@ -278,10 +278,10 @@ function SalespersonTable({ data }: { data: any }) {
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.email}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.totalSales).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(r.totalSales).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(r.avgSaleValue).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-blue-400">ETB {Number(r.totalProfit).toLocaleString()}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-amber-400">ETB {Number(r.totalCommission).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-blue-600 dark:text-blue-400">ETB {Number(r.totalProfit).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">ETB {Number(r.totalCommission).toLocaleString()}</td>
           </tr>
         ))}
       </tbody>

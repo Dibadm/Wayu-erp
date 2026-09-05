@@ -110,12 +110,12 @@ export default function CreatePOModal() {
               className="glass-card w-full max-w-3xl max-h-[85vh] flex flex-col shadow-2xl">
 
               {/* Header */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800 flex-shrink-0">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 flex-shrink-0">
                 <div>
-                  <h2 className="text-sm font-semibold text-zinc-100">Create Purchase Order</h2>
+                  <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Create Purchase Order</h2>
                   <p className="text-xs font-mono text-zinc-500 mt-0.5">PO number assigned automatically</p>
                 </div>
-                <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors">
+                <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -150,12 +150,12 @@ export default function CreatePOModal() {
                     <input className="input" placeholder="Search by name or SKU..."
                       value={productSearch} onChange={e => setProductSearch(e.target.value)} />
                     {filteredProducts.length > 0 && (
-                      <div className="absolute top-full mt-1 w-full bg-zinc-900 border border-zinc-700 rounded-lg z-10 divide-y divide-zinc-800 shadow-xl">
+                      <div className="absolute top-full mt-1 w-full bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg z-10 divide-y divide-zinc-200 dark:divide-zinc-800 shadow-xl">
                         {filteredProducts.map(p => (
                           <button key={p.id} type="button" onClick={() => addProduct(p)}
-                            className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/5 transition-colors text-left">
+                            className="w-full flex items-center justify-between px-3 py-2 hover:bg-zinc-200 dark:hover:bg-white/5 transition-colors text-left">
                             <div>
-                              <p className="text-xs text-zinc-200">{p.name}</p>
+                              <p className="text-xs text-zinc-700 dark:text-zinc-200">{p.name}</p>
                               <p className="sku mt-0.5">{p.sku}</p>
                             </div>
                             <Plus className="w-3.5 h-3.5 text-zinc-500" />
@@ -175,9 +175,9 @@ export default function CreatePOModal() {
                       ))}
                     </div>
                     {items.map((item, idx) => (
-                      <div key={item.productId} className="grid grid-cols-12 gap-2 items-center bg-zinc-900/40 border border-zinc-800 rounded-lg p-2">
+                      <div key={item.productId} className="grid grid-cols-12 gap-2 items-center bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-lg p-2">
                         <div className="col-span-3">
-                          <p className="text-xs text-zinc-200 truncate">{item.productName}</p>
+                          <p className="text-xs text-zinc-700 dark:text-zinc-200 truncate">{item.productName}</p>
                           <p className="sku mt-0.5">{item.sku}</p>
                         </div>
                         <div className="col-span-2">
@@ -197,17 +197,17 @@ export default function CreatePOModal() {
                             onChange={e => updateItem(idx, 'expiryDate', e.target.value)} />
                         </div>
                         <button type="button" onClick={() => removeItem(idx)}
-                          className="col-span-1 flex justify-center text-zinc-600 hover:text-red-400 transition-colors">
+                          className="col-span-1 flex justify-center text-zinc-600 hover:text-red-500 dark:hover:text-red-400 transition-colors">
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     ))}
 
                     {/* Total */}
-                    <div className="flex justify-end pt-2 border-t border-zinc-800">
+                    <div className="flex justify-end pt-2 border-t border-zinc-200 dark:border-zinc-800">
                       <div className="text-right">
                         <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Total Cost</p>
-                        <p className="stat-num text-lg text-zinc-100">ETB {total.toLocaleString('en-ET', { minimumFractionDigits: 2 })}</p>
+                        <p className="stat-num text-lg text-zinc-900 dark:text-zinc-100">ETB {total.toLocaleString('en-ET', { minimumFractionDigits: 2 })}</p>
                       </div>
                     </div>
                   </div>
@@ -216,13 +216,13 @@ export default function CreatePOModal() {
                 {error && (
                   <div className="flex items-center gap-2 px-3 py-2 bg-red-500/10 border border-red-500/20 rounded-lg">
                     <span className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
-                    <p className="text-xs font-mono text-red-400">{error}</p>
+                    <p className="text-xs font-mono text-red-500 dark:text-red-400">{error}</p>
                   </div>
                 )}
               </div>
 
               {/* Footer */}
-              <div className="flex items-center gap-3 px-6 py-4 border-t border-zinc-800 flex-shrink-0">
+              <div className="flex items-center gap-3 px-6 py-4 border-t border-zinc-200 dark:border-zinc-800 flex-shrink-0">
                 <button onClick={handleSubmit} disabled={loading || !items.length || !supplierId}
                   className="btn-primary flex items-center gap-2">
                   {loading ? <><Loader2 className="w-4 h-4 animate-spin" />Creating...</> : 'Create Purchase Order'}

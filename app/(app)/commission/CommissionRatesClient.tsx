@@ -115,7 +115,7 @@ export default function CommissionRatesClient({ initialRates, products, users }:
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Commission Rates</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Commission Rates</h1>
         <p className="text-sm text-zinc-500 font-mono mt-0.5">Configure tiered commission rates by scope</p>
       </div>
 
@@ -140,7 +140,7 @@ export default function CommissionRatesClient({ initialRates, products, users }:
           <input className="input w-full" type="number" min={0} placeholder="From Qty" value={form.tierFromQty} onChange={e => setForm({ ...form, tierFromQty: parseInt(e.target.value || '0') })} />
           <input className="input w-full" type="number" min={0} placeholder="To Qty (blank=∞)" value={form.tierToQty} onChange={e => setForm({ ...form, tierToQty: e.target.value })} />
           <input className="input w-full" type="number" min={0} max={100} step="0.01" placeholder="Rate %" value={form.rate} onChange={e => setForm({ ...form, rate: parseFloat(e.target.value || '0') })} />
-          <label className="flex items-center gap-2 text-xs text-zinc-400">
+          <label className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
             <input type="checkbox" checked={form.active} onChange={e => setForm({ ...form, active: e.target.checked })} />
             Active
           </label>
@@ -159,25 +159,25 @@ export default function CommissionRatesClient({ initialRates, products, users }:
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800">
+              <tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Scope', 'Salesperson', 'Product', 'Tier', 'Rate', 'Active', 'Created', ''].map(h => (
                   <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {rates.map(r => (
-                <tr key={r.id} className="hover:bg-white/[0.02]">
+                <tr key={r.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                   <td className="px-4 py-2.5"><span className="badge badge-ok">{SCOPE_LABELS[r.scope] ?? r.scope}</span></td>
-                  <td className="px-4 py-2.5 text-xs text-zinc-400">{r.salesperson?.name ?? r.salesperson?.email ?? '—'}</td>
-                  <td className="px-4 py-2.5 text-xs text-zinc-400">{r.product?.name ?? r.product?.sku ?? '—'}</td>
+                  <td className="px-4 py-2.5 text-xs text-zinc-500 dark:text-zinc-400">{r.salesperson?.name ?? r.salesperson?.email ?? '—'}</td>
+                  <td className="px-4 py-2.5 text-xs text-zinc-500 dark:text-zinc-400">{r.product?.name ?? r.product?.sku ?? '—'}</td>
                   <td className="px-4 py-2.5 text-xs font-mono text-zinc-500">{r.tierFromQty}{r.tierToQty ? ` – ${r.tierToQty}` : '+'}</td>
-                  <td className="px-4 py-2.5 stat-num text-xs text-emerald-400">{fmt(Number(r.rate))}</td>
+                  <td className="px-4 py-2.5 stat-num text-xs text-emerald-500 dark:text-emerald-400">{fmt(Number(r.rate))}</td>
                   <td className="px-4 py-2.5"><span className={`badge ${r.active ? 'badge-ok' : 'badge-out'}`}>{r.active ? 'Active' : 'Inactive'}</span></td>
                   <td className="px-4 py-2.5 text-xs font-mono text-zinc-600">{new Date(r.createdAt).toLocaleDateString()}</td>
                   <td className="px-4 py-2.5 text-right flex gap-2 justify-end">
-                    <button onClick={() => edit(r)} className="text-xs text-blue-400 hover:text-blue-300">Edit</button>
-                    <button onClick={() => remove(r.id)} className="text-red-400"><Trash2 className="w-4 h-4" /></button>
+                    <button onClick={() => edit(r)} className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">Edit</button>
+                    <button onClick={() => remove(r.id)} className="text-red-500 dark:text-red-400"><Trash2 className="w-4 h-4" /></button>
                   </td>
                 </tr>
               ))}

@@ -35,14 +35,14 @@ export default function SalesPlanPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Sales Plan</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Sales Plan</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Budget vs actual per product/month (CF19 19 Sells plan)</p>
         </div>
         <input type="month" className="input w-auto" value={month} onChange={e => setMonth(e.target.value)} />
       </div>
 
       <div className="glass-card p-5">
-        <h2 className="text-sm font-semibold mb-3 flex items-center gap-2"><Plus className="w-4 h-4 text-blue-400" /> Set Plan</h2>
+        <h2 className="text-sm font-semibold mb-3 flex items-center gap-2"><Plus className="w-4 h-4 text-blue-600 dark:text-blue-400" /> Set Plan</h2>
         <form onSubmit={add} className="grid grid-cols-2 md:grid-cols-4 gap-3 items-end">
           <select className="input w-full" value={form.productId} onChange={e => setForm({ ...form, productId: e.target.value })} required>
             <option value="">Product…</option>{products.map((p: any) => <option key={p.id} value={p.id}>{p.sku}</option>)}
@@ -54,26 +54,26 @@ export default function SalesPlanPage() {
       </div>
 
       <div className="glass-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-zinc-800 flex items-center gap-2">
-          <Target className="w-4 h-4 text-emerald-400" /><h2 className="text-sm font-semibold text-zinc-100">Budget vs Actual</h2>
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center gap-2">
+          <Target className="w-4 h-4 text-emerald-500 dark:text-emerald-400" /><h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Budget vs Actual</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800">
+              <tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Product', 'Plan Qty', 'Actual Qty', 'Plan Value', 'Actual Value', 'Variance', 'Achievement'].map(h => (
                   <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {rows.map((r, i) => (
-                <tr key={i} className="hover:bg-white/[0.02]">
-                  <td className="px-4 py-2.5 text-sm text-zinc-300">{r.sku} — {r.name}</td>
-                  <td className="px-4 py-2.5 stat-num text-sm text-zinc-400">{r.plannedQty}</td>
-                  <td className="px-4 py-2.5 stat-num text-sm text-zinc-300">{r.actualQty}</td>
-                  <td className="px-4 py-2.5 stat-num text-sm text-zinc-400">{fmt(r.plannedValue)}</td>
-                  <td className="px-4 py-2.5 stat-num text-sm text-zinc-300">{fmt(r.actualValue)}</td>
+                <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+                  <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{r.sku} — {r.name}</td>
+                  <td className="px-4 py-2.5 stat-num text-sm text-zinc-500 dark:text-zinc-400">{r.plannedQty}</td>
+                  <td className="px-4 py-2.5 stat-num text-sm text-zinc-600 dark:text-zinc-300">{r.actualQty}</td>
+                  <td className="px-4 py-2.5 stat-num text-sm text-zinc-500 dark:text-zinc-400">{fmt(r.plannedValue)}</td>
+                  <td className="px-4 py-2.5 stat-num text-sm text-zinc-600 dark:text-zinc-300">{fmt(r.actualValue)}</td>
                   <td className="px-4 py-2.5 stat-num text-sm" style={{ color: r.varianceQty >= 0 ? 'var(--accent-emerald)' : 'var(--accent-red)' }}>{r.varianceQty}</td>
                   <td className="px-4 py-2.5 text-xs font-mono" style={{ color: r.achievementPct >= 100 ? 'var(--accent-emerald)' : 'var(--accent-amber)' }}>{r.achievementPct.toFixed(0)}%</td>
                 </tr>

@@ -52,7 +52,7 @@ export default async function SalesPage() {
     <div className="space-y-6 animate-fade-in">
       <Breadcrumb />
       <div>
-        <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Sales History</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Sales History</h1>
         <p className="text-sm text-zinc-500 font-mono mt-0.5">{sales.length} recent transactions</p>
       </div>
 
@@ -84,9 +84,9 @@ export default async function SalesPage() {
         ].map(t => {
           const Icon = t.icon
           const colors: Record<string, string> = {
-            blue:   'bg-blue-500/10 border-blue-500/20 text-blue-400',
-            emerald:'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
-            purple: 'bg-purple-500/10 border-purple-500/20 text-purple-400',
+            blue:   'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',
+            emerald:'bg-emerald-500/10 border-emerald-500/20 text-emerald-500 dark:text-emerald-400',
+            purple: 'bg-purple-500/10 border-purple-500/20 text-purple-600 dark:text-purple-400',
           }
           const cls = colors[t.accent]
           return (
@@ -95,7 +95,7 @@ export default async function SalesPage() {
                 <Icon className="w-4 h-4" />
               </div>
               <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mb-2">{t.period}</p>
-              <p className="stat-num text-xl text-zinc-100">{fmt(t.revenue)}</p>
+              <p className="stat-num text-xl text-zinc-900 dark:text-zinc-100">{fmt(t.revenue)}</p>
               <p className="text-xs font-mono text-zinc-500 mt-1">revenue · {t.count} sales</p>
               <p className="text-xs font-mono text-emerald-500 mt-0.5">{fmt(t.profit)} profit</p>
                {'discount' in t && (t as any).discount > 0 && (

@@ -14,11 +14,11 @@ interface Props {
 }
 
 const ACCENT = {
-  blue:    { bg: 'bg-blue-500/10',    border: 'border-blue-500/20',    icon: 'text-blue-400',    val: 'text-blue-100'    },
-  emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', icon: 'text-emerald-400', val: 'text-emerald-100' },
-  amber:   { bg: 'bg-amber-500/10',   border: 'border-amber-500/20',   icon: 'text-amber-400',   val: 'text-amber-100'   },
-  red:     { bg: 'bg-red-500/10',     border: 'border-red-500/20',     icon: 'text-red-400',     val: 'text-red-100'     },
-  purple:  { bg: 'bg-purple-500/10',  border: 'border-purple-500/20',  icon: 'text-purple-400',  val: 'text-purple-100'  },
+  blue:    { bg: 'bg-blue-500/10',    border: 'border-blue-500/20',    icon: 'text-blue-600 dark:text-blue-400',    val: 'text-blue-100'    },
+  emerald: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', icon: 'text-emerald-500 dark:text-emerald-400', val: 'text-emerald-100' },
+  amber:   { bg: 'bg-amber-500/10',   border: 'border-amber-500/20',   icon: 'text-amber-500 dark:text-amber-400',   val: 'text-amber-100'   },
+  red:     { bg: 'bg-red-500/10',     border: 'border-red-500/20',     icon: 'text-red-500 dark:text-red-400',     val: 'text-red-100'     },
+  purple:  { bg: 'bg-purple-500/10',  border: 'border-purple-500/20',  icon: 'text-purple-600 dark:text-purple-400',  val: 'text-purple-100'  },
   rose:    { bg: 'bg-rose-500/10',    border: 'border-rose-500/20',    icon: 'text-rose-400',    val: 'text-rose-100'    },
 }
 
@@ -29,7 +29,7 @@ export default function AnalyticsKPICard({ title, value, subtitle, trend, icon: 
   const c = ACCENT[accent]
 
   const TrendIcon   = trend === undefined || trend === 0 ? Minus : trend > 0 ? TrendingUp : TrendingDown
-  const trendColor  = trend === undefined || trend === 0 ? 'text-zinc-500' : trend > 0 ? 'text-emerald-400' : 'text-red-400'
+  const trendColor  = trend === undefined || trend === 0 ? 'text-zinc-500' : trend > 0 ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'
   const trendLabel  = trend === undefined ? '' : trend === 0 ? 'no change' : `${trend > 0 ? '+' : ''}${trend}% vs prior`
 
   return (
@@ -47,13 +47,13 @@ export default function AnalyticsKPICard({ title, value, subtitle, trend, icon: 
       </div>
 
       <p className={cn('text-2xl stat-num', c.val)}>{value}</p>
-      <p className="text-xs font-medium text-zinc-400 mt-1">{title}</p>
+      <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mt-1">{title}</p>
       {subtitle && <p className="text-[11px] font-mono text-zinc-600 mt-0.5">{subtitle}</p>}
 
       {/* Health score bar */}
       {scoreBar !== undefined && (
         <div className="mt-3">
-          <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+          <div className="h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
             <div
               className={cn('h-full rounded-full transition-all duration-500', SCORE_COLOR(scoreBar))}
               style={{ width: `${scoreBar}%` }}

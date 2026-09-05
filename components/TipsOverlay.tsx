@@ -101,14 +101,14 @@ export default function TipsOverlay({ isOpen, onClose }: Props) {
             transition={{ duration: 0.2 }}
             className="glass-card w-full max-w-3xl shadow-2xl flex flex-col max-h-[85vh]"
           >
-            <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800 flex-shrink-0">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex-shrink-0">
               <div className="flex items-center gap-2">
-                <Info className="w-4 h-4 text-blue-400" />
-                <h2 className="text-sm font-semibold text-zinc-100">How to Use WAYU Inventory</h2>
+                <Info className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">How to Use WAYU Inventory</h2>
               </div>
               <button
                 onClick={handleGotIt}
-                className="p-1.5 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors"
+                className="p-1.5 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -127,8 +127,8 @@ export default function TipsOverlay({ isOpen, onClose }: Props) {
                         return (
                           <div key={tip.id} className="rounded-lg p-4" style={{ background: 'var(--bg-muted)', border: '1px solid var(--border)' }}>
                             <div className="flex items-center gap-2 mb-2">
-                              {Icon && <Icon className="w-4 h-4 text-blue-400" />}
-                              <p className="text-xs font-medium text-zinc-200">{tip.title}</p>
+                              {Icon && <Icon className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
+                              <p className="text-xs font-medium text-zinc-700 dark:text-zinc-200">{tip.title}</p>
                             </div>
                             <p className="text-xs text-zinc-500 leading-relaxed">{tip.description}</p>
                           </div>
@@ -140,7 +140,7 @@ export default function TipsOverlay({ isOpen, onClose }: Props) {
               })}
             </div>
 
-            <div className="flex items-center justify-end px-5 py-4 border-t border-zinc-800 flex-shrink-0">
+            <div className="flex items-center justify-end px-5 py-4 border-t border-zinc-200 dark:border-zinc-800 flex-shrink-0">
               <button onClick={handleGotIt} className="btn-primary text-xs px-4 py-2">
                 Got It
               </button>

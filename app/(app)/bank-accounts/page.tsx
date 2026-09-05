@@ -42,7 +42,7 @@ export default function BankAccountsPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Bank Accounts</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Bank Accounts</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Manage bank accounts and current balances</p>
         </div>
         <button onClick={() => setShowForm(!showForm)} className="btn-primary flex items-center gap-2"><Plus className="w-4 h-4" /> New Account</button>
@@ -69,7 +69,7 @@ export default function BankAccountsPage() {
           <div key={a.id} className="glass-card p-5">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <h3 className="text-sm font-semibold text-zinc-100">{a.accountName}</h3>
+                <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{a.accountName}</h3>
                 <p className="text-xs font-mono text-zinc-500">{a.accountNumber} — {a.bankName}</p>
               </div>
               <span className={`badge ${a.isActive ? 'badge-in' : 'badge-low'}`}>{a.isActive ? 'Active' : 'Inactive'}</span>
@@ -80,7 +80,7 @@ export default function BankAccountsPage() {
             </div>
             <div className="flex gap-2">
               <button onClick={() => toggleActive(a.id, a.isActive)} className="text-xs px-2 py-1 rounded btn-secondary">{a.isActive ? 'Deactivate' : 'Activate'}</button>
-              <button onClick={() => remove(a.id)} className="text-xs px-2 py-1 rounded text-red-400 hover:bg-red-500/10"><Trash2 className="w-3 h-3" /></button>
+              <button onClick={() => remove(a.id)} className="text-xs px-2 py-1 rounded text-red-500 dark:text-red-400 hover:bg-red-500/10"><Trash2 className="w-3 h-3" /></button>
             </div>
           </div>
         ))}

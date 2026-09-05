@@ -21,8 +21,8 @@ const STATUS_ICON: Record<string, any> = {
   SUCCESS: CheckCircle, FAILED: XCircle, RUNNING: RefreshCw, PENDING: Clock,
 }
 const STATUS_COLOR: Record<string, string> = {
-  SUCCESS: 'text-emerald-400', FAILED: 'text-red-400',
-  RUNNING: 'text-blue-400 animate-spin', PENDING: 'text-zinc-500',
+  SUCCESS: 'text-emerald-500 dark:text-emerald-400', FAILED: 'text-red-500 dark:text-red-400',
+  RUNNING: 'text-blue-600 dark:text-blue-400 animate-spin', PENDING: 'text-zinc-500',
 }
 
 export default function BackupPage() {
@@ -57,7 +57,7 @@ export default function BackupPage() {
     <div className="space-y-6 animate-fade-in max-w-3xl">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Backups</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Backups</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Database backup history and manual triggers</p>
         </div>
         <button onClick={triggerBackup} disabled={running} className="btn-primary flex items-center gap-2">
@@ -68,8 +68,8 @@ export default function BackupPage() {
       {message && (
         <div className={`px-4 py-3 rounded-lg border text-xs font-mono ${
           message.startsWith('✓')
-            ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-            : 'bg-red-500/10 border-red-500/20 text-red-400'
+            ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500 dark:text-emerald-400'
+            : 'bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400'
         }`}>
           {message}
         </div>
@@ -86,7 +86,7 @@ export default function BackupPage() {
           ].map(s => (
             <div key={s.label}>
               <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mb-1">{s.label}</p>
-              <p className="font-mono text-zinc-300">{s.value}</p>
+              <p className="font-mono text-zinc-600 dark:text-zinc-300">{s.value}</p>
             </div>
           ))}
         </div>
@@ -97,13 +97,13 @@ export default function BackupPage() {
 
       {/* Backup history */}
       <div className="glass-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-zinc-800">
-          <h2 className="text-sm font-semibold text-zinc-100">Backup History</h2>
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800">
+          <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Backup History</h2>
         </div>
         {loading ? (
           <div className="py-12 flex justify-center"><Loader2 className="w-5 h-5 animate-spin text-zinc-600" /></div>
         ) : (
-          <div className="divide-y divide-zinc-800/50">
+          <div className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
             {backups.map(b => {
               const Icon = STATUS_ICON[b.status] ?? Clock
               const colorCls = STATUS_COLOR[b.status] ?? 'text-zinc-500'
@@ -111,14 +111,14 @@ export default function BackupPage() {
                 <div key={b.id} className="flex items-center gap-4 px-5 py-3">
                   <Icon className={`w-4 h-4 flex-shrink-0 ${colorCls}`} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-mono text-zinc-300 truncate">{b.filename}</p>
+                    <p className="text-xs font-mono text-zinc-600 dark:text-zinc-300 truncate">{b.filename}</p>
                     <p className="text-[10px] font-mono text-zinc-600 mt-0.5">
                       {b.storagePath ?? '—'} · by {b.triggeredBy.length > 20 ? 'user' : b.triggeredBy}
                     </p>
-                    {b.errorMsg && <p className="text-[10px] font-mono text-red-400 mt-0.5">{b.errorMsg}</p>}
+                    {b.errorMsg && <p className="text-[10px] font-mono text-red-500 dark:text-red-400 mt-0.5">{b.errorMsg}</p>}
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="text-xs font-mono text-zinc-400">{formatBytes(b.sizeBytes)}</p>
+                    <p className="text-xs font-mono text-zinc-500 dark:text-zinc-400">{formatBytes(b.sizeBytes)}</p>
                     <p className="text-[10px] font-mono text-zinc-600 mt-0.5">{formatDate(b.startedAt)}</p>
                   </div>
                 </div>

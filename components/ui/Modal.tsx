@@ -84,11 +84,11 @@ export default function Modal({
             className={`glass-card w-full ${SIZE_MAP[size]} shadow-2xl flex flex-col max-h-[85vh]`}
           >
             {title && (
-              <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800 flex-shrink-0">
-                <h2 className="text-sm font-semibold text-zinc-100">{title}</h2>
+              <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex-shrink-0">
+                <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{title}</h2>
                 <button
                   onClick={onClose}
-                  className="p-1.5 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -98,7 +98,7 @@ export default function Modal({
               {children}
             </div>
             {footer && (
-              <div className="flex items-center gap-3 px-5 py-4 border-t border-zinc-800 flex-shrink-0">
+              <div className="flex items-center gap-3 px-5 py-4 border-t border-zinc-200 dark:border-zinc-800 flex-shrink-0">
                 {footer}
               </div>
             )}

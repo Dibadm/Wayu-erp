@@ -10,13 +10,13 @@ const ACTION_ICONS: Record<string, any> = {
   LOGIN: User, LOGOUT: User, EXPORT: Download, BACKUP: HardDrive,
 }
 const ACTION_COLORS: Record<string, string> = {
-  CREATE: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-  UPDATE: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-  DELETE: 'text-red-400 bg-red-500/10 border-red-500/20',
-  LOGIN:  'text-zinc-400 bg-zinc-500/10 border-zinc-500/20',
-  LOGOUT: 'text-zinc-400 bg-zinc-500/10 border-zinc-500/20',
-  EXPORT: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-  BACKUP: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
+  CREATE: 'text-emerald-500 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+  UPDATE: 'text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20',
+  DELETE: 'text-red-500 dark:text-red-400 bg-red-500/10 border-red-500/20',
+  LOGIN:  'text-zinc-500 dark:text-zinc-400 bg-zinc-500/10 border-zinc-500/20',
+  LOGOUT: 'text-zinc-500 dark:text-zinc-400 bg-zinc-500/10 border-zinc-500/20',
+  EXPORT: 'text-amber-500 dark:text-amber-400 bg-amber-500/10 border-amber-500/20',
+  BACKUP: 'text-purple-600 dark:text-purple-400 bg-purple-500/10 border-purple-500/20',
 }
 
 export default async function AuditPage() {
@@ -34,12 +34,12 @@ export default async function AuditPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Audit Log</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Audit Log</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Complete regulatory change history — {logs.length} entries</p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/10 border border-purple-500/20 rounded-full">
-          <Shield className="w-3.5 h-3.5 text-purple-400" />
-          <span className="text-xs font-mono text-purple-400">ADMIN ONLY</span>
+          <Shield className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+          <span className="text-xs font-mono text-purple-600 dark:text-purple-400">ADMIN ONLY</span>
         </div>
       </div>
 
@@ -47,20 +47,20 @@ export default async function AuditPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800">
+              <tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Timestamp', 'Action', 'Entity', 'Record', 'Changed By', 'IP', 'Reason / Changes'].map(h => (
                   <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {logs.map(log => {
                 const Icon = ACTION_ICONS[log.action] ?? Edit
                 const colorClass = ACTION_COLORS[log.action] ?? ACTION_COLORS.UPDATE
                 const changes = log.changes as Record<string, { before: unknown; after: unknown }> | null
 
                 return (
-                  <tr key={log.id} className="hover:bg-white/[0.02] transition-colors">
+                  <tr key={log.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02] transition-colors">
                     <td className="px-4 py-3 text-xs font-mono text-zinc-500 whitespace-nowrap">
                       {formatDate(log.timestamp)}
                     </td>
@@ -70,26 +70,26 @@ export default async function AuditPage() {
                         {log.action}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-xs font-mono text-zinc-400">{log.entity}</td>
+                    <td className="px-4 py-3 text-xs font-mono text-zinc-500 dark:text-zinc-400">{log.entity}</td>
                     <td className="px-4 py-3">
-                      <p className="text-xs text-zinc-300">{log.entityName ?? '—'}</p>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-300">{log.entityName ?? '—'}</p>
                       <p className="text-[10px] font-mono text-zinc-600 mt-0.5">{log.entityId.slice(0, 8)}…</p>
                     </td>
                     <td className="px-4 py-3">
-                      <p className="text-xs text-zinc-300">{log.user.name ?? '—'}</p>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-300">{log.user.name ?? '—'}</p>
                       <p className="text-[10px] font-mono text-zinc-600">{log.user.email}</p>
                     </td>
                     <td className="px-4 py-3 text-[10px] font-mono text-zinc-600">{log.ipAddress ?? '—'}</td>
                     <td className="px-4 py-3 max-w-xs">
-                      {log.reason && <p className="text-xs text-zinc-400 mb-1">{log.reason}</p>}
+                      {log.reason && <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">{log.reason}</p>}
                       {changes && Object.keys(changes).length > 0 && (
                         <div className="space-y-0.5">
                           {Object.entries(changes).slice(0, 3).map(([field, { before, after }]) => (
                             <p key={field} className="text-[10px] font-mono text-zinc-600">
                               <span className="text-zinc-500">{field}:</span>{' '}
-                              <span className="text-red-400/70">{String(before ?? '∅')}</span>
+                              <span className="text-red-500 dark:text-red-400/70">{String(before ?? '∅')}</span>
                               {' → '}
-                              <span className="text-emerald-400/70">{String(after ?? '∅')}</span>
+                              <span className="text-emerald-500 dark:text-emerald-400/70">{String(after ?? '∅')}</span>
                             </p>
                           ))}
                         </div>

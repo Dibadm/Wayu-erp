@@ -41,7 +41,7 @@ export default function InvestmentsPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Investments</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Investments</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Track company investments</p>
         </div>
         <button onClick={() => { setEditing(null); setForm({ name: '', type: 'FIXED_DEPOSIT', amount: '', expectedReturn: '', startDate: '', maturityDate: '', status: 'ACTIVE', notes: '' }); setShowForm(!showForm) }} className="btn-primary flex items-center gap-2"><Plus className="w-4 h-4" /> {editing ? 'Cancel' : 'New Investment'}</button>
@@ -71,24 +71,24 @@ export default function InvestmentsPage() {
       <div className="glass-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead><tr className="border-b border-zinc-800">
+            <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
               {['Name', 'Type', 'Amount', 'Expected Return', 'Start Date', 'Maturity', 'Status', 'Created By', 'Actions'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
             </tr></thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {loading ? (
                 <tr><td colSpan={9} className="px-4 py-10 flex justify-center"><RefreshCw className="w-5 h-5 animate-spin text-zinc-500" /></td></tr>
               ) : investments.map(inv => (
-                <tr key={inv.id} className="hover:bg-white/[0.02]">
-                  <td className="px-4 py-3 text-sm text-zinc-200">{inv.name}</td>
+                <tr key={inv.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+                  <td className="px-4 py-3 text-sm text-zinc-700 dark:text-zinc-200">{inv.name}</td>
                   <td className="px-4 py-3 text-xs text-zinc-500">{inv.type.replace('_', ' ')}</td>
                   <td className="px-4 py-3 stat-num text-sm">{fmt(inv.amount)}</td>
-                  <td className="px-4 py-3 stat-num text-sm text-emerald-400">{fmt(inv.expectedReturn)}</td>
+                  <td className="px-4 py-3 stat-num text-sm text-emerald-500 dark:text-emerald-400">{fmt(inv.expectedReturn)}</td>
                   <td className="px-4 py-3 text-xs font-mono text-zinc-500">{new Date(inv.startDate).toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-xs font-mono text-zinc-500">{inv.maturityDate ? new Date(inv.maturityDate).toLocaleDateString() : '—'}</td>
                   <td className="px-4 py-3"><span className="badge badge-in">{inv.status}</span></td>
                   <td className="px-4 py-3 text-xs text-zinc-500">{inv.createdBy?.name ?? '—'}</td>
                   <td className="px-4 py-3">
-                    <button onClick={() => startEdit(inv)} className="text-blue-400 hover:text-blue-300 mr-2"><span className="text-xs font-mono">Edit</span></button>
+                    <button onClick={() => startEdit(inv)} className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 mr-2"><span className="text-xs font-mono">Edit</span></button>
                   </td>
                 </tr>
               ))}

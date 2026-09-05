@@ -48,17 +48,17 @@ export default function AIAnalyticsReport({ period, from, to }: Props) {
       <div className="px-5 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-            <Bot className="w-4 h-4 text-blue-400" />
+            <Bot className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-zinc-100">AI Analytics Report</h3>
+            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">AI Analytics Report</h3>
             <p className="text-xs font-mono text-zinc-500 mt-0.5">
               {genAt ? `Generated ${formatDate(genAt)}${provider ? ` · via ${provider}` : ''}` : 'Executive summary with business insights'}
             </p>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          {error && <p className="text-xs font-mono text-red-400">{error}</p>}
+          {error && <p className="text-xs font-mono text-red-500 dark:text-red-400">{error}</p>}
           <button
             onClick={generate}
             disabled={loading}
@@ -74,7 +74,7 @@ export default function AIAnalyticsReport({ period, from, to }: Props) {
           {report && (
             <button
               onClick={() => setOpen(v => !v)}
-              className="p-2 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors"
+              className="p-2 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
             >
               {open ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
             </button>
@@ -93,8 +93,8 @@ export default function AIAnalyticsReport({ period, from, to }: Props) {
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="border-t border-zinc-800 px-5 py-5">
-              <pre className="whitespace-pre-wrap font-sans text-sm text-zinc-300 leading-relaxed">{report}</pre>
+            <div className="border-t border-zinc-200 dark:border-zinc-800 px-5 py-5">
+              <pre className="whitespace-pre-wrap font-sans text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">{report}</pre>
             </div>
           </motion.div>
         )}

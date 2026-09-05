@@ -22,12 +22,12 @@ export default function BudgetProgress({ category, planned, actual, formatCurren
       onMouseLeave={() => setHovered(false)}
     >
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-zinc-400">{category.replace(/_/g, ' ')}</span>
+        <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">{category.replace(/_/g, ' ')}</span>
         <span className="text-[10px] font-mono text-zinc-600">
           {hovered ? `${pct.toFixed(1)}%` : `${formatCurrency(actual)} / ${formatCurrency(planned)}`}
         </span>
       </div>
-      <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
+      <div className="h-2 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
         <div
           className="h-full rounded-full transition-all duration-500"
           style={{
@@ -41,7 +41,7 @@ export default function BudgetProgress({ category, planned, actual, formatCurren
           Variance: {formatCurrency(Math.abs(variance))} ({variance >= 0 ? 'under' : 'over'})
         </span>
         {overBudget && (
-          <span className="text-[10px] font-mono text-red-400">Over budget</span>
+          <span className="text-[10px] font-mono text-red-500 dark:text-red-400">Over budget</span>
         )}
       </div>
     </div>

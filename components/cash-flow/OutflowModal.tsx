@@ -90,11 +90,11 @@ export default function OutflowModal({ outflow, trigger, onSuccess }: Props) {
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-                    <TrendingDown className="w-4 h-4 text-red-400" />
+                    <TrendingDown className="w-4 h-4 text-red-500 dark:text-red-400" />
                   </div>
-                  <h2 className="text-sm font-semibold text-zinc-100">{isEdit ? 'Edit Outflow' : 'New Outflow'}</h2>
+                  <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{isEdit ? 'Edit Outflow' : 'New Outflow'}</h2>
                 </div>
-                <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors">
+                <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -140,7 +140,7 @@ export default function OutflowModal({ outflow, trigger, onSuccess }: Props) {
                 {error && (
                   <div className="flex items-center gap-2 px-3 py-2 bg-red-500/10 border border-red-500/20 rounded-lg">
                     <span className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
-                    <p className="text-xs font-mono text-red-400">{error}</p>
+                    <p className="text-xs font-mono text-red-500 dark:text-red-400">{error}</p>
                   </div>
                 )}
 

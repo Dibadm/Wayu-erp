@@ -20,7 +20,7 @@ export default function BankAccountCard({ account, formatCurrency }: Props) {
     <div className="glass-card p-4 hover:border-white/10 transition-colors">
       <div className="flex items-start justify-between mb-2">
         <div>
-          <h3 className="text-sm font-semibold text-zinc-100">{account.accountName}</h3>
+          <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{account.accountName}</h3>
           <p className="text-[10px] font-mono text-zinc-600">{account.bankName} · {account.accountType.replace('_', ' ')}</p>
         </div>
         <span className={`badge ${account.isActive ? 'badge-in' : 'badge-low'}`}>{account.isActive ? 'Active' : 'Inactive'}</span>

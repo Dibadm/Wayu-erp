@@ -93,12 +93,12 @@ export default function ReceiveGoodsModal({ poId, poNumber, items }: Props) {
               exit={{ opacity: 0, scale: 0.96 }} transition={{ duration: 0.2 }}
               className="glass-card w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl">
 
-              <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800 flex-shrink-0">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex-shrink-0">
                 <div>
-                  <h2 className="text-sm font-semibold text-zinc-100">Receive Goods — {poNumber}</h2>
+                  <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Receive Goods — {poNumber}</h2>
                   <p className="text-xs font-mono text-zinc-500 mt-0.5">Stock will update automatically on confirm</p>
                 </div>
-                <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-white/5 text-zinc-500"><X className="w-4 h-4" /></button>
+                <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500"><X className="w-4 h-4" /></button>
               </div>
 
               <div className="flex-1 overflow-y-auto p-5 space-y-4">
@@ -106,14 +106,14 @@ export default function ReceiveGoodsModal({ poId, poNumber, items }: Props) {
                   <div className="space-y-3">
                     {result.received.length > 0 && (
                       <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-2"><CheckCircle className="w-4 h-4 text-emerald-400" /><p className="text-xs font-semibold text-emerald-400">Stock Updated</p></div>
-                        {result.received.map(r => <p key={r} className="text-xs font-mono text-emerald-300">✓ {r}</p>)}
+                        <div className="flex items-center gap-2 mb-2"><CheckCircle className="w-4 h-4 text-emerald-500 dark:text-emerald-400" /><p className="text-xs font-semibold text-emerald-500 dark:text-emerald-400">Stock Updated</p></div>
+                        {result.received.map(r => <p key={r} className="text-xs font-mono text-emerald-400 dark:text-emerald-300">✓ {r}</p>)}
                       </div>
                     )}
                     {result.errors.length > 0 && (
                       <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-2"><AlertTriangle className="w-4 h-4 text-red-400" /><p className="text-xs font-semibold text-red-400">Issues</p></div>
-                        {result.errors.map(e => <p key={e} className="text-xs font-mono text-red-300">✗ {e}</p>)}
+                        <div className="flex items-center gap-2 mb-2"><AlertTriangle className="w-4 h-4 text-red-500 dark:text-red-400" /><p className="text-xs font-semibold text-red-500 dark:text-red-400">Issues</p></div>
+                        {result.errors.map(e => <p key={e} className="text-xs font-mono text-red-400 dark:text-red-300">✗ {e}</p>)}
                       </div>
                     )}
                     <button onClick={() => setOpen(false)} className="btn-primary w-full">Done</button>
@@ -132,10 +132,10 @@ export default function ReceiveGoodsModal({ poId, poNumber, items }: Props) {
                       const rec = receiving[item.id] ?? { qty: 0, batch: '', expiry: '' }
                       const remaining = item.quantityOrdered - item.quantityReceived
                       return (
-                        <div key={item.id} className="bg-zinc-900/40 border border-zinc-800 rounded-lg p-4 space-y-3">
+                        <div key={item.id} className="bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-lg p-4 space-y-3">
                           <div className="flex items-start justify-between">
                             <div>
-                              <p className="text-xs font-medium text-zinc-200">{item.product.name}</p>
+                              <p className="text-xs font-medium text-zinc-700 dark:text-zinc-200">{item.product.name}</p>
                               <p className="sku mt-0.5">{item.product.sku}</p>
                             </div>
                             <span className="text-xs font-mono text-zinc-500">{item.quantityReceived}/{item.quantityOrdered} received</span>
@@ -162,13 +162,13 @@ export default function ReceiveGoodsModal({ poId, poNumber, items }: Props) {
                       )
                     })}
 
-                    {error && <p className="text-xs font-mono text-red-400">{error}</p>}
+                    {error && <p className="text-xs font-mono text-red-500 dark:text-red-400">{error}</p>}
                   </>
                 )}
               </div>
 
               {!result && (
-                <div className="flex items-center gap-3 px-5 py-4 border-t border-zinc-800 flex-shrink-0">
+                <div className="flex items-center gap-3 px-5 py-4 border-t border-zinc-200 dark:border-zinc-800 flex-shrink-0">
                   <button onClick={handleSubmit} disabled={loading} className="btn-primary flex items-center gap-2">
                     {loading ? <><Loader2 className="w-4 h-4 animate-spin" />Processing...</> : <><PackageCheck className="w-4 h-4" />Confirm Receipt</>}
                   </button>

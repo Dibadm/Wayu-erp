@@ -26,7 +26,7 @@ export default async function CustomersPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Customers</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Customers</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">
             {customers.length} registered · ETB {totalRevenue.toLocaleString('en-ET', { minimumFractionDigits: 2 })} total revenue
           </p>
@@ -38,26 +38,26 @@ export default async function CustomersPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800">
+              <tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Customer', 'Contact', 'Total Purchases', 'Lifetime Value', 'Since', ''].map(h => (
                   <th key={h} className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {customers.map(c => {
                 const ltv = c.sales.reduce((s, sale) => s + Number(sale.total), 0)
                 return (
-                  <tr key={c.id} className="hover:bg-white/[0.02] transition-colors group">
+                  <tr key={c.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02] transition-colors group">
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
-                          <span className="text-xs font-semibold text-blue-400">
+                          <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">
                             {c.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
                           </span>
                         </div>
                         <div>
-                          <p className="text-xs font-medium text-zinc-200">{c.name}</p>
+                          <p className="text-xs font-medium text-zinc-700 dark:text-zinc-200">{c.name}</p>
                           {c.address && <p className="text-[10px] font-mono text-zinc-600 mt-0.5 truncate max-w-xs">{c.address}</p>}
                         </div>
                       </div>
@@ -74,14 +74,14 @@ export default async function CustomersPage() {
                         </div>
                       )}
                     </td>
-                    <td className="px-5 py-3 stat-num text-sm text-zinc-300">{c._count.sales}</td>
-                    <td className="px-5 py-3 stat-num text-sm text-emerald-400">
+                    <td className="px-5 py-3 stat-num text-sm text-zinc-600 dark:text-zinc-300">{c._count.sales}</td>
+                    <td className="px-5 py-3 stat-num text-sm text-emerald-500 dark:text-emerald-400">
                       ETB {ltv.toLocaleString('en-ET', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-5 py-3 text-xs font-mono text-zinc-600">{formatDate(c.createdAt)}</td>
                     <td className="px-5 py-3">
                       <Link href={`/customers/${c.id}`}
-                        className="text-xs font-mono text-blue-500 hover:text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                        className="text-xs font-mono text-blue-500 hover:text-blue-500 dark:hover:text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity">
                         VIEW →
                       </Link>
                     </td>

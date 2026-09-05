@@ -38,13 +38,13 @@ interface Location { id: string; code: string; name: string }
 // ─── Status config ─────────────────────────────────────────────────────────────
 
 const STATUS_CONFIG: Record<string, { label: string; cls: string }> = {
-  DRAFT:              { label: 'Draft',    cls: 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20' },
-  PENDING:            { label: 'Pending',  cls: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
-  APPROVED:           { label: 'Approved', cls: 'bg-purple-500/10 text-purple-400 border-purple-500/20' },
-  ORDERED:            { label: 'Ordered',  cls: 'bg-amber-500/10 text-amber-400 border-amber-500/20' },
+  DRAFT:              { label: 'Draft',    cls: 'bg-zinc-500/10 text-zinc-500 dark:text-zinc-400 border-zinc-500/20' },
+  PENDING:            { label: 'Pending',  cls: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20' },
+  APPROVED:           { label: 'Approved', cls: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20' },
+  ORDERED:            { label: 'Ordered',  cls: 'bg-amber-500/10 text-amber-500 dark:text-amber-400 border-amber-500/20' },
   PARTIALLY_RECEIVED: { label: 'Partial',  cls: 'bg-orange-500/10 text-orange-400 border-orange-500/20' },
-  COMPLETED:          { label: 'Completed',cls: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
-  CANCELLED:          { label: 'Cancelled',cls: 'bg-red-500/10 text-red-400 border-red-500/20' },
+  COMPLETED:          { label: 'Completed',cls: 'bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border-emerald-500/20' },
+  CANCELLED:          { label: 'Cancelled',cls: 'bg-red-500/10 text-red-500 dark:text-red-400 border-red-500/20' },
 }
 
 const STATUS_FLOW = ['DRAFT', 'PENDING', 'APPROVED', 'ORDERED']
@@ -153,7 +153,7 @@ export default function PODetailPage() {
   return (
     <div className="space-y-6 animate-fade-in max-w-4xl">
       {/* Back */}
-      <Link href="/purchase-orders" className="inline-flex items-center gap-1 text-xs font-mono text-zinc-500 hover:text-zinc-300 transition-colors">
+      <Link href="/purchase-orders" className="inline-flex items-center gap-1 text-xs font-mono text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
         <ChevronLeft className="w-3 h-3" /> Purchase Orders
       </Link>
 
@@ -162,7 +162,7 @@ export default function PODetailPage() {
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <span className="font-mono text-lg text-blue-400 font-semibold">{po.poNumber}</span>
+              <span className="font-mono text-lg text-blue-600 dark:text-blue-400 font-semibold">{po.poNumber}</span>
               <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono border ${cfg.cls}`}>{cfg.label}</span>
             </div>
             <div className="flex items-center gap-2 text-xs font-mono text-zinc-500 mb-1">
@@ -188,7 +188,7 @@ export default function PODetailPage() {
           <div className="flex flex-col gap-2 items-end">
             <div className="text-right">
               <p className="text-xs font-mono text-zinc-600">Total Cost</p>
-              <p className="stat-num text-xl text-zinc-100">
+              <p className="stat-num text-xl text-zinc-900 dark:text-zinc-100">
                 ETB {Number(po.totalCost).toLocaleString('en-ET', { minimumFractionDigits: 2 })}
               </p>
             </div>
@@ -206,7 +206,7 @@ export default function PODetailPage() {
               {canReceive && (
                 <button
                   onClick={() => setShowReceive(v => !v)}
-                  className="flex items-center gap-1.5 px-3 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/15 rounded-lg text-xs font-medium transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 dark:text-emerald-400 hover:bg-emerald-500/15 rounded-lg text-xs font-medium transition-colors"
                 >
                   <ArrowDownLeft className="w-3.5 h-3.5" />
                   Receive Goods
@@ -226,33 +226,33 @@ export default function PODetailPage() {
         </div>
 
         {/* Meta row */}
-        <div className="grid grid-cols-3 gap-4 mt-5 pt-4 border-t border-zinc-800 text-xs font-mono">
+        <div className="grid grid-cols-3 gap-4 mt-5 pt-4 border-t border-zinc-200 dark:border-zinc-800 text-xs font-mono">
           <div>
             <p className="text-zinc-600 uppercase tracking-widest text-[10px] mb-1">Created By</p>
-            <p className="text-zinc-400">{po.createdBy.name ?? po.createdBy.email.split('@')[0]}</p>
+            <p className="text-zinc-500 dark:text-zinc-400">{po.createdBy.name ?? po.createdBy.email.split('@')[0]}</p>
           </div>
           <div>
             <p className="text-zinc-600 uppercase tracking-widest text-[10px] mb-1">Order Date</p>
-            <p className="text-zinc-400">{formatDate(po.orderDate)}</p>
+            <p className="text-zinc-500 dark:text-zinc-400">{formatDate(po.orderDate)}</p>
           </div>
           <div>
             <p className="text-zinc-600 uppercase tracking-widest text-[10px] mb-1">Items</p>
-            <p className="text-zinc-400">{po.items.length} product{po.items.length !== 1 ? 's' : ''}</p>
+            <p className="text-zinc-500 dark:text-zinc-400">{po.items.length} product{po.items.length !== 1 ? 's' : ''}</p>
           </div>
         </div>
       </div>
 
       {error && (
         <div className="flex items-center gap-2 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl">
-          <AlertTriangle className="w-4 h-4 text-red-400 flex-shrink-0" />
-          <p className="text-xs font-mono text-red-400">{error}</p>
+          <AlertTriangle className="w-4 h-4 text-red-500 dark:text-red-400 flex-shrink-0" />
+          <p className="text-xs font-mono text-red-500 dark:text-red-400">{error}</p>
         </div>
       )}
 
       {receiveResult && (
         <div className={`px-4 py-3 rounded-xl border text-xs font-mono space-y-1 ${receiveResult.success ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-red-500/10 border-red-500/20'}`}>
-          {receiveResult.received.map((r, i) => <p key={i} className="text-emerald-400">✓ {r}</p>)}
-          {receiveResult.errors.map((e, i) => <p key={i} className="text-red-400">✗ {e}</p>)}
+          {receiveResult.received.map((r, i) => <p key={i} className="text-emerald-500 dark:text-emerald-400">✓ {r}</p>)}
+          {receiveResult.errors.map((e, i) => <p key={i} className="text-red-500 dark:text-red-400">✗ {e}</p>)}
         </div>
       )}
 
@@ -265,8 +265,8 @@ export default function PODetailPage() {
             exit={{ opacity: 0, height: 0 }}
             className="glass-card overflow-hidden"
           >
-            <div className="px-5 py-4 border-b border-zinc-800">
-              <h2 className="text-sm font-semibold text-zinc-100">Receive Goods</h2>
+            <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800">
+              <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Receive Goods</h2>
               <p className="text-xs font-mono text-zinc-500 mt-0.5">Enter quantities received. Inventory and batches will be updated automatically.</p>
             </div>
             <div className="p-5 space-y-4">
@@ -283,10 +283,10 @@ export default function PODetailPage() {
                   const remaining = item.quantityOrdered - item.quantityReceived
                   if (remaining <= 0) return null
                   return (
-                    <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
+                    <div key={item.id} className="bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-4">
                       <div className="flex items-center justify-between mb-3">
                         <div>
-                          <p className="text-xs font-medium text-zinc-200">{item.product.name}</p>
+                          <p className="text-xs font-medium text-zinc-700 dark:text-zinc-200">{item.product.name}</p>
                           <p className="sku mt-0.5">{item.product.sku}</p>
                         </div>
                         <div className="text-right text-xs font-mono text-zinc-500">
@@ -332,40 +332,40 @@ export default function PODetailPage() {
 
       {/* Line items table */}
       <div className="glass-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-zinc-800">
-          <h2 className="text-sm font-semibold text-zinc-100">Order Items</h2>
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800">
+          <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Order Items</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800">
+              <tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Product', 'Ordered', 'Received', 'Remaining', 'Unit Cost', 'Total', 'Batch', 'Expiry'].map(h => (
                   <th key={h} className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {po.items.map(item => {
                 const remaining = item.quantityOrdered - item.quantityReceived
                 const complete  = remaining <= 0
                 return (
-                  <tr key={item.id} className="hover:bg-white/[0.02] transition-colors">
+                  <tr key={item.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02] transition-colors">
                     <td className="px-5 py-3">
-                      <p className="text-zinc-200 font-medium text-xs">{item.product.name}</p>
+                      <p className="text-zinc-700 dark:text-zinc-200 font-medium text-xs">{item.product.name}</p>
                       <p className="sku mt-0.5">{item.product.sku}</p>
                     </td>
-                    <td className="px-5 py-3 stat-num text-sm text-zinc-300">{item.quantityOrdered}</td>
-                    <td className="px-5 py-3 stat-num text-sm text-emerald-400">{item.quantityReceived}</td>
+                    <td className="px-5 py-3 stat-num text-sm text-zinc-600 dark:text-zinc-300">{item.quantityOrdered}</td>
+                    <td className="px-5 py-3 stat-num text-sm text-emerald-500 dark:text-emerald-400">{item.quantityReceived}</td>
                     <td className="px-5 py-3">
-                      <span className={`stat-num text-sm ${complete ? 'text-zinc-600' : 'text-amber-400'}`}>
+                      <span className={`stat-num text-sm ${complete ? 'text-zinc-600' : 'text-amber-500 dark:text-amber-400'}`}>
                         {remaining}
                       </span>
                       {complete && <span className="ml-1.5 text-[10px] font-mono text-emerald-500">✓</span>}
                     </td>
-                    <td className="px-5 py-3 stat-num text-xs text-zinc-400">
+                    <td className="px-5 py-3 stat-num text-xs text-zinc-500 dark:text-zinc-400">
                       ETB {Number(item.unitCost).toLocaleString('en-ET', { minimumFractionDigits: 2 })}
                     </td>
-                    <td className="px-5 py-3 stat-num text-xs text-zinc-300">
+                    <td className="px-5 py-3 stat-num text-xs text-zinc-600 dark:text-zinc-300">
                       ETB {Number(item.totalCost).toLocaleString('en-ET', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-5 py-3 font-mono text-xs text-zinc-500">{item.batchNumber ?? '—'}</td>

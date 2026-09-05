@@ -44,13 +44,13 @@ export default function ExpiryAIAdvice() {
             transition={{ duration: 0.18 }}
             className="absolute right-0 top-full mt-2 w-[480px] glass-card shadow-2xl shadow-black/40 z-30 overflow-hidden"
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200 dark:border-zinc-800">
               <div className="flex items-center gap-2">
-                <Bot className="w-4 h-4 text-blue-400" />
-                <span className="text-xs font-semibold text-zinc-200">AI Expiry Recommendations</span>
+                <Bot className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-200">AI Expiry Recommendations</span>
                 {provider && <span className="text-[10px] font-mono text-zinc-600">via {provider}</span>}
               </div>
-              <button onClick={() => setOpen(false)} className="text-zinc-600 hover:text-zinc-400 transition-colors">
+              <button onClick={() => setOpen(false)} className="text-zinc-600 hover:text-zinc-500 dark:hover:text-zinc-400 transition-colors">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -61,7 +61,7 @@ export default function ExpiryAIAdvice() {
                   Analyzing expiry data from database…
                 </div>
               ) : (
-                <pre className="text-xs text-zinc-300 leading-relaxed whitespace-pre-wrap font-sans">{advice}</pre>
+                <pre className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed whitespace-pre-wrap font-sans">{advice}</pre>
               )}
             </div>
           </motion.div>

@@ -120,7 +120,7 @@ export default function AddProductModal() {
           {error && (
             <div className="flex items-center gap-2 px-3 py-2 bg-red-500/10 border border-red-500/20 rounded-lg">
               <span className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
-              <p className="text-xs font-mono text-red-400">{error}</p>
+              <p className="text-xs font-mono text-red-500 dark:text-red-400">{error}</p>
             </div>
           )}
 

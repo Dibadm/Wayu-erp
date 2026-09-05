@@ -256,7 +256,7 @@ export default function Sidebar() {
           </div>
           <button
             onClick={() => setOpen(false)}
-            className="lg:hidden p-1.5 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors"
+            className="lg:hidden p-1.5 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>

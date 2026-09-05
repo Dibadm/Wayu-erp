@@ -108,38 +108,38 @@ export default function MovementsTable({ movements }: { movements: Movement[] })
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-zinc-800">
+            <tr className="border-b border-zinc-200 dark:border-zinc-800">
               <th className="px-4 py-2 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('type')} className="flex items-center gap-1 hover:text-zinc-400">
+                <button onClick={() => handleSort('type')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">
                   Type <SortIcon column="type" />
                 </button>
               </th>
               <th className="px-4 py-2 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('product')} className="flex items-center gap-1 hover:text-zinc-400">
+                <button onClick={() => handleSort('product')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">
                   Product <SortIcon column="product" />
                 </button>
               </th>
               <th className="px-4 py-2 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('quantity')} className="flex items-center gap-1 hover:text-zinc-400">
+                <button onClick={() => handleSort('quantity')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">
                   Qty <SortIcon column="quantity" />
                 </button>
               </th>
               <th className="px-4 py-2 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('user')} className="flex items-center gap-1 hover:text-zinc-400">
+                <button onClick={() => handleSort('user')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">
                   By <SortIcon column="user" />
                 </button>
               </th>
               <th className="px-4 py-2 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('timestamp')} className="flex items-center gap-1 hover:text-zinc-400">
+                <button onClick={() => handleSort('timestamp')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">
                   When <SortIcon column="timestamp" />
                 </button>
               </th>
               <th className="px-4 py-2 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Notes</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800/50">
+          <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
             {paginated.map(m => (
-              <tr key={m.id} className="hover:bg-white/[0.02] transition-colors">
+              <tr key={m.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02] transition-colors">
                 <td className="px-4 py-2.5"><TypeBadge type={m.type} /></td>
                 <td>
                   <p className="font-medium text-xs" style={{ color: 'var(--text-primary)' }}>{m.product.name}</p>
@@ -168,7 +168,7 @@ export default function MovementsTable({ movements }: { movements: Movement[] })
         </table>
       </div>
 
-      <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-800 mt-2">
+      <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-200 dark:border-zinc-800 mt-2">
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Rows per page</span>
           <select
@@ -186,7 +186,7 @@ export default function MovementsTable({ movements }: { movements: Movement[] })
           <button
             onClick={() => setPage(p => Math.max(0, p - 1))}
             disabled={page === 0}
-            className="px-2 py-1 text-xs font-mono rounded border border-zinc-800 disabled:opacity-40 hover:bg-white/5 transition-colors"
+            className="px-2 py-1 text-xs font-mono rounded border border-zinc-200 dark:border-zinc-800 disabled:opacity-40 hover:bg-zinc-200 dark:hover:bg-white/5 transition-colors"
             style={{ color: 'var(--text-secondary)' }}
           >
             Prev
@@ -194,7 +194,7 @@ export default function MovementsTable({ movements }: { movements: Movement[] })
           <button
             onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
-            className="px-2 py-1 text-xs font-mono rounded border border-zinc-800 disabled:opacity-40 hover:bg-white/5 transition-colors"
+            className="px-2 py-1 text-xs font-mono rounded border border-zinc-200 dark:border-zinc-800 disabled:opacity-40 hover:bg-zinc-200 dark:hover:bg-white/5 transition-colors"
             style={{ color: 'var(--text-secondary)' }}
           >
             Next

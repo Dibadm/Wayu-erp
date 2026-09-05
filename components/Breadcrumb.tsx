@@ -46,7 +46,7 @@ export default function Breadcrumb({ productName }: { productName?: string }) {
 
   return (
     <nav className="flex items-center gap-1.5 text-xs font-mono mb-4" style={{ color: 'var(--text-muted)' }}>
-      <Link href="/dashboard" className="hover:text-zinc-300 transition-colors">
+      <Link href="/dashboard" className="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
         Home
       </Link>
       {crumbs.map((crumb, i) => (
@@ -55,7 +55,7 @@ export default function Breadcrumb({ productName }: { productName?: string }) {
           {crumb.isLast ? (
             <span style={{ color: 'var(--text-primary)' }}>{crumb.label}</span>
           ) : (
-            <Link href={crumb.href} className="hover:text-zinc-300 transition-colors">
+            <Link href={crumb.href} className="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
               {crumb.label}
             </Link>
           )}

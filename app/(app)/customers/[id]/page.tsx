@@ -41,7 +41,7 @@ export default async function CustomerDetailPage({ params }: { params: { id: str
 
   return (
     <div className="space-y-6 animate-fade-in max-w-4xl">
-      <Link href="/customers" className="inline-flex items-center gap-1 text-xs font-mono text-zinc-500 hover:text-zinc-300 transition-colors">
+      <Link href="/customers" className="inline-flex items-center gap-1 text-xs font-mono text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
         <ChevronLeft className="w-3 h-3" /> Customers
       </Link>
 
@@ -50,12 +50,12 @@ export default async function CustomerDetailPage({ params }: { params: { id: str
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-              <span className="text-xl font-semibold text-blue-300">
+              <span className="text-xl font-semibold text-blue-500 dark:text-blue-300">
                 {customer.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
               </span>
             </div>
             <div>
-              <h1 className="text-lg font-semibold text-zinc-100">{customer.name}</h1>
+              <h1 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{customer.name}</h1>
               <div className="flex flex-col gap-0.5 mt-1">
                 {customer.phone && (
                   <div className="flex items-center gap-1.5 text-xs font-mono text-zinc-500">
@@ -79,14 +79,14 @@ export default async function CustomerDetailPage({ params }: { params: { id: str
         </div>
 
         {customer.notes && (
-          <div className="mt-4 pt-4 border-t border-zinc-800">
+          <div className="mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-800">
             <p className="text-xs font-mono text-zinc-600 uppercase tracking-widest mb-1">Notes</p>
-            <p className="text-xs text-zinc-400">{customer.notes}</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">{customer.notes}</p>
           </div>
         )}
 
         {/* Stats row */}
-        <div className="grid grid-cols-4 gap-4 mt-5 pt-4 border-t border-zinc-800">
+        <div className="grid grid-cols-4 gap-4 mt-5 pt-4 border-t border-zinc-200 dark:border-zinc-800">
           {[
             { label: 'Total Purchases', value: customer.sales.length.toString(),   mono: false },
             { label: 'Lifetime Value',  value: `ETB ${totalSpent.toLocaleString('en-ET', { minimumFractionDigits: 2 })}`, mono: true },
@@ -95,7 +95,7 @@ export default async function CustomerDetailPage({ params }: { params: { id: str
           ].map(s => (
             <div key={s.label}>
               <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mb-1">{s.label}</p>
-              <p className={`text-lg font-semibold text-zinc-100 ${s.mono ? 'font-mono' : ''}`}>{s.value}</p>
+              <p className={`text-lg font-semibold text-zinc-900 dark:text-zinc-100 ${s.mono ? 'font-mono' : ''}`}>{s.value}</p>
             </div>
           ))}
         </div>
@@ -103,8 +103,8 @@ export default async function CustomerDetailPage({ params }: { params: { id: str
 
       {/* Purchase history */}
       <div className="glass-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-zinc-800">
-          <h2 className="text-sm font-semibold text-zinc-100">Purchase History</h2>
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800">
+          <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Purchase History</h2>
           <p className="text-xs font-mono text-zinc-500 mt-0.5">Last 50 transactions</p>
         </div>
         {customer.sales.length === 0 ? (
@@ -116,21 +116,21 @@ export default async function CustomerDetailPage({ params }: { params: { id: str
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800">
+                <tr className="border-b border-zinc-200 dark:border-zinc-800">
                   {['Receipt', 'Status', 'Items', 'Total', 'Payment', 'Cashier', 'Date'].map(h => (
                     <th key={h} className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800/50">
+              <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                 {customer.sales.map(sale => (
-                  <tr key={sale.id} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="px-5 py-3 font-mono text-xs text-blue-400">{sale.receiptNumber}</td>
+                  <tr key={sale.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02] transition-colors">
+                    <td className="px-5 py-3 font-mono text-xs text-blue-600 dark:text-blue-400">{sale.receiptNumber}</td>
                     <td className="px-5 py-3">
                       <span className={`badge ${STATUS_CLS[sale.status] ?? 'badge-ok'}`}>{sale.status}</span>
                     </td>
-                    <td className="px-5 py-3 stat-num text-sm text-zinc-400">{sale.items.length}</td>
-                    <td className="px-5 py-3 stat-num text-sm text-emerald-400">
+                    <td className="px-5 py-3 stat-num text-sm text-zinc-500 dark:text-zinc-400">{sale.items.length}</td>
+                    <td className="px-5 py-3 stat-num text-sm text-emerald-500 dark:text-emerald-400">
                       ETB {Number(sale.total).toLocaleString('en-ET', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-5 py-3 text-xs font-mono text-zinc-500">

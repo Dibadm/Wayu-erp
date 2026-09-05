@@ -54,13 +54,13 @@ export default function Cart({ items, onChange, taxRate, discount }: Props) {
         {items.map((item, idx) => {
           const lineTotal = (item.unitPrice - item.discount) * item.quantity
           return (
-            <div key={`${item.productId}-${idx}`} className="bg-zinc-900 border border-zinc-800 rounded-lg p-3">
+            <div key={`${item.productId}-${idx}`} className="bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-3">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="min-w-0">
-                  <p className="text-xs font-medium text-zinc-200 truncate">{item.name}</p>
+                  <p className="text-xs font-medium text-zinc-700 dark:text-zinc-200 truncate">{item.name}</p>
                   <p className="sku">{item.sku}</p>
                 </div>
-                <button onClick={() => remove(idx)} className="text-zinc-700 hover:text-red-400 transition-colors flex-shrink-0">
+                <button onClick={() => remove(idx)} className="text-zinc-700 hover:text-red-500 dark:hover:text-red-400 transition-colors flex-shrink-0">
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -71,19 +71,19 @@ export default function Cart({ items, onChange, taxRate, discount }: Props) {
                   <div className="flex items-center gap-1">
                     <button
                       onClick={() => setQty(idx, item.quantity - 1)}
-                      className="w-6 h-6 flex items-center justify-center rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 transition-colors"
+                      className="w-6 h-6 flex items-center justify-center rounded bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
                     >
                       <Minus className="w-3 h-3" />
                     </button>
                     <input
                       type="number" min={1}
-                      className="w-10 text-center bg-zinc-800 border border-zinc-700 rounded text-xs font-mono text-zinc-200 py-0.5 outline-none focus:border-blue-500/50"
+                      className="w-10 text-center bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded text-xs font-mono text-zinc-700 dark:text-zinc-200 py-0.5 outline-none focus:border-blue-500/50"
                       value={item.quantity}
                       onChange={e => setQty(idx, parseInt(e.target.value) || 1)}
                     />
                     <button
                       onClick={() => setQty(idx, item.quantity + 1)}
-                      className="w-6 h-6 flex items-center justify-center rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 transition-colors"
+                      className="w-6 h-6 flex items-center justify-center rounded bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
                     >
                       <Plus className="w-3 h-3" />
                     </button>
@@ -96,27 +96,27 @@ export default function Cart({ items, onChange, taxRate, discount }: Props) {
                   <div className="space-y-0.5 text-right">
                     <input
                       type="number" min={0} step={0.01}
-                      className="w-20 text-right bg-transparent text-xs font-mono text-zinc-300 outline-none border-b border-zinc-700 focus:border-blue-500/50 pb-0.5"
+                      className="w-20 text-right bg-transparent text-xs font-mono text-zinc-600 dark:text-zinc-300 outline-none border-b border-zinc-300 dark:border-zinc-700 focus:border-blue-500/50 pb-0.5"
                       value={item.unitPrice}
                       onChange={e => update(idx, { unitPrice: parseFloat(e.target.value) || 0 })}
                       title="Unit price"
                     />
                     {item.discount > 0 && (
-                      <p className="text-[10px] font-mono text-amber-400">-ETB {item.discount.toFixed(2)} disc</p>
+                      <p className="text-[10px] font-mono text-amber-500 dark:text-amber-400">-ETB {item.discount.toFixed(2)} disc</p>
                     )}
                   </div>
-                  <p className="text-xs font-mono text-zinc-300 w-24 text-right">
+                  <p className="text-xs font-mono text-zinc-600 dark:text-zinc-300 w-24 text-right">
                     ETB {lineTotal.toFixed(2)}
                   </p>
                 </div>
               </div>
 
               {/* Per-item discount */}
-              <div className="flex items-center gap-2 mt-2 pt-2 border-t border-zinc-800/50">
+              <div className="flex items-center gap-2 mt-2 pt-2 border-t border-zinc-200 dark:border-zinc-800/50">
                 <span className="text-[10px] font-mono text-zinc-600 flex-shrink-0">Item discount ETB </span>
                 <input
                   type="number" min={0} step={0.01}
-                  className="w-16 bg-zinc-800 border border-zinc-700 rounded px-1.5 py-0.5 text-xs font-mono text-zinc-300 outline-none focus:border-amber-500/50"
+                  className="w-16 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-1.5 py-0.5 text-xs font-mono text-zinc-600 dark:text-zinc-300 outline-none focus:border-amber-500/50"
                   value={item.discount || ''}
                   placeholder="0"
                   onChange={e => update(idx, { discount: parseFloat(e.target.value) || 0 })}
@@ -129,12 +129,12 @@ export default function Cart({ items, onChange, taxRate, discount }: Props) {
 
       {/* Totals */}
       {items.length > 0 && (
-        <div className="pt-3 mt-3 border-t border-zinc-800 space-y-1.5 text-xs font-mono">
+        <div className="pt-3 mt-3 border-t border-zinc-200 dark:border-zinc-800 space-y-1.5 text-xs font-mono">
           <div className="flex justify-between text-zinc-500">
             <span>Subtotal</span><span>ETB {subtotal.toFixed(2)}</span>
           </div>
           {discount > 0 && (
-            <div className="flex justify-between text-amber-400">
+            <div className="flex justify-between text-amber-500 dark:text-amber-400">
               <span>Order discount</span><span>-ETB {discount.toFixed(2)}</span>
             </div>
           )}
@@ -143,7 +143,7 @@ export default function Cart({ items, onChange, taxRate, discount }: Props) {
               <span>Tax ({taxRate}%)</span><span>ETB {taxAmount.toFixed(2)}</span>
             </div>
           )}
-          <div className="flex justify-between text-base font-semibold text-zinc-100 pt-1 border-t border-zinc-800">
+          <div className="flex justify-between text-base font-semibold text-zinc-900 dark:text-zinc-100 pt-1 border-t border-zinc-200 dark:border-zinc-800">
             <span>TOTAL</span><span>ETB {total.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-zinc-600 text-[10px] pt-1">

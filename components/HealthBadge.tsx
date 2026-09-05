@@ -24,7 +24,7 @@ export default function HealthBadge() {
     return (
       <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-500/10 border border-zinc-500/20 rounded-full">
         <span className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
-        <span className="text-xs font-mono text-zinc-400">CHECKING…</span>
+        <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400">CHECKING…</span>
       </div>
     )
   }
@@ -33,7 +33,7 @@ export default function HealthBadge() {
     return (
       <div className="flex items-center gap-2 px-3 py-1.5 bg-red-500/10 border border-red-500/20 rounded-full">
         <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
-        <span className="text-xs font-mono text-red-400">SYSTEM OFFLINE</span>
+        <span className="text-xs font-mono text-red-500 dark:text-red-400">SYSTEM OFFLINE</span>
       </div>
     )
   }
@@ -41,7 +41,7 @@ export default function HealthBadge() {
   return (
     <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-      <span className="text-xs font-mono text-emerald-400">SYSTEM ONLINE</span>
+      <span className="text-xs font-mono text-emerald-500 dark:text-emerald-400">SYSTEM ONLINE</span>
     </div>
   )
 }

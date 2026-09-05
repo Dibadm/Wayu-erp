@@ -40,7 +40,7 @@ export default function LoansPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Loans</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Loans</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Track loans and repayments</p>
         </div>
         <button onClick={() => setShowForm(!showForm)} className="btn-primary flex items-center gap-2"><Plus className="w-4 h-4" /> New Loan</button>
@@ -65,7 +65,7 @@ export default function LoansPage() {
           <div key={loan.id} className="glass-card p-5">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <h3 className="text-sm font-semibold text-zinc-100">{loan.lender}</h3>
+                <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{loan.lender}</h3>
                 <p className="text-xs font-mono text-zinc-500">{loan.status} — {loan.interestRate}% p.a.</p>
               </div>
               <span className={`badge ${loan.status === 'PAID_OFF' ? 'badge-in' : loan.status === 'DEFAULTED' ? 'badge-low' : 'badge-blue'}`}>{loan.status}</span>
@@ -73,8 +73,8 @@ export default function LoansPage() {
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div><span className="text-zinc-600">Principal</span><p className="stat-num text-sm">{fmt(loan.principal)}</p></div>
               <div><span className="text-zinc-600">Remaining</span><p className="stat-num text-sm" style={{ color: 'var(--accent-amber)' }}>{fmt(loan.repaymentSummary.remainingPrincipal)}</p></div>
-              <div><span className="text-zinc-600">Repaid</span><p className="stat-num text-sm text-emerald-400">{fmt(loan.repaymentSummary.totalRepaid)}</p></div>
-              <div><span className="text-zinc-600">Interest Paid</span><p className="stat-num text-sm text-red-400">{fmt(loan.repaymentSummary.totalInterest)}</p></div>
+              <div><span className="text-zinc-600">Repaid</span><p className="stat-num text-sm text-emerald-500 dark:text-emerald-400">{fmt(loan.repaymentSummary.totalRepaid)}</p></div>
+              <div><span className="text-zinc-600">Interest Paid</span><p className="stat-num text-sm text-red-500 dark:text-red-400">{fmt(loan.repaymentSummary.totalInterest)}</p></div>
             </div>
             <button onClick={() => recordRepayment(loan.id)} className="mt-3 text-xs px-3 py-1.5 rounded btn-primary">Record Repayment</button>
           </div>

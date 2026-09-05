@@ -31,10 +31,10 @@ export default async function CommissionPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Commission Rates</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Commission Rates</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Configure tiered commission rates by scope</p>
         </div>
-        <a href="/commission/performance" className="text-xs font-mono text-blue-400 hover:text-blue-300">Salesperson Performance →</a>
+        <a href="/commission/performance" className="text-xs font-mono text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">Salesperson Performance →</a>
       </div>
       <CommissionRatesClient initialRates={serializedRates} products={products} users={users} />
     </div>

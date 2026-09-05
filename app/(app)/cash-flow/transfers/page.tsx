@@ -41,7 +41,7 @@ export default function TransfersPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Bank Transfers</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Bank Transfers</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Transfer funds between accounts</p>
         </div>
         <button onClick={() => setShowForm(!showForm)} className="btn-primary flex items-center gap-2"><Plus className="w-4 h-4" /> New Transfer</button>
@@ -68,20 +68,20 @@ export default function TransfersPage() {
       )}
 
       <div className="glass-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-zinc-800 flex items-center gap-2"><ArrowLeftRight className="w-4 h-4 text-blue-400" /><h2 className="text-sm font-semibold text-zinc-100">Transfers</h2></div>
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center gap-2"><ArrowLeftRight className="w-4 h-4 text-blue-600 dark:text-blue-400" /><h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Transfers</h2></div>
         {loading ? <div className="p-10 flex justify-center"><RefreshCw className="w-5 h-5 animate-spin text-zinc-500" /></div> : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead><tr className="border-b border-zinc-800">
+              <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Date', 'From', 'To', 'Amount', 'Reference', 'Description'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
               </tr></thead>
-              <tbody className="divide-y divide-zinc-800/50">
+              <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                 {transfers.map(t => (
-                  <tr key={t.id} className="hover:bg-white/[0.02]">
+                  <tr key={t.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                     <td className="px-4 py-2.5 text-xs font-mono text-zinc-500">{new Date(t.transferredAt).toLocaleDateString()}</td>
-                    <td className="px-4 py-2.5 text-sm text-zinc-300">{t.fromAccount?.accountName ?? '—'}</td>
-                    <td className="px-4 py-2.5 text-sm text-zinc-300">{t.toAccount?.accountName ?? '—'}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-blue-400">{fmt(t.amount)}</td>
+                    <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{t.fromAccount?.accountName ?? '—'}</td>
+                    <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{t.toAccount?.accountName ?? '—'}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-blue-600 dark:text-blue-400">{fmt(t.amount)}</td>
                     <td className="px-4 py-2.5 text-xs font-mono text-zinc-500">{t.reference ?? '—'}</td>
                     <td className="px-4 py-2.5 text-xs text-zinc-500">{t.description ?? '—'}</td>
                   </tr>

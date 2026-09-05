@@ -87,7 +87,7 @@ export default function InventoryReportsPage() {
             onClick={() => setActiveTab(tab.key)}
             className={`px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
               activeTab === tab.key
-                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500 dark:text-emerald-400'
                 : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300'
             }`}
           >
@@ -165,7 +165,7 @@ function CurrentStockTable({ data }: { data: any }) {
       <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {products.map((p: any) => (
           <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{p.sku}</td>
+            <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{p.sku}</td>
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{p.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{p.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{p.quantity}</td>
@@ -173,7 +173,7 @@ function CurrentStockTable({ data }: { data: any }) {
             <td className="px-4 py-2.5 text-xs text-zinc-500">{p.unit}</td>
             <td className="px-4 py-2.5">
               <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                p.quantity === 0 ? 'badge-warning' : p.quantity <= p.minStockLevel ? 'badge-outline border-amber-500/30 text-amber-400' : 'badge-in'
+                p.quantity === 0 ? 'badge-warning' : p.quantity <= p.minStockLevel ? 'badge-outline border-amber-500/30 text-amber-500 dark:text-amber-400' : 'badge-in'
               }`}>
                 {p.quantity === 0 ? 'OUT OF STOCK' : p.quantity <= p.minStockLevel ? 'LOW STOCK' : 'OK'}
               </span>
@@ -202,7 +202,7 @@ function ValuationTable({ data }: { data: any }) {
           const invCost = p.quantity * cost; const invVal = p.quantity * sell; const estProfit = invVal - invCost
           return (
             <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
-              <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{p.sku}</td>
+              <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{p.sku}</td>
               <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{p.name}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{p.quantity}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{cost > 0 ? cost.toFixed(2) : '—'}</td>
@@ -238,9 +238,9 @@ function ExpiryTable({ data }: { data: any }) {
           const alert = daysLeft < 0 ? 'EXPIRED' : daysLeft <= 30 ? 'CRITICAL' : daysLeft <= 90 ? 'WARNING' : 'OK'
           return (
             <tr key={b.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
-              <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{b.product.sku}</td>
+              <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{b.product.sku}</td>
               <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{b.product.name}</td>
-              <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{b.batchNumber}</td>
+              <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{b.batchNumber}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{b.quantity}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{b.location.name}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(b.receivedDate)}</td>
@@ -248,7 +248,7 @@ function ExpiryTable({ data }: { data: any }) {
               <td className="px-4 py-2.5 stat-num text-sm">{daysLeft}</td>
               <td className="px-4 py-2.5">
                 <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                  alert === 'EXPIRED' ? 'badge-warning' : alert === 'CRITICAL' ? 'badge-outline border-amber-500/30 text-amber-400' : alert === 'WARNING' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
+                  alert === 'EXPIRED' ? 'badge-warning' : alert === 'CRITICAL' ? 'badge-outline border-amber-500/30 text-amber-500 dark:text-amber-400' : alert === 'WARNING' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
                 }`}>{alert}</span>
               </td>
             </tr>
@@ -271,7 +271,7 @@ function DeadStockTable({ data }: { data: any }) {
       <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {items.map((p: any) => (
           <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{p.sku}</td>
+            <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{p.sku}</td>
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{p.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{p.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{p.totalQty}</td>
@@ -300,9 +300,9 @@ function MovementsTable({ data }: { data: any }) {
           <tr key={m.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(m.timestamp)}</td>
             <td className="px-4 py-2.5"><span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-              m.type === 'IN' ? 'badge-in' : m.type === 'OUT' ? 'badge-outline border-red-500/30 text-red-400' : 'badge-warning'
+              m.type === 'IN' ? 'badge-in' : m.type === 'OUT' ? 'badge-outline border-red-500/30 text-red-500 dark:text-red-400' : 'badge-warning'
             }`}>{m.type}</span></td>
-            <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{m.product.sku}</td>
+            <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{m.product.sku}</td>
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{m.product.name}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{m.quantity}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{m.location ? `${m.location.code} – ${m.location.name}` : '—'}</td>
@@ -332,9 +332,9 @@ function BatchesTable({ data }: { data: any }) {
           const alert = daysLeft < 0 ? 'EXPIRED' : daysLeft <= 30 ? 'CRITICAL' : daysLeft <= 90 ? 'WARNING' : 'OK'
           return (
             <tr key={b.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
-              <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{b.product.sku}</td>
+              <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{b.product.sku}</td>
               <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{b.product.name}</td>
-              <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{b.batchNumber}</td>
+              <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{b.batchNumber}</td>
               <td className="px-4 py-2.5 stat-num text-sm">{b.quantity}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{b.location.name}</td>
               <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(b.receivedDate)}</td>
@@ -342,7 +342,7 @@ function BatchesTable({ data }: { data: any }) {
               <td className="px-4 py-2.5 stat-num text-sm">{daysLeft}</td>
               <td className="px-4 py-2.5">
                 <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide border ${
-                  alert === 'EXPIRED' ? 'badge-warning' : alert === 'CRITICAL' ? 'badge-outline border-amber-500/30 text-amber-400' : alert === 'WARNING' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
+                  alert === 'EXPIRED' ? 'badge-warning' : alert === 'CRITICAL' ? 'badge-outline border-amber-500/30 text-amber-500 dark:text-amber-400' : alert === 'WARNING' ? 'badge-outline border-yellow-500/30 text-yellow-400' : 'badge-in'
                 }`}>{alert}</span>
               </td>
             </tr>
@@ -366,7 +366,7 @@ function MonthlyReceivedTable({ data }: { data: any }) {
         {rows.map((r: any, i: number) => (
           <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.month}</td>
-            <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
+            <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{r.sku}</td>
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.totalQty}</td>
@@ -391,11 +391,11 @@ function MonthlySoldTable({ data }: { data: any }) {
         {rows.map((r: any, i: number) => (
           <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.month}</td>
-            <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
+            <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{r.sku}</td>
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.totalQty}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">ETB {Number(r.totalRevenue).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">ETB {Number(r.totalRevenue).toLocaleString()}</td>
           </tr>
         ))}
       </tbody>
@@ -420,12 +420,12 @@ function ProductPerformanceTable({ data }: { data: any }) {
       <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
         {rows.map((r: any, i: number) => (
           <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
-            <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
+            <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{r.sku}</td>
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{r.category}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.totalQty}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.transactions}</td>
-            <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{Number(r.totalRevenue).toLocaleString()}</td>
+            <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{Number(r.totalRevenue).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{Number(r.totalCost).toLocaleString()}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{(r.totalRevenue - r.totalCost).toFixed(2)}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{r.margin}</td>
@@ -451,12 +451,12 @@ function FastSlowMovingTable({ data }: { data: any }) {
             <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
               {(data.fastMoving ?? []).map((r: any) => (
                 <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
-                  <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
+                  <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{r.sku}</td>
                   <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.currentStock}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.totalSold}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.daysSinceLastSale}</td>
-                  <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{r.velocity}</td>
+                  <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{r.velocity}</td>
                 </tr>
               ))}
             </tbody>
@@ -475,12 +475,12 @@ function FastSlowMovingTable({ data }: { data: any }) {
             <tbody className="divide-y divide-zinc-200/50 dark:divide-zinc-800/50">
               {(data.slowMoving ?? []).map((r: any) => (
                 <tr key={r.sku} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
-                  <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{r.sku}</td>
+                  <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{r.sku}</td>
                   <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{r.name}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.currentStock}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.totalSold}</td>
                   <td className="px-4 py-2.5 stat-num text-sm">{r.daysSinceLastSale}</td>
-                  <td className="px-4 py-2.5 stat-num text-sm text-amber-400">{r.velocity}</td>
+                  <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">{r.velocity}</td>
                 </tr>
               ))}
             </tbody>
@@ -504,7 +504,7 @@ function AdjustmentHistoryTable({ data }: { data: any }) {
         {movements.map((m: any) => (
           <tr key={m.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
             <td className="px-4 py-2.5 text-xs text-zinc-500">{formatDate(m.timestamp)}</td>
-            <td className="px-4 py-2.5 font-mono text-xs text-zinc-400">{m.product.sku}</td>
+            <td className="px-4 py-2.5 font-mono text-xs text-zinc-500 dark:text-zinc-400">{m.product.sku}</td>
             <td className="px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300">{m.product.name}</td>
             <td className="px-4 py-2.5 stat-num text-sm">{m.quantity}</td>
             <td className="px-4 py-2.5 text-xs text-zinc-500">{m.location ? `${m.location.code} – ${m.location.name}` : '—'}</td>

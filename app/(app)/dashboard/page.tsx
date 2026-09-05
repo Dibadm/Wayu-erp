@@ -209,7 +209,7 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-           <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-900 dark:text-zinc-100">Dashboard</h1>
+           <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Dashboard</h1>
            <p className="text-sm text-zinc-600 dark:text-zinc-500 font-mono mt-0.5">
             {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
           </p>

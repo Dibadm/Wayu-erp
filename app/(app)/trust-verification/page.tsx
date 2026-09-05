@@ -27,7 +27,7 @@ export default function TrustVerificationPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Trust Verification</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Trust Verification</h1>
         <p className="text-sm text-zinc-500 font-mono mt-0.5">Side-by-side app-vs-Excel check (decision #8) before retiring Excel</p>
       </div>
 
@@ -54,33 +54,33 @@ export default function TrustVerificationPage() {
         </form>
       </div>
 
-      {error && <div className="glass-card p-3 text-sm font-mono text-red-400">{error}</div>}
+      {error && <div className="glass-card p-3 text-sm font-mono text-red-500 dark:text-red-400">{error}</div>}
 
       {result && (
         <div className="glass-card p-5">
           <div className="flex items-center gap-2 mb-4">
             {result.allMatch
-              ? <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-              : <XCircle className="w-5 h-5 text-red-400" />}
-            <h2 className="text-sm font-semibold text-zinc-100">
+              ? <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
+              : <XCircle className="w-5 h-5 text-red-500 dark:text-red-400" />}
+            <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
               {result.allMatch ? 'MATCH — app mirrors Excel' : 'Differences found — review before retiring Excel'}
             </h2>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800">
+                <tr className="border-b border-zinc-200 dark:border-zinc-800">
                   {['Metric', 'App', 'Excel', 'Delta'].map(h => (
                     <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800/50">
+              <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                 {result.comparison.map((c: any) => (
                   <tr key={c.metric}>
-                    <td className="px-4 py-2.5 text-sm text-zinc-300">{c.metric}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-zinc-400">{c.app.toLocaleString()}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-zinc-400">{c.excel.toLocaleString()}</td>
+                    <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{c.metric}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-zinc-500 dark:text-zinc-400">{c.app.toLocaleString()}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-zinc-500 dark:text-zinc-400">{c.excel.toLocaleString()}</td>
                     <td className="px-4 py-2.5 stat-num text-sm" style={{ color: Math.abs(c.delta) < 0.01 ? 'var(--accent-emerald)' : 'var(--accent-red)' }}>{c.delta.toLocaleString()}</td>
                   </tr>
                 ))}
@@ -94,7 +94,7 @@ export default function TrustVerificationPage() {
       )}
 
       <div className="glass-card p-4 text-xs font-mono text-zinc-500 flex items-start gap-2">
-        <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+        <ShieldCheck className="w-4 h-4 text-emerald-500 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
         Run BOTH a one-month and a one-quarter check and confirm a full match before the client stops using Excel. The app is authoritative; Excel re-imports only add new rows.
       </div>
     </div>

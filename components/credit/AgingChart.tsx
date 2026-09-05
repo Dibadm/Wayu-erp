@@ -14,7 +14,7 @@ export default function AgingChart({ data, maxTotal }: { data: any[]; maxTotal: 
         const w3 = (Number(a.bucket90plus || 0) / maxTotal) * 100
         return (
           <div key={a.id} className="flex items-center gap-3">
-            <span className="text-xs text-zinc-400 w-40 truncate">{a.customer?.name || '—'}</span>
+            <span className="text-xs text-zinc-500 dark:text-zinc-400 w-40 truncate">{a.customer?.name || '—'}</span>
             <div className="flex-1 h-4 rounded-full overflow-hidden flex">
               <div className="bg-emerald-500 h-full" style={{ width: `${w0}%` }} title={`0-30`} />
               <div className="bg-blue-500 h-full" style={{ width: `${w1}%` }} title={`31-60`} />

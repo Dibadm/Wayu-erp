@@ -160,14 +160,14 @@ export default function POSPage() {
         {/* POS header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Point of Sale</h1>
+            <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Point of Sale</h1>
             <p className="text-xs font-mono text-zinc-500 mt-0.5">
               {salesperson ? `Salesperson: ${salesperson.name}` : 'Scan or search products to add to cart'}
             </p>
           </div>
           <button
             onClick={() => setShowSettings(v => !v)}
-            className="p-2 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 border border-zinc-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 border border-zinc-200 dark:border-zinc-800 transition-colors"
             title="Tax & settings"
           >
             <Settings2 className="w-4 h-4" />
@@ -194,7 +194,7 @@ export default function POSPage() {
             </div>
             <div className="mt-3 flex items-center gap-2">
               <input id="taxable" type="checkbox" checked={taxable} onChange={e => setTaxable(e.target.checked)} />
-              <label htmlFor="taxable" className="text-xs text-zinc-400">This sale is taxable (WHT applies)</label>
+              <label htmlFor="taxable" className="text-xs text-zinc-500 dark:text-zinc-400">This sale is taxable (WHT applies)</label>
             </div>
             <div className="mt-3 space-y-1.5">
               <label className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Sale Notes</label>
@@ -214,7 +214,7 @@ export default function POSPage() {
             <CustomerModal
               onSuccess={c => { setCustomer(c); setCustomerSearch(''); setCustomerResults([]) }}
               trigger={
-                <button className="text-[10px] font-mono text-blue-400 hover:text-blue-300 transition-colors">
+                <button className="text-[10px] font-mono text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors">
                   + New customer
                 </button>
               }
@@ -224,14 +224,14 @@ export default function POSPage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                  <User className="w-4 h-4 text-blue-400" />
+                  <User className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-zinc-200">{customer.name}</p>
+                  <p className="text-xs font-medium text-zinc-700 dark:text-zinc-200">{customer.name}</p>
                   <p className="text-[10px] font-mono text-zinc-500">{customer.phone ?? customer.email ?? '—'}</p>
                 </div>
               </div>
-              <button onClick={() => setCustomer(null)} className="text-xs font-mono text-zinc-600 hover:text-zinc-400 transition-colors">
+              <button onClick={() => setCustomer(null)} className="text-xs font-mono text-zinc-600 hover:text-zinc-500 dark:hover:text-zinc-400 transition-colors">
                 Remove
               </button>
             </div>
@@ -244,13 +244,13 @@ export default function POSPage() {
                 onChange={e => searchCustomers(e.target.value)}
               />
               {customerResults.length > 0 && (
-                <div className="absolute top-full mt-1 left-0 right-0 z-20 bg-zinc-900 border border-zinc-700 rounded-xl shadow-xl overflow-hidden">
+                <div className="absolute top-full mt-1 left-0 right-0 z-20 bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
                   {customerResults.map(c => (
                     <button key={c.id} onClick={() => { setCustomer(c); setCustomerSearch(''); setCustomerResults([]) }}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 transition-colors text-left border-b border-zinc-800/50 last:border-0">
+                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-zinc-200 dark:hover:bg-white/5 transition-colors text-left border-b border-zinc-200 dark:border-zinc-800/50 last:border-0">
                       <User className="w-3.5 h-3.5 text-zinc-500 flex-shrink-0" />
                       <div>
-                        <p className="text-xs text-zinc-200">{c.name}</p>
+                        <p className="text-xs text-zinc-700 dark:text-zinc-200">{c.name}</p>
                         <p className="text-[10px] font-mono text-zinc-600">{c.phone ?? c.email ?? '—'}</p>
                       </div>
                     </button>
@@ -270,14 +270,14 @@ export default function POSPage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-                  <User className="w-4 h-4 text-emerald-400" />
+                  <User className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-zinc-200">{salesperson.name}</p>
+                  <p className="text-xs font-medium text-zinc-700 dark:text-zinc-200">{salesperson.name}</p>
                   <p className="text-[10px] font-mono text-zinc-500">{salesperson.email ?? salesperson.role ?? '—'}</p>
                 </div>
               </div>
-              <button onClick={() => setSalesperson(null)} className="text-xs font-mono text-zinc-600 hover:text-zinc-400 transition-colors">
+              <button onClick={() => setSalesperson(null)} className="text-xs font-mono text-zinc-600 hover:text-zinc-500 dark:hover:text-zinc-400 transition-colors">
                 Remove
               </button>
             </div>
@@ -290,13 +290,13 @@ export default function POSPage() {
                 onChange={e => searchSalespeople(e.target.value)}
               />
               {salespersonResults.length > 0 && (
-                <div className="absolute top-full mt-1 left-0 right-0 z-20 bg-zinc-900 border border-zinc-700 rounded-xl shadow-xl overflow-hidden">
+                <div className="absolute top-full mt-1 left-0 right-0 z-20 bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
                   {salespersonResults.map(u => (
                     <button key={u.id} onClick={() => { setSalesperson(u); setSalespersonSearch(''); setSalespersonResults([]) }}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 transition-colors text-left border-b border-zinc-800/50 last:border-0">
+                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-zinc-200 dark:hover:bg-white/5 transition-colors text-left border-b border-zinc-200 dark:border-zinc-800/50 last:border-0">
                       <User className="w-3.5 h-3.5 text-zinc-500 flex-shrink-0" />
                       <div>
-                        <p className="text-xs text-zinc-200">{u.name}</p>
+                        <p className="text-xs text-zinc-700 dark:text-zinc-200">{u.name}</p>
                         <p className="text-[10px] font-mono text-zinc-600">{u.email ?? u.role ?? '—'}</p>
                       </div>
                     </button>
@@ -309,7 +309,7 @@ export default function POSPage() {
 
         {/* Recent sales shortcut */}
         <div className="mt-auto">
-          <a href="/sales" className="flex items-center gap-2 text-xs font-mono text-zinc-600 hover:text-zinc-400 transition-colors">
+          <a href="/sales" className="flex items-center gap-2 text-xs font-mono text-zinc-600 hover:text-zinc-500 dark:hover:text-zinc-400 transition-colors">
             <Receipt className="w-3.5 h-3.5" /> View sales history →
           </a>
         </div>
@@ -318,18 +318,18 @@ export default function POSPage() {
       {/* ── Right: Cart panel ── */}
       <div className="w-80 flex-shrink-0 flex flex-col glass-card overflow-hidden">
         {/* Cart header */}
-        <div className="px-4 py-3 border-b border-zinc-800 flex items-center justify-between">
+        <div className="px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <CartIcon className="w-4 h-4 text-zinc-400" />
-            <span className="text-sm font-semibold text-zinc-100">Cart</span>
+            <CartIcon className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
+            <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Cart</span>
             {itemCount > 0 && (
-              <span className="px-1.5 py-0.5 bg-blue-500/10 border border-blue-500/20 rounded text-[10px] font-mono text-blue-400">
+              <span className="px-1.5 py-0.5 bg-blue-500/10 border border-blue-500/20 rounded text-[10px] font-mono text-blue-600 dark:text-blue-400">
                 {itemCount} {itemCount === 1 ? 'item' : 'items'}
               </span>
             )}
           </div>
           {cartItems.length > 0 && (
-            <button onClick={() => setCartItems([])} className="text-[10px] font-mono text-zinc-600 hover:text-red-400 transition-colors">
+            <button onClick={() => setCartItems([])} className="text-[10px] font-mono text-zinc-600 hover:text-red-500 dark:hover:text-red-400 transition-colors">
               Clear
             </button>
           )}
@@ -345,9 +345,9 @@ export default function POSPage() {
         </div>
 
         {/* Checkout button */}
-        <div className="p-4 border-t border-zinc-800">
+        <div className="p-4 border-t border-zinc-200 dark:border-zinc-800">
           {payError && (
-            <p className="text-xs font-mono text-red-400 mb-2 text-center">{payError}</p>
+            <p className="text-xs font-mono text-red-500 dark:text-red-400 mb-2 text-center">{payError}</p>
           )}
           <button
             onClick={() => setShowPayment(true)}

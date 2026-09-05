@@ -26,7 +26,7 @@ export default async function MovementsPage() {
       <Breadcrumb />
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Movements</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Movements</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Full stock transaction history</p>
         </div>
         <div className="flex items-center gap-3 text-xs font-mono">

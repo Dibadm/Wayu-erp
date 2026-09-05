@@ -59,33 +59,33 @@ export default async function CommissionPerformancePage() {
     <div className="space-y-6 animate-fade-in">
       <Breadcrumb />
       <div>
-        <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Salesperson Performance</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Salesperson Performance</h1>
         <p className="text-sm text-zinc-500 font-mono mt-0.5">Commission report — {now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="glass-card p-5">
           <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
-            <Receipt className="w-4 h-4 text-blue-400" />
+            <Receipt className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </div>
-          <p className="stat-num text-xl text-zinc-100">{formatCurrency(totalSales)}</p>
-          <p className="text-xs font-medium text-zinc-400 mt-1">Total Sales</p>
+          <p className="stat-num text-xl text-zinc-900 dark:text-zinc-100">{formatCurrency(totalSales)}</p>
+          <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mt-1">Total Sales</p>
           <p className="text-[11px] font-mono text-zinc-600 mt-0.5">{totalSalesCount} transactions</p>
         </div>
         <div className="glass-card p-5">
           <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
-            <TrendingUp className="w-4 h-4 text-emerald-400" />
+            <TrendingUp className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
           </div>
-          <p className="stat-num text-xl text-zinc-100">{formatCurrency(totalCommission)}</p>
-          <p className="text-xs font-medium text-zinc-400 mt-1">Total Commission</p>
+          <p className="stat-num text-xl text-zinc-900 dark:text-zinc-100">{formatCurrency(totalCommission)}</p>
+          <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mt-1">Total Commission</p>
           <p className="text-[11px] font-mono text-zinc-600 mt-0.5">This month</p>
         </div>
         <div className="glass-card p-5">
           <div className="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4">
-            <Users className="w-4 h-4 text-purple-400" />
+            <Users className="w-4 h-4 text-purple-600 dark:text-purple-400" />
           </div>
-          <p className="stat-num text-xl text-zinc-100">{rows.length}</p>
-          <p className="text-xs font-medium text-zinc-400 mt-1">Active Salespeople</p>
+          <p className="stat-num text-xl text-zinc-900 dark:text-zinc-100">{rows.length}</p>
+          <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mt-1">Active Salespeople</p>
           <p className="text-[11px] font-mono text-zinc-600 mt-0.5">With sales this month</p>
         </div>
       </div>
@@ -94,28 +94,28 @@ export default async function CommissionPerformancePage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800">
+              <tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Salesperson', 'Sales', 'Commission', 'Avg Sale', 'Rank'].map(h => (
                   <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {rows.map((r, i) => (
-                <tr key={r.salespersonId} className="hover:bg-white/[0.02]">
+                <tr key={r.salespersonId} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2.5">
                       <div className="w-7 h-7 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-                        <span className="text-[10px] font-semibold text-purple-400">#{i + 1}</span>
+                        <span className="text-[10px] font-semibold text-purple-600 dark:text-purple-400">#{i + 1}</span>
                       </div>
                       <div>
-                        <p className="text-xs font-medium text-zinc-200">{r.name}</p>
+                        <p className="text-xs font-medium text-zinc-700 dark:text-zinc-200">{r.name}</p>
                         <p className="text-[10px] font-mono text-zinc-600">{r.email}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 stat-num text-xs text-zinc-400">{r.saleCount}</td>
-                  <td className="px-4 py-3 stat-num text-xs text-emerald-400">{formatCurrency(r.totalCommission)}</td>
+                  <td className="px-4 py-3 stat-num text-xs text-zinc-500 dark:text-zinc-400">{r.saleCount}</td>
+                  <td className="px-4 py-3 stat-num text-xs text-emerald-500 dark:text-emerald-400">{formatCurrency(r.totalCommission)}</td>
                   <td className="px-4 py-3 stat-num text-xs text-zinc-500">{formatCurrency(r.saleCount ? r.totalSales / r.saleCount : 0)}</td>
                   <td className="px-4 py-3 text-xs font-mono text-zinc-500">#{i + 1}</td>
                 </tr>

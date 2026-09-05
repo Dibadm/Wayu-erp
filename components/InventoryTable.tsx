@@ -69,24 +69,24 @@ export default function InventoryTable({ products }: { products: Product[] }) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-zinc-800">
+            <tr className="border-b border-zinc-200 dark:border-zinc-800">
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('sku')} className="flex items-center gap-1 hover:text-zinc-400">
+                <button onClick={() => handleSort('sku')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">
                   SKU <SortIcon column="sku" />
                 </button>
               </th>
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('name')} className="flex items-center gap-1 hover:text-zinc-400">
+                <button onClick={() => handleSort('name')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">
                   Product <SortIcon column="name" />
                 </button>
               </th>
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('category')} className="flex items-center gap-1 hover:text-zinc-400">
+                <button onClick={() => handleSort('category')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">
                   Category <SortIcon column="category" />
                 </button>
               </th>
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('quantity')} className="flex items-center gap-1 hover:text-zinc-400">
+                <button onClick={() => handleSort('quantity')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">
                   Stock <SortIcon column="quantity" />
                 </button>
               </th>
@@ -95,21 +95,21 @@ export default function InventoryTable({ products }: { products: Product[] }) {
               <th className="px-5 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800/50">
+          <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
             {paginated.map(p => {
               const status = getStockStatus(p.quantity, p.minStockLevel)
               return (
-                <tr key={p.id} className="hover:bg-white/[0.02] transition-colors group">
+                <tr key={p.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02] transition-colors group">
                   <td className="px-5 py-3 sku">{p.sku}</td>
                   <td className="px-5 py-3">
-                    <p className="text-zinc-200 font-medium">{p.name}</p>
+                    <p className="text-zinc-700 dark:text-zinc-200 font-medium">{p.name}</p>
                     {p.description && <p className="text-xs text-zinc-600 mt-0.5 truncate max-w-xs">{p.description}</p>}
                   </td>
                   <td className="px-5 py-3 text-xs font-mono text-zinc-500">{p.category}</td>
                   <td className="px-5 py-3">
                     <span className={`stat-num text-sm ${
-                      status === 'ok' ? 'text-zinc-200' :
-                      status === 'warning' ? 'text-amber-400' : 'text-red-400'
+                      status === 'ok' ? 'text-zinc-700 dark:text-zinc-200' :
+                      status === 'warning' ? 'text-amber-500 dark:text-amber-400' : 'text-red-500 dark:text-red-400'
                     }`}>{p.quantity.toLocaleString()}</span>
                     <span className="text-xs font-mono text-zinc-600 ml-1">{p.unit}</span>
                   </td>
@@ -120,7 +120,7 @@ export default function InventoryTable({ products }: { products: Product[] }) {
                     <StockStatusBadge status={status} />
                   </td>
                   <td className="px-5 py-3">
-                    <Link href={`/inventory/${p.id}`} className="text-xs font-mono text-blue-500 hover:text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Link href={`/inventory/${p.id}`} className="text-xs font-mono text-blue-500 hover:text-blue-500 dark:hover:text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity">
                       VIEW →
                     </Link>
                   </td>
@@ -131,7 +131,7 @@ export default function InventoryTable({ products }: { products: Product[] }) {
         </table>
       </div>
 
-      <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-800">
+      <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-200 dark:border-zinc-800">
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Rows per page</span>
           <select
@@ -149,7 +149,7 @@ export default function InventoryTable({ products }: { products: Product[] }) {
           <button
             onClick={() => setPage(p => Math.max(0, p - 1))}
             disabled={page === 0}
-            className="px-2 py-1 text-xs font-mono rounded border border-zinc-800 disabled:opacity-40 hover:bg-white/5 transition-colors"
+            className="px-2 py-1 text-xs font-mono rounded border border-zinc-200 dark:border-zinc-800 disabled:opacity-40 hover:bg-zinc-200 dark:hover:bg-white/5 transition-colors"
             style={{ color: 'var(--text-secondary)' }}
           >
             Prev
@@ -157,7 +157,7 @@ export default function InventoryTable({ products }: { products: Product[] }) {
           <button
             onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
-            className="px-2 py-1 text-xs font-mono rounded border border-zinc-800 disabled:opacity-40 hover:bg-white/5 transition-colors"
+            className="px-2 py-1 text-xs font-mono rounded border border-zinc-200 dark:border-zinc-800 disabled:opacity-40 hover:bg-zinc-200 dark:hover:bg-white/5 transition-colors"
             style={{ color: 'var(--text-secondary)' }}
           >
             Next

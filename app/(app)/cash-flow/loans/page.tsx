@@ -39,7 +39,7 @@ export default function LoansPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Loans</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Loans</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Track loans and repayments</p>
         </div>
         <button onClick={() => setShowForm(!showForm)} className="btn-primary flex items-center gap-2"><Plus className="w-4 h-4" /> New Loan</button>
@@ -60,23 +60,23 @@ export default function LoansPage() {
       )}
 
       <div className="glass-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-zinc-800"><h2 className="text-sm font-semibold text-zinc-100">Loans</h2></div>
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800"><h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Loans</h2></div>
         {loading ? <div className="p-10 flex justify-center"><RefreshCw className="w-5 h-5 animate-spin text-zinc-500" /></div> : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead><tr className="border-b border-zinc-800">
+              <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Lender', 'Principal', 'Rate', 'Start Date', 'End Date', 'Status', 'Total Repaid', 'Actions'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
               </tr></thead>
-              <tbody className="divide-y divide-zinc-800/50">
+              <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                 {loans.map(loan => (
-                  <tr key={loan.id} className="hover:bg-white/[0.02]">
-                    <td className="px-4 py-3 text-sm text-zinc-200">{loan.lender}</td>
+                  <tr key={loan.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+                    <td className="px-4 py-3 text-sm text-zinc-700 dark:text-zinc-200">{loan.lender}</td>
                     <td className="px-4 py-3 stat-num text-sm">{fmt(loan.principal)}</td>
                     <td className="px-4 py-3 stat-num text-sm">{loan.interestRate}%</td>
                     <td className="px-4 py-3 text-xs font-mono text-zinc-500">{new Date(loan.startDate).toLocaleDateString()}</td>
                     <td className="px-4 py-3 text-xs font-mono text-zinc-500">{loan.endDate ? new Date(loan.endDate).toLocaleDateString() : '—'}</td>
                     <td className="px-4 py-3"><span className={`badge ${loan.status === 'PAID_OFF' ? 'badge-in' : loan.status === 'DEFAULTED' ? 'badge-low' : 'badge-warning'}`}>{loan.status}</span></td>
-                    <td className="px-4 py-3 stat-num text-sm text-emerald-400">{fmt(loan.repaymentSummary.totalRepaid)}</td>
+                    <td className="px-4 py-3 stat-num text-sm text-emerald-500 dark:text-emerald-400">{fmt(loan.repaymentSummary.totalRepaid)}</td>
                     <td className="px-4 py-3">
                       <button onClick={() => { setShowRepay(loan.id); setRepayForm({ ...repayForm, loanId: loan.id }) }} className="text-xs px-3 py-1.5 rounded btn-primary">Repay</button>
                     </td>
@@ -109,15 +109,15 @@ export default function LoansPage() {
           <h2 className="text-sm font-semibold mb-3">Repayment History — {loans.find(l => l.id === showRepay)!.lender}</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead><tr className="border-b border-zinc-800">
+              <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Date', 'Principal', 'Interest', 'Total', 'Reference', 'Notes'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
               </tr></thead>
-              <tbody className="divide-y divide-zinc-800/50">
+              <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                 {loans.find(l => l.id === showRepay)!.repayments.map(r => (
-                  <tr key={r.id} className="hover:bg-white/[0.02]">
+                  <tr key={r.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                     <td className="px-4 py-2.5 text-xs font-mono text-zinc-500">{new Date(r.paidAt).toLocaleDateString()}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{fmt(r.principal)}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-red-400">{fmt(r.interest)}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{fmt(r.principal)}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">{fmt(r.interest)}</td>
                     <td className="px-4 py-2.5 stat-num text-sm">{fmt(r.amount)}</td>
                     <td className="px-4 py-2.5 text-xs font-mono text-zinc-500">{r.reference ?? '—'}</td>
                     <td className="px-4 py-2.5 text-xs text-zinc-500">{r.notes ?? '—'}</td>

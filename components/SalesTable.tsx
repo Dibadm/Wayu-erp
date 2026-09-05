@@ -91,57 +91,57 @@ export default function SalesTable({ sales }: { sales: Sale[] }) {
 
   return (
     <div className="glass-card overflow-hidden">
-      <div className="px-5 py-4 border-b border-zinc-800 flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-zinc-100">Recent Transactions</h2>
+      <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+        <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Recent Transactions</h2>
         <span className="text-xs font-mono text-zinc-600">{sales.length} total</span>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-zinc-800">
+            <tr className="border-b border-zinc-200 dark:border-zinc-800">
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('receiptNumber')} className="flex items-center gap-1 hover:text-zinc-400">Receipt <SortIcon column="receiptNumber" /></button>
+                <button onClick={() => handleSort('receiptNumber')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Receipt <SortIcon column="receiptNumber" /></button>
               </th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('customer')} className="flex items-center gap-1 hover:text-zinc-400">Customer <SortIcon column="customer" /></button>
+                <button onClick={() => handleSort('customer')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Customer <SortIcon column="customer" /></button>
               </th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('status')} className="flex items-center gap-1 hover:text-zinc-400">Status <SortIcon column="status" /></button>
+                <button onClick={() => handleSort('status')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Status <SortIcon column="status" /></button>
               </th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Items</th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Discount</th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Tax</th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('total')} className="flex items-center gap-1 hover:text-zinc-400">Total <SortIcon column="total" /></button>
+                <button onClick={() => handleSort('total')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Total <SortIcon column="total" /></button>
               </th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('profit')} className="flex items-center gap-1 hover:text-zinc-400">Profit <SortIcon column="profit" /></button>
+                <button onClick={() => handleSort('profit')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Profit <SortIcon column="profit" /></button>
               </th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Payment</th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Cashier</th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('salesperson')} className="flex items-center gap-1 hover:text-zinc-400">Salesperson <SortIcon column="salesperson" /></button>
+                <button onClick={() => handleSort('salesperson')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Salesperson <SortIcon column="salesperson" /></button>
               </th>
               <th className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                <button onClick={() => handleSort('createdAt')} className="flex items-center gap-1 hover:text-zinc-400">Date <SortIcon column="createdAt" /></button>
+                <button onClick={() => handleSort('createdAt')} className="flex items-center gap-1 hover:text-zinc-500 dark:hover:text-zinc-400">Date <SortIcon column="createdAt" /></button>
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800/50">
+          <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
             {paginated.map(sale => (
-              <tr key={sale.id} className="hover:bg-white/[0.02] transition-colors">
-                <td className="px-4 py-3 font-mono text-xs text-blue-400 whitespace-nowrap">{sale.receiptNumber}</td>
-                <td className="px-4 py-3 text-xs text-zinc-400">{sale.customer?.name ?? <span className="text-zinc-600">Walk-in</span>}</td>
+              <tr key={sale.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02] transition-colors">
+                <td className="px-4 py-3 font-mono text-xs text-blue-600 dark:text-blue-400 whitespace-nowrap">{sale.receiptNumber}</td>
+                <td className="px-4 py-3 text-xs text-zinc-500 dark:text-zinc-400">{sale.customer?.name ?? <span className="text-zinc-600">Walk-in</span>}</td>
                 <td className="px-4 py-3">
                   <span className={`badge ${STATUS_CLS[sale.status] ?? 'badge-ok'}`}>{sale.status.replace('_', ' ')}</span>
                 </td>
-                <td className="px-4 py-3 stat-num text-sm text-zinc-400">{sale._count.items}</td>
-                <td className="px-4 py-3 stat-num text-xs text-amber-400">
+                <td className="px-4 py-3 stat-num text-sm text-zinc-500 dark:text-zinc-400">{sale._count.items}</td>
+                <td className="px-4 py-3 stat-num text-xs text-amber-500 dark:text-amber-400">
                   {Number(sale.discountAmount) > 0 ? `-${fmt(Number(sale.discountAmount))}` : '—'}
                 </td>
                 <td className="px-4 py-3 stat-num text-xs text-zinc-500">{fmt(Number(sale.taxAmount))}</td>
-                <td className="px-4 py-3 stat-num text-sm text-emerald-400 whitespace-nowrap">{fmt(Number(sale.total))}</td>
-                <td className="px-4 py-3 stat-num text-xs text-blue-400">{fmt(Number(sale.profit))}</td>
+                <td className="px-4 py-3 stat-num text-sm text-emerald-500 dark:text-emerald-400 whitespace-nowrap">{fmt(Number(sale.total))}</td>
+                <td className="px-4 py-3 stat-num text-xs text-blue-600 dark:text-blue-400">{fmt(Number(sale.profit))}</td>
                 <td className="px-4 py-3 text-xs font-mono text-zinc-500 whitespace-nowrap">
                   {sale.payments.map(p => p.method.replace('_', ' ')).join(', ')}
                 </td>
@@ -163,7 +163,7 @@ export default function SalesTable({ sales }: { sales: Sale[] }) {
         </div>
       )}
 
-      <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-800">
+      <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-200 dark:border-zinc-800">
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Rows per page</span>
           <select
@@ -181,7 +181,7 @@ export default function SalesTable({ sales }: { sales: Sale[] }) {
           <button
             onClick={() => setPage(p => Math.max(0, p - 1))}
             disabled={page === 0}
-            className="px-2 py-1 text-xs font-mono rounded border border-zinc-800 disabled:opacity-40 hover:bg-white/5 transition-colors"
+            className="px-2 py-1 text-xs font-mono rounded border border-zinc-200 dark:border-zinc-800 disabled:opacity-40 hover:bg-zinc-200 dark:hover:bg-white/5 transition-colors"
             style={{ color: 'var(--text-secondary)' }}
           >
             Prev
@@ -189,7 +189,7 @@ export default function SalesTable({ sales }: { sales: Sale[] }) {
           <button
             onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
-            className="px-2 py-1 text-xs font-mono rounded border border-zinc-800 disabled:opacity-40 hover:bg-white/5 transition-colors"
+            className="px-2 py-1 text-xs font-mono rounded border border-zinc-200 dark:border-zinc-800 disabled:opacity-40 hover:bg-zinc-200 dark:hover:bg-white/5 transition-colors"
             style={{ color: 'var(--text-secondary)' }}
           >
             Next

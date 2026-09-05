@@ -84,14 +84,14 @@ export default function CustomerModal({ customer, trigger, onSuccess }: Props) {
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                    <User className="w-4 h-4 text-blue-400" />
+                    <User className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
-                    <h2 className="text-sm font-semibold text-zinc-100">{isEdit ? 'Edit Customer' : 'New Customer'}</h2>
+                    <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{isEdit ? 'Edit Customer' : 'New Customer'}</h2>
                     <p className="text-xs font-mono text-zinc-500 mt-0.5">Customer account details</p>
                   </div>
                 </div>
-                <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors">
+                <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -129,7 +129,7 @@ export default function CustomerModal({ customer, trigger, onSuccess }: Props) {
                 </div>
 
                 {error && (
-                  <p className="text-xs font-mono text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">{error}</p>
+                  <p className="text-xs font-mono text-red-500 dark:text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">{error}</p>
                 )}
 
                 <div className="flex gap-3 pt-1">

@@ -29,7 +29,7 @@ export default function GrossProfitPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Gross Profit</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Gross Profit</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">By product &amp; month — mirrors GP 2,18</p>
         </div>
         <div className="flex items-center gap-2">
@@ -55,32 +55,32 @@ export default function GrossProfitPage() {
       </div>
 
       <div className="glass-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-zinc-800 flex items-center gap-2">
-          <TrendingUp className="w-4 h-4 text-emerald-400" />
-          <h2 className="text-sm font-semibold text-zinc-100">GP by Product / Month</h2>
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center gap-2">
+          <TrendingUp className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+          <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">GP by Product / Month</h2>
         </div>
         {loading ? <div className="p-10 flex justify-center"><Loader2 className="w-5 h-5 animate-spin text-zinc-500" /></div> : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800">
+                <tr className="border-b border-zinc-200 dark:border-zinc-800">
                   {['SKU', 'Product', 'Month', 'Qty', 'Sell', 'COGS', 'Profit', 'Margin %'].map(h => (
                     <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800/50">
+              <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                 {rows.map((r, i) => {
                   const m = r.sellValue > 0 ? (r.profit / r.sellValue) * 100 : 0
                   return (
-                    <tr key={i} className="hover:bg-white/[0.02]">
-                      <td className="px-4 py-2.5 font-mono text-xs text-blue-400">{r.sku}</td>
-                      <td className="px-4 py-2.5 text-xs text-zinc-300">{r.productName}</td>
-                      <td className="px-4 py-2.5 text-xs font-mono text-zinc-400">{r.monthKey}</td>
-                      <td className="px-4 py-2.5 stat-num text-sm text-zinc-400">{r.quantity}</td>
-                      <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{fmt(r.sellValue)}</td>
-                      <td className="px-4 py-2.5 stat-num text-sm text-zinc-400">{fmt(r.cogs)}</td>
-                      <td className="px-4 py-2.5 stat-num text-sm text-purple-400">{fmt(r.profit)}</td>
+                    <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+                      <td className="px-4 py-2.5 font-mono text-xs text-blue-600 dark:text-blue-400">{r.sku}</td>
+                      <td className="px-4 py-2.5 text-xs text-zinc-600 dark:text-zinc-300">{r.productName}</td>
+                      <td className="px-4 py-2.5 text-xs font-mono text-zinc-500 dark:text-zinc-400">{r.monthKey}</td>
+                      <td className="px-4 py-2.5 stat-num text-sm text-zinc-500 dark:text-zinc-400">{r.quantity}</td>
+                      <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{fmt(r.sellValue)}</td>
+                      <td className="px-4 py-2.5 stat-num text-sm text-zinc-500 dark:text-zinc-400">{fmt(r.cogs)}</td>
+                      <td className="px-4 py-2.5 stat-num text-sm text-purple-600 dark:text-purple-400">{fmt(r.profit)}</td>
                       <td className="px-4 py-2.5 text-xs font-mono" style={{ color: m >= 20 ? 'var(--accent-emerald)' : m >= 10 ? 'var(--accent-amber)' : 'var(--accent-red)' }}>{m.toFixed(1)}%</td>
                     </tr>
                   )

@@ -103,7 +103,7 @@ export default function AdminSettings() {
   return (
     <div className="space-y-6">
       {msg && (
-        <div className="glass-card p-3 text-sm font-mono text-emerald-400 flex items-center gap-2">
+        <div className="glass-card p-3 text-sm font-mono text-emerald-500 dark:text-emerald-400 flex items-center gap-2">
           <Save className="w-4 h-4" /> {msg}
         </div>
       )}
@@ -194,7 +194,7 @@ export default function AdminSettings() {
                   <td className="px-3 py-2"><span className={`badge ${u.role === 'ADMIN' ? 'badge-in' : 'badge-warning'}`}>{u.role}</span></td>
                   <td className="px-3 py-2 text-xs">{u.isSalesperson ? 'Yes' : '—'}</td>
                   <td className="px-3 py-2 text-right">
-                    <button onClick={() => deleteUser(u.id)} className="text-red-400 hover:text-red-300" title="Delete"><Trash2 className="w-4 h-4" /></button>
+                    <button onClick={() => deleteUser(u.id)} className="text-red-500 dark:text-red-400 hover:text-red-400 dark:hover:text-red-300" title="Delete"><Trash2 className="w-4 h-4" /></button>
                   </td>
                 </tr>
               ))}
@@ -252,12 +252,12 @@ export default function AdminSettings() {
                   <td className="px-3 py-2 text-xs"><span className="badge badge-ok">{r.scope}</span></td>
                   <td className="px-3 py-2 text-xs font-mono">{r.salespersonId ? 'SP' : ''}{r.productId ? ' · PROD' : ''}</td>
                   <td className="px-3 py-2 text-xs font-mono">{r.tierFromQty}–{r.tierToQty ?? '∞'}</td>
-                  <td className="px-3 py-2 stat-num text-sm text-emerald-400">{r.rate}%</td>
+                  <td className="px-3 py-2 stat-num text-sm text-emerald-500 dark:text-emerald-400">{r.rate}%</td>
                   <td className="px-3 py-2">
                     <button onClick={() => toggleRate(r.id, r.active)} className={`badge ${r.active ? 'badge-in' : 'badge-low'}`}>{r.active ? 'ON' : 'OFF'}</button>
                   </td>
                   <td className="px-3 py-2 text-right">
-                    <button onClick={() => deleteRate(r.id)} className="text-red-400 hover:text-red-300"><Trash2 className="w-4 h-4" /></button>
+                    <button onClick={() => deleteRate(r.id)} className="text-red-500 dark:text-red-400 hover:text-red-400 dark:hover:text-red-300"><Trash2 className="w-4 h-4" /></button>
                   </td>
                 </tr>
               ))}

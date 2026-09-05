@@ -35,7 +35,7 @@ export default function CashOutflowsPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Cash Outflows</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Cash Outflows</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Record money going out of the business</p>
         </div>
         <button onClick={() => setShowForm(!showForm)} className="btn-primary flex items-center gap-2"><Plus className="w-4 h-4" /> New Outflow</button>
@@ -61,18 +61,18 @@ export default function CashOutflowsPage() {
       )}
 
       <div className="glass-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-zinc-800 flex items-center gap-2"><ArrowUpRight className="w-4 h-4 text-red-400" /><h2 className="text-sm font-semibold text-zinc-100">Outflows</h2></div>
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center gap-2"><ArrowUpRight className="w-4 h-4 text-red-500 dark:text-red-400" /><h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Outflows</h2></div>
         {loading ? <div className="p-10 flex justify-center"><RefreshCw className="w-5 h-5 animate-spin text-zinc-500" /></div> : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead><tr className="border-b border-zinc-800">{['Date', 'Account', 'Category', 'Amount', 'Reference', 'Description'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}</tr></thead>
-              <tbody className="divide-y divide-zinc-800/50">
+              <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">{['Date', 'Account', 'Category', 'Amount', 'Reference', 'Description'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}</tr></thead>
+              <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                 {outflows.map(f => (
-                  <tr key={f.id} className="hover:bg-white/[0.02]">
+                  <tr key={f.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                     <td className="px-4 py-2.5 text-xs font-mono text-zinc-500">{new Date(f.paidAt).toLocaleDateString()}</td>
-                    <td className="px-4 py-2.5 text-sm text-zinc-300">{f.bankAccount?.accountName ?? '—'}</td>
+                    <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{f.bankAccount?.accountName ?? '—'}</td>
                     <td className="px-4 py-2.5"><span className="badge badge-low">{f.category.replace('_', ' ')}</span></td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-red-400">{fmt(f.amount)}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">{fmt(f.amount)}</td>
                     <td className="px-4 py-2.5 text-xs font-mono text-zinc-500">{f.reference ?? '—'}</td>
                     <td className="px-4 py-2.5 text-xs text-zinc-500">{f.description ?? '—'}</td>
                   </tr>

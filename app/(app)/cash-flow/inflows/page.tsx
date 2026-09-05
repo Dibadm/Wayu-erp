@@ -36,7 +36,7 @@ export default function InflowsPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Cash Inflows</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Cash Inflows</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Record money coming into the business</p>
         </div>
         <button onClick={() => setShowForm(!showForm)} className="btn-primary flex items-center gap-2"><Plus className="w-4 h-4" /> New Inflow</button>
@@ -77,27 +77,27 @@ export default function InflowsPage() {
       )}
 
       <div className="glass-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-zinc-800 flex items-center justify-between">
-          <div className="flex items-center gap-2"><ArrowDownLeft className="w-4 h-4 text-emerald-400" /><h2 className="text-sm font-semibold text-zinc-100">Inflows</h2></div>
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+          <div className="flex items-center gap-2"><ArrowDownLeft className="w-4 h-4 text-emerald-500 dark:text-emerald-400" /><h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Inflows</h2></div>
           <button onClick={() => {
             const csv = inflows.map(i => [i.receivedAt, i.bankAccount.accountName, i.category, i.amount, i.reference, i.description, i.createdBy?.name].join(',')).join('\n')
             const blob = new Blob([csv], { type: 'text/csv' })
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'inflows.csv'; a.click()
-          }} className="text-xs font-mono text-blue-400 hover:text-blue-300"><Download className="w-3 h-3 inline mr-1" /> Export</button>
+          }} className="text-xs font-mono text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"><Download className="w-3 h-3 inline mr-1" /> Export</button>
         </div>
         {loading ? <div className="p-10 flex justify-center"><RefreshCw className="w-5 h-5 animate-spin text-zinc-500" /></div> : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead><tr className="border-b border-zinc-800">
+              <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Date', 'Account', 'Category', 'Amount', 'Reference', 'Description', 'Created By'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
               </tr></thead>
-              <tbody className="divide-y divide-zinc-800/50">
+              <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                 {inflows.map(f => (
-                  <tr key={f.id} className="hover:bg-white/[0.02]">
+                  <tr key={f.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                     <td className="px-4 py-2.5 text-xs font-mono text-zinc-500">{new Date(f.receivedAt).toLocaleDateString()}</td>
-                    <td className="px-4 py-2.5 text-sm text-zinc-300">{f.bankAccount?.accountName ?? '—'}</td>
+                    <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{f.bankAccount?.accountName ?? '—'}</td>
                     <td className="px-4 py-2.5"><span className="badge badge-in">{f.category.replace('_', ' ')}</span></td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{fmt(f.amount)}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{fmt(f.amount)}</td>
                     <td className="px-4 py-2.5 text-xs font-mono text-zinc-500">{f.reference ?? '—'}</td>
                     <td className="px-4 py-2.5 text-xs text-zinc-500">{f.description ?? '—'}</td>
                     <td className="px-4 py-2.5 text-xs text-zinc-500">{f.createdBy?.name ?? '—'}</td>

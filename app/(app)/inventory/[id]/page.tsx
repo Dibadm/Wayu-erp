@@ -40,7 +40,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
     <div className="space-y-6 animate-fade-in max-w-4xl">
       <Breadcrumb productName={product.name} />
       {/* Back */}
-      <Link href="/inventory" className="inline-flex items-center gap-1 text-xs font-mono text-zinc-500 hover:text-zinc-300 transition-colors">
+      <Link href="/inventory" className="inline-flex items-center gap-1 text-xs font-mono text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
         <ChevronLeft className="w-3 h-3" /> Back to Inventory
       </Link>
 
@@ -49,7 +49,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="sku mb-1">{product.sku}</p>
-            <h1 className="text-xl font-semibold text-zinc-100">{product.name}</h1>
+            <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">{product.name}</h1>
             {product.description && <p className="text-sm text-zinc-500 mt-1">{product.description}</p>}
             <div className="flex items-center gap-3 mt-3">
               <StockStatusBadge status={status} />
@@ -60,30 +60,30 @@ export default async function ProductPage({ params }: { params: { id: string } }
         </div>
 
         {/* Stats row */}
-        <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t border-zinc-800">
+        <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-800">
           <div>
             <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Current Stock</p>
-            <p className={`stat-num text-2xl mt-1 ${status === 'ok' ? 'text-zinc-100' : status === 'warning' ? 'text-amber-400' : 'text-red-400'}`}>
+            <p className={`stat-num text-2xl mt-1 ${status === 'ok' ? 'text-zinc-900 dark:text-zinc-100' : status === 'warning' ? 'text-amber-500 dark:text-amber-400' : 'text-red-500 dark:text-red-400'}`}>
               {product.quantity.toLocaleString()}
             </p>
             <p className="text-xs font-mono text-zinc-600">{product.unit}</p>
           </div>
           <div>
             <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Min Level</p>
-            <p className="stat-num text-2xl mt-1 text-zinc-400">{product.minStockLevel.toLocaleString()}</p>
+            <p className="stat-num text-2xl mt-1 text-zinc-500 dark:text-zinc-400">{product.minStockLevel.toLocaleString()}</p>
             <p className="text-xs font-mono text-zinc-600">{product.unit}</p>
           </div>
           <div>
             <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">Last Updated</p>
-            <p className="text-sm font-mono text-zinc-400 mt-1">{formatDate(product.updatedAt)}</p>
+            <p className="text-sm font-mono text-zinc-500 dark:text-zinc-400 mt-1">{formatDate(product.updatedAt)}</p>
           </div>
         </div>
       </div>
 
       {/* Movement history */}
       <div className="glass-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-zinc-800">
-          <h2 className="text-sm font-semibold text-zinc-100">Movement History</h2>
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800">
+          <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Movement History</h2>
           <p className="text-xs font-mono text-zinc-500 mt-0.5">Last 20 transactions for this product</p>
         </div>
         <MovementsTable movements={movements} />

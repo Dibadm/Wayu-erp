@@ -66,7 +66,7 @@ export default function SupplierModal({ supplier, trigger }: Props) {
   }
 
   const defaultTrigger = supplier ? (
-    <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-zinc-400 hover:text-zinc-200 hover:bg-white/5 rounded-lg transition-colors border border-zinc-800 hover:border-zinc-700">
+    <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-white/5 rounded-lg transition-colors border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700">
       <Edit2 className="w-3.5 h-3.5" /> Edit
     </button>
   ) : (
@@ -90,12 +90,12 @@ export default function SupplierModal({ supplier, trigger }: Props) {
 
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
-                  <Building2 className="w-4 h-4 text-blue-400" />
-                  <h2 className="text-sm font-semibold text-zinc-100">
+                  <Building2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                  <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                     {supplier ? 'Edit Supplier' : 'Add New Supplier'}
                   </h2>
                 </div>
-                <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors">
+                <button onClick={() => setOpen(false)} className="p-1.5 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -158,7 +158,7 @@ export default function SupplierModal({ supplier, trigger }: Props) {
                 {error && (
                   <div className="flex items-center gap-2 px-3 py-2 bg-red-500/10 border border-red-500/20 rounded-lg">
                     <span className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
-                    <p className="text-xs font-mono text-red-400">{error}</p>
+                    <p className="text-xs font-mono text-red-500 dark:text-red-400">{error}</p>
                   </div>
                 )}
 

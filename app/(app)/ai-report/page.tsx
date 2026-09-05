@@ -41,7 +41,7 @@ export default function AIReportPage() {
     <div className="space-y-6 animate-fade-in max-w-3xl">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">AI Inventory Report</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">AI Inventory Report</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Real-time statistics interpreted by AI into management insights</p>
         </div>
         <button
@@ -59,10 +59,10 @@ export default function AIReportPage() {
       {!report && !loading && (
         <div className="glass-card p-10 flex flex-col items-center gap-4 text-center">
           <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-            <Bot className="w-7 h-7 text-blue-400" />
+            <Bot className="w-7 h-7 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <p className="text-sm font-semibold text-zinc-200">AI Management Summary</p>
+            <p className="text-sm font-semibold text-zinc-700 dark:text-zinc-200">AI Management Summary</p>
             <p className="text-xs text-zinc-500 mt-1 max-w-sm">
               Click Generate to pull live stats from your database and have AI write a professional management report with insights and action items.
             </p>
@@ -75,9 +75,9 @@ export default function AIReportPage() {
 
       {loading && (
         <div className="glass-card p-10 flex flex-col items-center gap-4 text-center">
-          <Loader2 className="w-10 h-10 text-blue-400 animate-spin" />
+          <Loader2 className="w-10 h-10 text-blue-600 dark:text-blue-400 animate-spin" />
           <div>
-            <p className="text-sm font-semibold text-zinc-300">Calculating statistics…</p>
+            <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">Calculating statistics…</p>
             <p className="text-xs font-mono text-zinc-600 mt-1">Querying database → Sending to AI → Writing report</p>
           </div>
         </div>
@@ -85,7 +85,7 @@ export default function AIReportPage() {
 
       {error && (
         <div className="px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-          <p className="text-xs font-mono text-red-400">{error}</p>
+          <p className="text-xs font-mono text-red-500 dark:text-red-400">{error}</p>
         </div>
       )}
 
@@ -103,17 +103,17 @@ export default function AIReportPage() {
             ].map(s => {
               const Icon = s.icon
               const colors = {
-                blue:    'bg-blue-500/10 border-blue-500/20 text-blue-400',
-                emerald: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
-                amber:   'bg-amber-500/10 border-amber-500/20 text-amber-400',
-                red:     'bg-red-500/10 border-red-500/20 text-red-400',
+                blue:    'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',
+                emerald: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500 dark:text-emerald-400',
+                amber:   'bg-amber-500/10 border-amber-500/20 text-amber-500 dark:text-amber-400',
+                red:     'bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400',
               }[s.color] ?? ''
               return (
                 <div key={s.label} className="glass-card p-4">
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center border mb-3 ${colors}`}>
                     <Icon className="w-4 h-4" />
                   </div>
-                  <p className="stat-num text-lg text-zinc-100">{s.value}</p>
+                  <p className="stat-num text-lg text-zinc-900 dark:text-zinc-100">{s.value}</p>
                   <p className="text-xs text-zinc-500 mt-0.5">{s.label}</p>
                 </div>
               )
@@ -123,20 +123,20 @@ export default function AIReportPage() {
           {/* AI narrative report */}
           {report && (
             <div className="glass-card p-6">
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-zinc-800">
+              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-zinc-200 dark:border-zinc-800">
                 <div className="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                  <Bot className="w-3.5 h-3.5 text-blue-400" />
+                  <Bot className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-zinc-200">AI Management Summary</p>
+                  <p className="text-xs font-semibold text-zinc-700 dark:text-zinc-200">AI Management Summary</p>
                   {generatedAt && <p className="text-[10px] font-mono text-zinc-600">Generated {formatDate(generatedAt)}</p>}
                 </div>
-                <button onClick={generate} disabled={loading} className="ml-auto p-1.5 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors">
+                <button onClick={generate} disabled={loading} className="ml-auto p-1.5 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
                   <RefreshCw className="w-3.5 h-3.5" />
                 </button>
               </div>
               <div className="prose prose-invert prose-sm max-w-none">
-                <pre className="whitespace-pre-wrap font-sans text-sm text-zinc-300 leading-relaxed">{report}</pre>
+                <pre className="whitespace-pre-wrap font-sans text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">{report}</pre>
               </div>
             </div>
           )}

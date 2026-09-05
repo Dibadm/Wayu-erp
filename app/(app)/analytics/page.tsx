@@ -95,7 +95,7 @@ export default function AnalyticsPage() {
     return (
       <div className="flex items-center justify-center py-24">
         <div className="text-center space-y-3">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-400 mx-auto" />
+          <Loader2 className="w-8 h-8 animate-spin text-blue-600 dark:text-blue-400 mx-auto" />
           <p className="text-sm font-mono text-zinc-500">Loading analytics…</p>
         </div>
       </div>
@@ -111,7 +111,7 @@ export default function AnalyticsPage() {
       {/* ── Header ── */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Analytics</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Analytics</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">
             {data?.period.label} · {data?.period.days} days
           </p>
@@ -119,7 +119,7 @@ export default function AnalyticsPage() {
 
         {/* Period filter */}
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-1 gap-1">
+          <div className="flex items-center bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-1 gap-1">
             {PERIODS.map(p => (
               <button
                 key={p.value}
@@ -127,7 +127,7 @@ export default function AnalyticsPage() {
                 className={`px-3 py-1.5 text-xs font-mono rounded-md transition-all duration-150 ${
                   period === p.value
                     ? 'bg-blue-600 text-white'
-                    : 'text-zinc-500 hover:text-zinc-300'
+                    : 'text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300'
                 }`}
               >
                 {p.label}
@@ -150,7 +150,7 @@ export default function AnalyticsPage() {
           <button
             onClick={load}
             disabled={loading}
-            className="p-2 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors border border-zinc-800"
+            className="p-2 rounded-lg hover:bg-zinc-200 dark:hover:bg-white/5 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors border border-zinc-200 dark:border-zinc-800"
             title="Refresh"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -159,7 +159,7 @@ export default function AnalyticsPage() {
       </div>
 
       {error && (
-        <div className="px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-xs font-mono text-red-400">
+        <div className="px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-xs font-mono text-red-500 dark:text-red-400">
           {error}
         </div>
       )}
@@ -317,9 +317,9 @@ export default function AnalyticsPage() {
                         <div className="flex items-center gap-1.5 min-w-0">
                           <span className="w-2 h-2 rounded-full flex-shrink-0"
                             style={{ background: CAT_COLORS[i % CAT_COLORS.length] }} />
-                          <span className="font-mono text-zinc-400 truncate">{cat.name}</span>
+                          <span className="font-mono text-zinc-500 dark:text-zinc-400 truncate">{cat.name}</span>
                         </div>
-                        <span className="font-mono text-zinc-300 flex-shrink-0">{fmtETB(cat.revenue)}</span>
+                        <span className="font-mono text-zinc-600 dark:text-zinc-300 flex-shrink-0">{fmtETB(cat.revenue)}</span>
                       </div>
                     ))}
                   </div>
@@ -355,8 +355,8 @@ export default function AnalyticsPage() {
               subtitle={`ETB ${k.expiryRisk.toLocaleString('en-ET', { minimumFractionDigits: 2 })} total value at risk`}
               action={
                 <div className="flex items-center gap-1.5 px-2.5 py-1 bg-red-500/10 border border-red-500/20 rounded-full">
-                  <AlertTriangle className="w-3 h-3 text-red-400" />
-                  <span className="text-[10px] font-mono text-red-400">{c.expiringData.length} batches</span>
+                  <AlertTriangle className="w-3 h-3 text-red-500 dark:text-red-400" />
+                  <span className="text-[10px] font-mono text-red-500 dark:text-red-400">{c.expiringData.length} batches</span>
                 </div>
               }
             >
@@ -381,16 +381,16 @@ export default function AnalyticsPage() {
 
           {/* ── Inventory value composition ── */}
           <div className="glass-card p-5">
-            <h3 className="text-sm font-semibold text-zinc-100 mb-4">Inventory Value Composition</h3>
+            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Inventory Value Composition</h3>
             <div className="grid grid-cols-3 gap-4">
               {[
-                { label: 'Cost Value',   val: fmtFull(k.inventoryCost),  sub: 'At purchase price', color: 'text-blue-400' },
-                { label: 'Retail Value', val: fmtFull(k.inventoryValue), sub: 'At selling price',  color: 'text-emerald-400' },
-                { label: 'Potential Profit', val: fmtFull(k.inventoryValue - k.inventoryCost), sub: 'If all stock sold', color: 'text-purple-400' },
+                { label: 'Cost Value',   val: fmtFull(k.inventoryCost),  sub: 'At purchase price', color: 'text-blue-600 dark:text-blue-400' },
+                { label: 'Retail Value', val: fmtFull(k.inventoryValue), sub: 'At selling price',  color: 'text-emerald-500 dark:text-emerald-400' },
+                { label: 'Potential Profit', val: fmtFull(k.inventoryValue - k.inventoryCost), sub: 'If all stock sold', color: 'text-purple-600 dark:text-purple-400' },
               ].map(s => (
-                <div key={s.label} className="text-center p-4 bg-zinc-900 rounded-xl border border-zinc-800">
+                <div key={s.label} className="text-center p-4 bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800">
                   <p className={`stat-num text-xl ${s.color}`}>{s.val}</p>
-                  <p className="text-xs font-medium text-zinc-400 mt-1">{s.label}</p>
+                  <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mt-1">{s.label}</p>
                   <p className="text-[10px] font-mono text-zinc-600 mt-0.5">{s.sub}</p>
                 </div>
               ))}

@@ -14,9 +14,9 @@ interface Props {
 }
 
 const TYPE_CONFIG = {
-  IN:         { label: 'Stock In',    icon: ArrowDownLeft,  color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
-  OUT:        { label: 'Stock Out',   icon: ArrowUpRight,   color: 'text-red-400',     bg: 'bg-red-500/10 border-red-500/20' },
-  ADJUSTMENT: { label: 'Adjustment',  icon: RefreshCw,      color: 'text-amber-400',   bg: 'bg-amber-500/10 border-amber-500/20' },
+  IN:         { label: 'Stock In',    icon: ArrowDownLeft,  color: 'text-emerald-500 dark:text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
+  OUT:        { label: 'Stock Out',   icon: ArrowUpRight,   color: 'text-red-500 dark:text-red-400',     bg: 'bg-red-500/10 border-red-500/20' },
+  ADJUSTMENT: { label: 'Adjustment',  icon: RefreshCw,      color: 'text-amber-500 dark:text-amber-400',   bg: 'bg-amber-500/10 border-amber-500/20' },
 }
 
 export default function StockMovementModal({ productId, productName }: Props) {
@@ -75,7 +75,7 @@ export default function StockMovementModal({ productId, productName }: Props) {
                     type="button"
                     onClick={() => setType(t)}
                     className={`flex flex-col items-center gap-1.5 p-3 rounded-lg border text-xs font-mono transition-all duration-150 ${
-                      active ? `${bg} ${color}` : 'border-zinc-800 text-zinc-600 hover:border-zinc-700 hover:text-zinc-400'
+                      active ? `${bg} ${color}` : 'border-zinc-200 dark:border-zinc-800 text-zinc-600 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-500 dark:hover:text-zinc-400'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -114,7 +114,7 @@ export default function StockMovementModal({ productId, productName }: Props) {
           {error && (
             <div className="flex items-center gap-2 px-3 py-2 bg-red-500/10 border border-red-500/20 rounded-lg">
               <span className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
-              <p className="text-xs font-mono text-red-400">{error}</p>
+              <p className="text-xs font-mono text-red-500 dark:text-red-400">{error}</p>
             </div>
           )}
 

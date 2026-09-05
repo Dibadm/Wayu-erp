@@ -66,17 +66,17 @@ export default function CreditAgingPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Credit Aging</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Credit Aging</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Outstanding receivables by aging bucket</p>
         </div>
-        <button onClick={exportCSV} className="flex items-center gap-1.5 px-3 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-sm text-emerald-400 hover:bg-emerald-500/20 transition-colors">
+        <button onClick={exportCSV} className="flex items-center gap-1.5 px-3 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-sm text-emerald-500 dark:text-emerald-400 hover:bg-emerald-500/20 transition-colors">
           <Download className="w-4 h-4" /> Export CSV
         </button>
       </div>
 
       <div className="glass-card p-4 flex items-center gap-4">
         <label className="text-xs font-mono text-zinc-500">Min Total:</label>
-        <input type="number" value={minTotal} onChange={e => setMinTotal(e.target.value)} placeholder="0" className="bg-transparent border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-200 w-32" />
+        <input type="number" value={minTotal} onChange={e => setMinTotal(e.target.value)} placeholder="0" className="bg-transparent border border-zinc-300 dark:border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 w-32" />
         <span className="text-xs text-zinc-500">Filter customers with total outstanding above this amount</span>
       </div>
 
@@ -84,24 +84,24 @@ export default function CreditAgingPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800">
+              <tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Customer', '0-30 Days', '31-60 Days', '61-90 Days', '90+ Days', 'Total', '% of Total', 'As Of'].map(h => (
                   <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {filtered.map((a: any) => {
                 const total = Number(a.total || 0)
                 const pct = maxTotal > 0 ? ((total / maxTotal) * 100).toFixed(1) : '0.0'
                 return (
-                  <tr key={a.id} className="hover:bg-white/[0.02]">
-                    <td className="px-4 py-2.5 text-sm text-zinc-300">{a.customer?.name ?? '—'}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{fmt(a.bucket0to30)}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-blue-400">{fmt(a.bucket31to60)}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-amber-400">{fmt(a.bucket61to90)}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-red-400">{fmt(a.bucket90plus)}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-zinc-200">{fmt(total)}</td>
+                  <tr key={a.id} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+                    <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{a.customer?.name ?? '—'}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{fmt(a.bucket0to30)}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-blue-600 dark:text-blue-400">{fmt(a.bucket31to60)}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-amber-500 dark:text-amber-400">{fmt(a.bucket61to90)}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">{fmt(a.bucket90plus)}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-zinc-700 dark:text-zinc-200">{fmt(total)}</td>
                     <td className="px-4 py-2.5 text-xs text-zinc-500">{pct}%</td>
                     <td className="px-4 py-2.5 text-xs text-zinc-500">{new Date(a.asOf).toLocaleDateString()}</td>
                   </tr>
@@ -111,18 +111,18 @@ export default function CreditAgingPage() {
             </tbody>
           </table>
         </div>
-        <div className="px-4 py-3 border-t border-zinc-800 flex items-center justify-between">
+        <div className="px-4 py-3 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
           <p className="text-xs font-mono text-zinc-500">Page {page} of {Math.ceil(total / limit) || 1} ({total} total)</p>
           <div className="flex gap-2">
-            <button disabled={page <= 1} onClick={() => setPage(p => p - 1)} className="px-3 py-1 text-xs rounded border border-zinc-700 disabled:opacity-50 hover:bg-zinc-800 transition-colors">Prev</button>
-            <button disabled={page >= Math.ceil(total / limit)} onClick={() => setPage(p => p + 1)} className="px-3 py-1 text-xs rounded border border-zinc-700 disabled:opacity-50 hover:bg-zinc-800 transition-colors">Next</button>
+            <button disabled={page <= 1} onClick={() => setPage(p => p - 1)} className="px-3 py-1 text-xs rounded border border-zinc-300 dark:border-zinc-700 disabled:opacity-50 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">Prev</button>
+            <button disabled={page >= Math.ceil(total / limit)} onClick={() => setPage(p => p + 1)} className="px-3 py-1 text-xs rounded border border-zinc-300 dark:border-zinc-700 disabled:opacity-50 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">Next</button>
           </div>
         </div>
       </div>
 
       {/* Visual stacked bars */}
       <div className="glass-card p-5">
-        <h2 className="text-sm font-semibold text-zinc-100 mb-4">Aging Visualization</h2>
+        <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Aging Visualization</h2>
         <div className="space-y-3">
           {filtered.slice(0, 10).map((a: any) => {
             const total = Number(a.total || 0)
@@ -133,7 +133,7 @@ export default function CreditAgingPage() {
             const w3 = (Number(a.bucket90plus || 0) / maxTotal) * 100
             return (
               <div key={a.id} className="flex items-center gap-3">
-                <span className="text-xs text-zinc-400 w-40 truncate">{a.customer?.name || '—'}</span>
+                <span className="text-xs text-zinc-500 dark:text-zinc-400 w-40 truncate">{a.customer?.name || '—'}</span>
                 <div className="flex-1 h-4 rounded-full overflow-hidden flex">
                   <div className="bg-emerald-500 h-full" style={{ width: `${w0}%` }} title={`0-30: ${fmt(a.bucket0to30)}`} />
                   <div className="bg-blue-500 h-full" style={{ width: `${w1}%` }} title={`31-60: ${fmt(a.bucket31to60)}`} />

@@ -103,8 +103,8 @@ export default function NotificationCenter() {
   }
 
   const colorMap = {
-    overdue: 'text-red-400',
-    low_stock: 'text-amber-400',
+    overdue: 'text-red-500 dark:text-red-400',
+    low_stock: 'text-amber-500 dark:text-amber-400',
     expiring: 'text-orange-400',
   }
 
@@ -139,7 +139,7 @@ export default function NotificationCenter() {
         >
           <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'var(--border)' }}>
             <h3 className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>Notifications</h3>
-            <button onClick={() => setOpen(false)} className="p-1 rounded hover:bg-white/5" style={{ color: 'var(--text-muted)' }}>
+            <button onClick={() => setOpen(false)} className="p-1 rounded hover:bg-zinc-200 dark:hover:bg-white/5" style={{ color: 'var(--text-muted)' }}>
               <X className="w-4 h-4" />
             </button>
           </div>

@@ -34,7 +34,7 @@ export default function BudgetsPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Budgets</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Budgets</h1>
           <p className="text-sm text-zinc-500 font-mono mt-0.5">Plan and track cash flow budgets</p>
         </div>
         <button onClick={() => setShowForm(!showForm)} className="btn-primary flex items-center gap-2"><Plus className="w-4 h-4" /> New Budget</button>
@@ -57,28 +57,28 @@ export default function BudgetsPage() {
       )}
 
       <div className="glass-card overflow-hidden">
-        <div className="px-5 py-4 border-b border-zinc-800 flex items-center justify-between">
-          <div className="flex items-center gap-2"><Download className="w-4 h-4 text-amber-400" /><h2 className="text-sm font-semibold text-zinc-100">Budget vs Actual</h2></div>
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+          <div className="flex items-center gap-2"><Download className="w-4 h-4 text-amber-500 dark:text-amber-400" /><h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Budget vs Actual</h2></div>
           <button onClick={() => {
             const csv = ((Array.isArray(actuals) && actuals.length > 0 ? actuals : budgets) as any[]).map(b => [b.category, b.periodLabel, b.plannedAmount, b.actualInflows ?? 0, b.actualOutflows ?? 0, b.variance ?? 0].join(',')).join('\n')
             const blob = new Blob([csv], { type: 'text/csv' })
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'budgets.csv'; a.click()
-          }} className="text-xs font-mono text-blue-400 hover:text-blue-300">Export CSV</button>
+          }} className="text-xs font-mono text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">Export CSV</button>
         </div>
         {loading ? <div className="p-10 flex justify-center"><RefreshCw className="w-5 h-5 animate-spin text-zinc-500" /></div> : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead><tr className="border-b border-zinc-800">
+              <thead><tr className="border-b border-zinc-200 dark:border-zinc-800">
                 {['Category', 'Period', 'Planned', 'Inflows', 'Outflows', 'Variance'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
               </tr></thead>
-              <tbody className="divide-y divide-zinc-800/50">
+              <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                 {(Array.isArray(actuals) && actuals.length > 0 ? actuals : budgets).map((b: any, i: number) => (
-                  <tr key={b.id ?? i} className="hover:bg-white/[0.02]">
+                  <tr key={b.id ?? i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                     <td className="px-4 py-2.5"><span className="badge badge-in">{b.category}</span></td>
-                    <td className="px-4 py-2.5 text-xs font-mono text-zinc-400">{b.periodLabel ?? b.periodStart?.slice(0, 7)}</td>
+                    <td className="px-4 py-2.5 text-xs font-mono text-zinc-500 dark:text-zinc-400">{b.periodLabel ?? b.periodStart?.slice(0, 7)}</td>
                     <td className="px-4 py-2.5 stat-num text-sm">{fmt(b.plannedAmount)}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-emerald-400">{fmt(b.actualInflows ?? 0)}</td>
-                    <td className="px-4 py-2.5 stat-num text-sm text-red-400">{fmt(b.actualOutflows ?? 0)}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-emerald-500 dark:text-emerald-400">{fmt(b.actualInflows ?? 0)}</td>
+                    <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">{fmt(b.actualOutflows ?? 0)}</td>
                     <td className="px-4 py-2.5 stat-num text-sm" style={{ color: (b.variance ?? 0) >= 0 ? 'var(--accent-emerald)' : 'var(--accent-red)' }}>{fmt(Math.abs(b.variance ?? 0))} {(b.variance ?? 0) >= 0 ? 'under' : 'over'}</td>
                   </tr>
                 ))}

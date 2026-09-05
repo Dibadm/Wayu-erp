@@ -55,10 +55,10 @@ const REPORTS = [
 ]
 
 const ACCENT_MAP: Record<string, string> = {
-  emerald: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
-  blue:    'bg-blue-500/10 border-blue-500/20 text-blue-400',
-  purple:  'bg-purple-500/10 border-purple-500/20 text-purple-400',
-  amber:   'bg-amber-500/10 border-amber-500/20 text-amber-400',
+  emerald: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500 dark:text-emerald-400',
+  blue:    'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',
+  purple:  'bg-purple-500/10 border-purple-500/20 text-purple-600 dark:text-purple-400',
+  amber:   'bg-amber-500/10 border-amber-500/20 text-amber-500 dark:text-amber-400',
   rose:    'bg-rose-500/10 border-rose-500/20 text-rose-400',
 }
 
