@@ -332,7 +332,7 @@ export default async function DashboardPage() {
           </>
         )}
 
-        {(isSales || isAdmin) && (
+        {isSales && (
           <div className="glass-card p-5">
             <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
               <TrendingUp className="w-4 h-4 text-emerald-400" />
