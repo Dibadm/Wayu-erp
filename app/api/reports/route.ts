@@ -15,8 +15,16 @@ import {
   generateSalesReportsExcel,
 } from '@/lib/reports-ext'
 import { writeAuditLog } from '@/lib/audit'
+import { rateLimit, getClientKey } from '@/lib/rate-limit'
+
+const REPORT_RATE = { max: 20, window: 60_000 }
 
 export async function GET(req: NextRequest) {
+  const rl = rateLimit(`${getClientKey(req)}:reports`, REPORT_RATE.max, REPORT_RATE.window)
+  if (!rl.success) {
+    return NextResponse.json({ error: 'Rate limit exceeded. Slow down.' }, { status: 429 })
+  }
+
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 

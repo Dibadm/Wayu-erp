@@ -7,8 +7,16 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { getARAgingReport } from '@/lib/credit'
 import { formatDate } from '@/lib/utils'
+import { rateLimit, getClientKey } from '@/lib/rate-limit'
+
+const DATA_RATE = { max: 60, window: 60_000 }
 
 export async function GET(req: NextRequest) {
+  const rl = rateLimit(`${getClientKey(req)}:reports-data`, DATA_RATE.max, DATA_RATE.window)
+  if (!rl.success) {
+    return NextResponse.json({ error: 'Rate limit exceeded. Slow down.' }, { status: 429 })
+  }
+
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 

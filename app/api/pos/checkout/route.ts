@@ -19,6 +19,9 @@ import { checkoutSchema } from '@/lib/validations'
 import { writeAuditLog } from '@/lib/audit'
 import { resolveCommissionRate } from '@/lib/commission'
 import { recalcCreditProfile } from '@/lib/credit'
+import { rateLimit, getClientKey } from '@/lib/rate-limit'
+
+const CHECKOUT_RATE = { max: 60, window: 60_000 }
 
 // Generate receipt number: RCP-YYYYMMDD-XXXX
 async function generateReceiptNumber(): Promise<string> {
@@ -49,6 +52,11 @@ function planFEFO(
 }
 
 export async function POST(req: NextRequest) {
+  const rl = rateLimit(`${getClientKey(req)}:checkout`, CHECKOUT_RATE.max, CHECKOUT_RATE.window)
+  if (!rl.success) {
+    return NextResponse.json({ error: 'Rate limit exceeded. Slow down.' }, { status: 429 })
+  }
+
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
