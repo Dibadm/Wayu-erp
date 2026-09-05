@@ -13,6 +13,7 @@ import BarChart from '@/components/charts/BarChart'
 import DonutChart from '@/components/charts/DonutChart'
 import Link from 'next/link'
 import Breadcrumb from '@/components/Breadcrumb'
+import HealthBadge from '@/components/HealthBadge'
 import {
   Package, Wallet, ShoppingCart, CreditCard,
   TrendingUp, Receipt, Percent, Activity,
@@ -212,10 +213,7 @@ export default async function DashboardPage() {
             {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs font-mono text-emerald-400">SYSTEM ONLINE</span>
-        </div>
+        <HealthBadge />
       </div>
 
       {/* Row 1: Core Business KPIs */}
