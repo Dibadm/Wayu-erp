@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { formatCurrency } from '@/lib/utils'
 import StatCard from '@/components/StatCard'
+import DashboardKPI from '@/components/DashboardKPI'
 import MovementsTable from '@/components/MovementsTable'
 import LowStockAlert from '@/components/LowStockAlert'
 import ExpiryWidget from '@/components/ExpiryWidget'
@@ -208,8 +209,8 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">Dashboard</h1>
-          <p className="text-sm text-zinc-500 font-mono mt-0.5">
+           <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-900 dark:text-zinc-100">Dashboard</h1>
+           <p className="text-sm text-zinc-600 dark:text-zinc-500 font-mono mt-0.5">
             {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
         </div>
@@ -218,39 +219,39 @@ export default async function DashboardPage() {
 
       {/* Row 1: Core Business KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="glass-card p-5">
-          <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
-            <Package className="w-4 h-4 text-blue-400" />
-          </div>
-          <p className="stat-num text-2xl text-zinc-100">{(kpis.totalInventoryValue ?? 0).toLocaleString()}</p>
-          <p className="text-xs font-medium text-zinc-400 mt-1">Total Inventory Value</p>
-          <p className="text-[11px] font-mono text-zinc-600 mt-0.5">Units in stock</p>
-        </div>
-        <div className="glass-card p-5">
-          <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
-            <Wallet className="w-4 h-4 text-emerald-400" />
-          </div>
-          <p className="stat-num text-2xl text-emerald-200">{formatCurrency(kpis.currentCashPosition ?? 0)}</p>
-          <p className="text-xs font-medium text-zinc-400 mt-1">Current Cash Position</p>
-          <p className="text-[11px] font-mono text-zinc-600 mt-0.5">Sum of all bank balances</p>
-        </div>
-        <div className="glass-card p-5">
-          <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4">
-            <ShoppingCart className="w-4 h-4 text-amber-400" />
-          </div>
-          <p className="stat-num text-2xl text-amber-200">{formatCurrency(kpis.dailySales ?? 0)}</p>
-          <p className="text-xs font-medium text-zinc-400 mt-1">Daily Sales</p>
-          <p className="text-[11px] font-mono text-zinc-600 mt-0.5">Today&apos;s revenue</p>
-        </div>
+        <DashboardKPI
+          label="Total Inventory Value"
+          value={(kpis.totalInventoryValue ?? 0).toLocaleString()}
+          subtitle="Units in stock"
+          icon={Package}
+          accent="blue"
+          isZero={kpis.totalInventoryValue === 0}
+        />
+        <DashboardKPI
+          label="Current Cash Position"
+          value={formatCurrency(kpis.currentCashPosition ?? 0)}
+          subtitle="Sum of all bank balances"
+          icon={Wallet}
+          accent="emerald"
+          isZero={kpis.currentCashPosition === 0}
+        />
+        <DashboardKPI
+          label="Daily Sales"
+          value={formatCurrency(kpis.dailySales ?? 0)}
+          subtitle="Today's revenue"
+          icon={ShoppingCart}
+          accent="amber"
+          isZero={kpis.dailySales === 0}
+        />
         {(isAdmin || isFinance || isCreditOfficer || isSales) && (
-          <div className="glass-card p-5">
-            <div className="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4">
-              <CreditCard className="w-4 h-4 text-purple-400" />
-            </div>
-            <p className="stat-num text-2xl text-purple-200">{formatCurrency(kpis.outstandingCredit ?? 0)}</p>
-            <p className="text-xs font-medium text-zinc-400 mt-1">Outstanding Credit</p>
-            <p className="text-[11px] font-mono text-zinc-600 mt-0.5">AR total</p>
-          </div>
+          <DashboardKPI
+            label="Outstanding Credit"
+            value={formatCurrency(kpis.outstandingCredit ?? 0)}
+            subtitle="AR total"
+            icon={CreditCard}
+            accent="purple"
+            isZero={kpis.outstandingCredit === 0}
+          />
         )}
       </div>
 
@@ -258,109 +259,99 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {!isInventory && (
           <>
-            <div className="glass-card p-5">
-              <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
-                <TrendingUp className="w-4 h-4 text-emerald-400" />
-              </div>
-              <p className="stat-num text-2xl text-emerald-200">{formatCurrency(kpis.monthlyRevenue ?? 0)}</p>
-              <p className="text-xs font-medium text-zinc-400 mt-1">Monthly Revenue</p>
-              <p className="text-[11px] font-mono text-zinc-600 mt-0.5">This month</p>
-            </div>
-            <div className="glass-card p-5">
-              <div className="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-4">
-                <Receipt className="w-4 h-4 text-red-400" />
-              </div>
-              <p className="stat-num text-2xl text-red-400">{formatCurrency(kpis.monthlyExpenses ?? 0)}</p>
-              <p className="text-xs font-medium text-zinc-400 mt-1">Expense Summary</p>
-              <p className="text-[11px] font-mono text-zinc-600 mt-0.5">This month</p>
-            </div>
-            <div className="glass-card p-5">
-              <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
-                <Percent className="w-4 h-4 text-blue-400" />
-              </div>
-              <p className="stat-num text-2xl text-blue-200">{(kpis.grossProfitMargin ?? 0).toFixed(1)}%</p>
-              <p className="text-xs font-medium text-zinc-400 mt-1">Gross Profit Margin</p>
-              <p className="text-[11px] font-mono text-zinc-600 mt-0.5">This month</p>
-            </div>
-            <div className="glass-card p-5">
-              <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4">
-                <Activity className="w-4 h-4 text-amber-400" />
-              </div>
-              <p className="stat-num text-2xl text-amber-200">{(kpis.bankAccountsCount ?? 0)}</p>
-              <p className="text-xs font-medium text-zinc-400 mt-1">Bank Balances</p>
-              <p className="text-[11px] font-mono text-zinc-600 mt-0.5">Active accounts</p>
-            </div>
+            <DashboardKPI
+              label="Monthly Revenue"
+              value={formatCurrency(kpis.monthlyRevenue ?? 0)}
+              subtitle="This month"
+              icon={TrendingUp}
+              accent="emerald"
+              isZero={kpis.monthlyRevenue === 0}
+            />
+            <DashboardKPI
+              label="Expense Summary"
+              value={formatCurrency(kpis.monthlyExpenses ?? 0)}
+              subtitle="This month"
+              icon={Receipt}
+              accent="red"
+              isZero={kpis.monthlyExpenses === 0}
+            />
+            <DashboardKPI
+              label="Gross Profit Margin"
+              value={`${(kpis.grossProfitMargin ?? 0).toFixed(1)}%`}
+              subtitle="This month"
+              icon={Percent}
+              accent="blue"
+              isZero={kpis.grossProfitMargin === 0}
+            />
+            <DashboardKPI
+              label="Bank Balances"
+              value={kpis.bankAccountsCount ?? 0}
+              subtitle="Active accounts"
+              icon={Activity}
+              accent="amber"
+              isZero={kpis.bankAccountsCount === 0}
+            />
           </>
         )}
 
         {(isCreditOfficer || isAdmin || isFinance) && (
           <>
-            <div className="glass-card p-5">
-              <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
-                <Users className="w-4 h-4 text-blue-400" />
-              </div>
-              <p className="stat-num text-2xl text-blue-200">{creditProfiles}</p>
-              <p className="text-xs font-medium text-zinc-400 mt-1">Credit Profiles</p>
-              <p className="text-[11px] font-mono text-zinc-600 mt-0.5">Active customers</p>
-            </div>
-            <div className="glass-card p-5">
-              <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4">
-                <FileText className="w-4 h-4 text-amber-400" />
-              </div>
-              <p className="stat-num text-2xl text-amber-200">{creditApps}</p>
-              <p className="text-xs font-medium text-zinc-400 mt-1">Pending Applications</p>
-              <p className="text-[11px] font-mono text-zinc-600 mt-0.5">Awaiting review</p>
-            </div>
-            <div className="glass-card p-5">
-              <div className="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-4">
-                <ShieldCheck className="w-4 h-4 text-red-400" />
-              </div>
-              <p className="stat-num text-2xl text-red-400">{collectionCases}</p>
-              <p className="text-xs font-medium text-zinc-400 mt-1">Open Collections</p>
-              <p className="text-[11px] font-mono text-zinc-600 mt-0.5">Active cases</p>
-            </div>
-            <div className="glass-card p-5">
-              <div className="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4">
-                <AlertTriangle className="w-4 h-4 text-purple-400" />
-              </div>
-              <p className="stat-num text-2xl text-purple-200">{overdueNotifications}</p>
-              <p className="text-xs font-medium text-zinc-400 mt-1">Overdue Alerts</p>
-              <p className="text-[11px] font-mono text-zinc-600 mt-0.5">System notifications</p>
-            </div>
+            <DashboardKPI
+              label="Credit Profiles"
+              value={creditProfiles}
+              subtitle="Active customers"
+              icon={Users}
+              accent="blue"
+              isZero={creditProfiles === 0}
+            />
+            <DashboardKPI
+              label="Pending Applications"
+              value={creditApps}
+              subtitle="Awaiting review"
+              icon={FileText}
+              accent="amber"
+              isZero={creditApps === 0}
+            />
+            <DashboardKPI
+              label="Open Collections"
+              value={collectionCases}
+              subtitle="Active cases"
+              icon={ShieldCheck}
+              accent="red"
+              isZero={collectionCases === 0}
+            />
+            <DashboardKPI
+              label="Overdue Alerts"
+              value={overdueNotifications}
+              subtitle="System notifications"
+              icon={AlertTriangle}
+              accent="purple"
+              isZero={overdueNotifications === 0}
+            />
           </>
-        )}
-
-        {isSales && (
-          <div className="glass-card p-5">
-            <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
-              <TrendingUp className="w-4 h-4 text-emerald-400" />
-            </div>
-            <p className="stat-num text-2xl text-emerald-200">{(kpis.monthlyRevenue ?? 0).toLocaleString()}</p>
-            <p className="text-xs font-medium text-zinc-400 mt-1">Monthly Revenue</p>
-            <p className="text-[11px] font-mono text-zinc-600 mt-0.5">This month</p>
-          </div>
         )}
       </div>
 
       {(isAdmin || isFinance) && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="glass-card p-5">
-            <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
-              <BadgeDollarSign className="w-4 h-4 text-emerald-400" />
-            </div>
-            <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mb-2">Commission Owed This Month</p>
-            <p className="stat-num text-xl text-zinc-100">{formatCurrency(Number(commissionOwedThisMonth._sum.commissionAmount ?? 0))}</p>
-            <p className="text-xs font-mono text-zinc-500 mt-1">Total commission earned</p>
-          </div>
-          <div className="glass-card p-5">
-            <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
-              <Users className="w-4 h-4 text-blue-400" />
-            </div>
-            <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mb-2">Top Salesperson</p>
-            <p className="text-sm font-medium text-zinc-200">{topSalespersonUser?.name ?? topSalespersonUser?.email?.split('@')[0] ?? '—'}</p>
-            <p className="stat-num text-xl text-blue-200">{formatCurrency(topSalespersonCommission)}</p>
-            <p className="text-xs font-mono text-zinc-500 mt-1">Highest commission this month</p>
-          </div>
+          <DashboardKPI
+            label="Commission Owed This Month"
+            value={formatCurrency(Number(commissionOwedThisMonth._sum.commissionAmount ?? 0))}
+            subtitle="Total commission earned"
+            icon={BadgeDollarSign}
+            accent="emerald"
+            isZero={Number(commissionOwedThisMonth._sum.commissionAmount ?? 0) === 0}
+            valueSize="xl"
+          />
+          <DashboardKPI
+            label="Top Salesperson"
+            value={topSalespersonUser?.name ?? topSalespersonUser?.email?.split('@')[0] ?? '—'}
+            subtitle={formatCurrency(topSalespersonCommission)}
+            icon={Users}
+            accent="blue"
+            valueSize="xl"
+            valueMono={false}
+          />
         </div>
       )}
 
@@ -368,7 +359,7 @@ export default async function DashboardPage() {
       {(isAdmin || isFinance) && (
         <div className="grid grid-cols-1 gap-6">
           <div className="glass-card p-5">
-            <h2 className="text-sm font-semibold text-zinc-100 mb-4">Sales Trend (Last 30 Days)</h2>
+            <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Sales Trend (Last 30 Days)</h2>
             <AreaChart
               data={salesTrend}
               series={[
@@ -381,7 +372,7 @@ export default async function DashboardPage() {
             />
           </div>
           <div className="glass-card p-5">
-            <h2 className="text-sm font-semibold text-zinc-100 mb-4">Expense Trend (Last 30 Days)</h2>
+            <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Expense Trend (Last 30 Days)</h2>
             <BarChart
               data={expenseTrend}
               bars={[{ key: 'amount', label: 'Expenses', color: 'var(--accent-red)' }]}
@@ -391,7 +382,7 @@ export default async function DashboardPage() {
             />
           </div>
           <div className="glass-card p-5">
-            <h2 className="text-sm font-semibold text-zinc-100 mb-4">Cash Flow Trend (Last 30 Days)</h2>
+            <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Cash Flow Trend (Last 30 Days)</h2>
             <AreaChart
               data={cashFlowTrend}
               series={[
@@ -410,8 +401,8 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {!isInventory && (
           <div className="glass-card overflow-hidden">
-            <div className="px-5 py-4 border-b border-zinc-800">
-              <h2 className="text-sm font-semibold text-zinc-100">Low Stock Alerts</h2>
+            <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800">
+              <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Low Stock Alerts</h2>
               <p className="text-xs font-mono text-zinc-500 mt-0.5">{lowStockProducts.length} items need restocking</p>
             </div>
             {lowStockProducts.length > 0 && <LowStockAlert products={lowStockProducts} />}
@@ -424,18 +415,18 @@ export default async function DashboardPage() {
         )}
         {(isAdmin || isSales || isFinance) && (
           <div className="glass-card overflow-hidden">
-            <div className="px-5 py-4 border-b border-zinc-800">
-              <h2 className="text-sm font-semibold text-zinc-100">Top Selling Products</h2>
+            <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800">
+              <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Top Selling Products</h2>
               <p className="text-xs font-mono text-zinc-500 mt-0.5">Top 5 by revenue this month</p>
             </div>
-            <div className="divide-y divide-zinc-800/50">
+            <div className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
               {topProducts.map((p: any, i: number) => (
-                <div key={p.productId} className="px-5 py-3 flex items-center justify-between hover:bg-white/[0.02]">
+                <div key={p.productId} className="px-5 py-3 flex items-center justify-between hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
                   <div>
-                    <p className="text-sm text-zinc-200">{p.name}</p>
+                    <p className="text-sm text-zinc-700 dark:text-zinc-200">{p.name}</p>
                     <p className="text-[10px] font-mono text-zinc-600">{p.sku} · {p.qty} units</p>
                   </div>
-                  <p className="stat-num text-sm text-emerald-400">{formatCurrency(p.revenue)}</p>
+                  <p className="stat-num text-sm text-emerald-500 dark:text-emerald-400">{formatCurrency(p.revenue)}</p>
                 </div>
               ))}
               {topProducts.length === 0 && <div className="py-10 text-center text-xs font-mono text-zinc-600">No sales this month.</div>}
@@ -447,9 +438,9 @@ export default async function DashboardPage() {
       {/* Overdue Notifications Banner */}
       {(isAdmin || isCreditOfficer) && overdueNotifications > 0 && (
         <div className="glass-card p-4 flex items-center gap-3 border-l-4 border-l-red-500">
-          <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
+          <AlertTriangle className="w-5 h-5 text-red-500 dark:text-red-400 flex-shrink-0" />
           <div>
-            <p className="text-sm font-medium text-zinc-200">Overdue Notifications</p>
+            <p className="text-sm font-medium text-zinc-700 dark:text-zinc-200">Overdue Notifications</p>
             <p className="text-xs font-mono text-zinc-500">{overdueNotifications} overdue alerts require attention</p>
           </div>
         </div>
@@ -459,7 +450,7 @@ export default async function DashboardPage() {
       {(isAdmin || isCreditOfficer) && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="glass-card p-5">
-            <h2 className="text-sm font-semibold text-zinc-100 mb-4">Product Category Analysis</h2>
+            <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Product Category Analysis</h2>
             <DonutChart
               data={topProducts.map((p: any, i: number) => ({
                 name: p.name,
@@ -471,7 +462,7 @@ export default async function DashboardPage() {
             />
           </div>
           <div className="glass-card p-5">
-            <h2 className="text-sm font-semibold text-zinc-100 mb-4">Monthly Profit Comparison</h2>
+            <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Monthly Profit Comparison</h2>
             <BarChart
               data={[
                 { name: 'Revenue', value: kpis.monthlyRevenue ?? 0 },
@@ -487,7 +478,7 @@ export default async function DashboardPage() {
             />
           </div>
           <div className="glass-card p-5">
-            <h2 className="text-sm font-semibold text-zinc-100 mb-4">Credit Aging</h2>
+            <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Credit Aging</h2>
             <DonutChart
               data={arAging.map((a: any, i: number) => ({
                 name: a.status,
@@ -499,7 +490,7 @@ export default async function DashboardPage() {
             />
           </div>
           <div className="glass-card p-5">
-            <h2 className="text-sm font-semibold text-zinc-100 mb-4">Inventory Movement</h2>
+            <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Inventory Movement</h2>
             <AreaChart
               data={movementsByDate.slice(-30)}
               series={[
@@ -517,12 +508,12 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {!isCreditOfficer && (
           <div className="glass-card overflow-hidden">
-            <div className="px-5 py-4 border-b border-zinc-800 flex items-center justify-between">
+            <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
               <div>
-                <h2 className="text-sm font-semibold text-zinc-100">Recent Movements</h2>
+                <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Recent Movements</h2>
                 <p className="text-xs font-mono text-zinc-500 mt-0.5">Last 10 transactions</p>
               </div>
-              <Link href="/movements" className="text-xs font-mono text-blue-400 hover:text-blue-300">All →</Link>
+              <Link href="/movements" className="text-xs font-mono text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">All →</Link>
             </div>
             <MovementsTable movements={recentMovements.map((m: any) => ({
               ...m,
@@ -535,22 +526,22 @@ export default async function DashboardPage() {
         )}
         {(isAdmin || isFinance) && (
           <div className="glass-card overflow-hidden">
-            <div className="px-5 py-4 border-b border-zinc-800">
-              <h2 className="text-sm font-semibold text-zinc-100">Expense Category Summary</h2>
+            <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800">
+              <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Expense Category Summary</h2>
               <p className="text-xs font-mono text-zinc-500 mt-0.5">This month&apos;s expenses by category</p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-zinc-800">
+                  <tr className="border-b border-zinc-200 dark:border-zinc-800">
                     {['Category', 'Amount'].map(h => <th key={h} className="px-4 py-3 text-left text-[10px] font-mono text-zinc-600 uppercase tracking-widest">{h}</th>)}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-800/50">
+                <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                   {expensesByCategory.map((e: any, i: number) => (
-                    <tr key={i} className="hover:bg-white/[0.02]">
-                      <td className="px-4 py-2.5 text-sm text-zinc-300">{e.category.replace(/_/g, ' ')}</td>
-                      <td className="px-4 py-2.5 stat-num text-sm text-red-400">{formatCurrency(e.total)}</td>
+                    <tr key={i} className="hover:bg-zinc-100 dark:hover:bg-white/[0.02]">
+                      <td className="px-4 py-2.5 text-sm text-zinc-600 dark:text-zinc-300">{e.category.replace(/_/g, ' ')}</td>
+                      <td className="px-4 py-2.5 stat-num text-sm text-red-500 dark:text-red-400">{formatCurrency(e.total)}</td>
                     </tr>
                   ))}
                   {expensesByCategory.length === 0 && <tr><td colSpan={2} className="px-4 py-10 text-center text-xs font-mono text-zinc-600">No expenses this month.</td></tr>}
