@@ -45,6 +45,6 @@ export async function POST(req: NextRequest) {
     create: { ...body, periodStart: new Date(body.periodStart), periodEnd: new Date(body.periodEnd), plannedAmount: body.plannedAmount },
     update: { periodEnd: new Date(body.periodEnd), plannedAmount: body.plannedAmount },
   })
-  await writeAuditLog({ userId: (session.user as any).id, action: 'CREATE', entity: 'Budget', entityId: upserted.id, entityName: `${upserted.category} ${upserted.periodLabel}`, reason: 'Budget created/updated' })
+  await writeAuditLog({ userId: session.user.id, action: 'CREATE', entity: 'Budget', entityId: upserted.id, entityName: `${upserted.category} ${upserted.periodLabel}`, reason: 'Budget created/updated' })
   return NextResponse.json(upserted)
 }

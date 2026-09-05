@@ -7,7 +7,7 @@ export function requirePermission(...permissions: string[]) {
   return async (req: NextRequest) => {
     const session = await getServerSession(authOptions)
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    const role = (session.user as any)?.role as any
+    const role = session.user?.role
     if (!canAccess(role, ...permissions)) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }

@@ -14,7 +14,7 @@ import { writeAuditLog } from '@/lib/audit'
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  if ((session.user as any)?.role === 'VIEWER') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  if (session.user.role === 'VIEWER') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const body = await req.json()
   const parsed = receiveItemsSchema.safeParse(body)
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     return NextResponse.json({ error: `Cannot receive against a ${po.status} order.` }, { status: 400 })
   }
 
-  const userId = (session.user as any).id
+  const userId = session.user.id
   const { locationId, items } = parsed.data
   const receivedResults: string[] = []
   const errors: string[] = []

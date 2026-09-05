@@ -50,7 +50,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   })
 
   await writeAuditLog({
-    userId: (session.user as any).id,
+    userId: session.user.id,
     action: 'UPDATE',
     entity: 'CreditProfile',
     entityId: profile.id,
@@ -71,7 +71,7 @@ export async function DELETE(_: NextRequest, { params }: { params: { id: string 
 
   await prisma.creditProfile.delete({ where: { id: params.id } })
   await writeAuditLog({
-    userId: (session.user as any).id,
+    userId: session.user.id,
     action: 'DELETE',
     entity: 'CreditProfile',
     entityId: params.id,

@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  if ((session.user as any).role !== 'ADMIN') {
+  if (session.user.role !== 'ADMIN') {
     return NextResponse.json({ error: 'Admin only' }, { status: 403 })
   }
 
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   if (!file) return NextResponse.json({ error: 'No file uploaded' }, { status: 400 })
 
   const buffer = Buffer.from(await file.arrayBuffer())
-  const importedBy = (session.user as any).id
+  const importedBy = session.user.id
 
   const location = await prisma.location.findFirst({ where: { active: true }, select: { id: true } })
   const supplier = await prisma.supplier.findFirst({ where: { status: 'ACTIVE' }, select: { id: true } })

@@ -34,14 +34,14 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const body = await req.json()
-  const role = (session.user as any).role
+  const role = session.user.role
   if (body.loanId) {
     const repayment = await prisma.loanRepayment.create({
       data: {
         amount: body.amount, principal: body.principal, interest: body.interest,
         paidAt: body.paidAt ? new Date(body.paidAt) : new Date(),
         reference: body.reference ?? null, notes: body.notes ?? null,
-        loanId: body.loanId, createdById: (session.user as any).id,
+        loanId: body.loanId, createdById: session.user.id,
       },
     })
     const loan = await prisma.loan.findUnique({ where: { id: body.loanId }, include: { repayments: true } })
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     if (newStatus !== loan!.status) {
       await prisma.loan.update({ where: { id: body.loanId }, data: { status: newStatus } })
     }
-    await writeAuditLog({ userId: (session.user as any).id, action: 'CREATE', entity: 'LoanRepayment', entityId: repayment.id, entityName: `Repayment ${repayment.amount}`, reason: 'Loan repayment recorded' })
+    await writeAuditLog({ userId: session.user.id, action: 'CREATE', entity: 'LoanRepayment', entityId: repayment.id, entityName: `Repayment ${repayment.amount}`, reason: 'Loan repayment recorded' })
     return NextResponse.json(repayment, { status: 201 })
   }
   if (role !== Role.ADMIN) return NextResponse.json({ error: 'Admin only for creating loans' }, { status: 403 })
@@ -59,9 +59,9 @@ export async function POST(req: NextRequest) {
     data: {
       lender: body.lender, principal: body.principal, interestRate: body.interestRate,
       startDate: new Date(body.startDate), endDate: body.endDate ? new Date(body.endDate) : null,
-      status: body.status ?? 'ACTIVE', createdById: (session.user as any).id,
+      status: body.status ?? 'ACTIVE', createdById: session.user.id,
     },
   })
-  await writeAuditLog({ userId: (session.user as any).id, action: 'CREATE', entity: 'Loan', entityId: loan.id, entityName: `${loan.lender} - ${loan.principal}`, reason: 'Loan created' })
+  await writeAuditLog({ userId: session.user.id, action: 'CREATE', entity: 'Loan', entityId: loan.id, entityName: `${loan.lender} - ${loan.principal}`, reason: 'Loan created' })
   return NextResponse.json(loan, { status: 201 })
 }

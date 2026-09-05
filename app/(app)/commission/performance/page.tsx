@@ -9,7 +9,7 @@ import Breadcrumb from '@/components/Breadcrumb'
 export default async function CommissionPerformancePage() {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
-  const role = (session.user as any).role
+  const role = session.user.role
   if (!['ADMIN', 'FINANCE'].includes(role)) redirect('/dashboard')
 
   const now = new Date()

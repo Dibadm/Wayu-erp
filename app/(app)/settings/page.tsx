@@ -50,7 +50,7 @@ export default async function SettingsPage() {
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <p className={labelCls} style={{ color: 'var(--text-muted)' }}>Name</p>
-            <p>{(session.user as any)?.name ?? '—'}</p>
+            <p>{session.user?.name ?? '—'}</p>
           </div>
           <div>
             <p className={labelCls} style={{ color: 'var(--text-muted)' }}>Email</p>
@@ -58,8 +58,8 @@ export default async function SettingsPage() {
           </div>
           <div>
             <p className={labelCls} style={{ color: 'var(--text-muted)' }}>Role</p>
-            <span className={`badge ${(session.user as any)?.role === 'ADMIN' ? 'badge-in' : 'badge-warning'}`}>
-              {(session.user as any)?.role}
+            <span className={`badge ${session.user?.role === 'ADMIN' ? 'badge-in' : 'badge-warning'}`}>
+              {session.user?.role}
             </span>
           </div>
         </div>

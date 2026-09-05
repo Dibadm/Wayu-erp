@@ -53,8 +53,8 @@ export function hasPermission(role: AppRole, permission: string): boolean {
   return perms.some(p => permission === p || permission.startsWith(p + ':'))
 }
 
-export function canAccess(role: AppRole | undefined, ...permissions: string[]): boolean {
+export function canAccess(role: string | undefined, ...permissions: string[]): boolean {
   if (!role) return false
   if (role === 'ADMIN') return true
-  return permissions.some(p => hasPermission(role, p))
+  return permissions.some(p => hasPermission(role as AppRole, p))
 }

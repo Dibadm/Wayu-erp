@@ -28,10 +28,10 @@ export async function POST(req: NextRequest) {
     data: {
       category: body.category, description: body.description ?? null,
       amount: body.amount, type: (body.type as ExpenseType) ?? 'DEBIT',
-      reference: body.reference ?? null, createdById: (session.user as any).id,
+      reference: body.reference ?? null, createdById: session.user.id,
     },
   })
-  await writeAuditLog({ userId: (session.user as any).id, action: 'CREATE', entity: 'Expense', entityId: created.id, entityName: body.category, reason: 'Expense recorded' })
+  await writeAuditLog({ userId: session.user.id, action: 'CREATE', entity: 'Expense', entityId: created.id, entityName: body.category, reason: 'Expense recorded' })
   return NextResponse.json(created, { status: 201 })
 }
 

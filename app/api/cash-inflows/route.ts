@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
         amount: body.amount, category: (body.category as CashFlowCategory) ?? 'SALES',
         reference: body.reference ?? null, description: body.description ?? null,
         receivedAt: body.receivedAt ? new Date(body.receivedAt) : new Date(),
-        bankAccountId: body.bankAccountId, createdById: (session.user as any).id,
+        bankAccountId: body.bankAccountId, createdById: session.user.id,
       },
     })
     await tx.bankAccount.update({
@@ -56,6 +56,6 @@ export async function POST(req: NextRequest) {
     })
     return inflow
   })
-  await writeAuditLog({ userId: (session.user as any).id, action: 'CREATE', entity: 'CashInflow', entityId: created.id, entityName: `Inflow ${created.amount}`, reason: 'Cash inflow recorded' })
+  await writeAuditLog({ userId: session.user.id, action: 'CREATE', entity: 'CashInflow', entityId: created.id, entityName: `Inflow ${created.amount}`, reason: 'Cash inflow recorded' })
   return NextResponse.json(created, { status: 201 })
 }

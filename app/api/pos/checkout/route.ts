@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
   if (!parsed.success) return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 })
 
   const { items, customerId, salespersonId, taxable, discountAmount, taxRate, notes, payments } = parsed.data
-  const cashierId = (session.user as any).id
+  const cashierId = session.user.id
 
   // Verify cashier exists in DB (defensive against stale sessions / FK violations)
   const cashier = await prisma.user.findUnique({ where: { id: cashierId } })

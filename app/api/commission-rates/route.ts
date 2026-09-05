@@ -26,7 +26,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  if ((session.user as any).role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
+  if (session.user.role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
 
   const body = await req.json()
   const scope = body.scope as CommissionScope
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
 
   const created = await prisma.commissionRate.create({ data })
   await writeAuditLog({
-    userId: (session.user as any).id, action: 'CREATE', entity: 'CommissionRate',
+    userId: session.user.id, action: 'CREATE', entity: 'CommissionRate',
     entityId: created.id, entityName: `${scope} @${data.rate}%`,
     reason: 'Commission rate created',
   })
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
 export async function PATCH(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  if ((session.user as any).role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
+  if (session.user.role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
 
   const body = await req.json()
   const id = body.id
@@ -72,7 +72,7 @@ export async function PATCH(req: NextRequest) {
 
   const updated = await prisma.commissionRate.update({ where: { id }, data })
   await writeAuditLog({
-    userId: (session.user as any).id, action: 'UPDATE', entity: 'CommissionRate',
+    userId: session.user.id, action: 'UPDATE', entity: 'CommissionRate',
     entityId: id, entityName: `rate ${id}`, reason: 'Commission rate updated',
   })
   return NextResponse.json(updated)
@@ -81,7 +81,7 @@ export async function PATCH(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  if ((session.user as any).role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
+  if (session.user.role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
 
   const { searchParams } = new URL(req.url)
   const id = searchParams.get('id')
@@ -89,7 +89,7 @@ export async function DELETE(req: NextRequest) {
 
   await prisma.commissionRate.delete({ where: { id } })
   await writeAuditLog({
-    userId: (session.user as any).id, action: 'DELETE', entity: 'CommissionRate',
+    userId: session.user.id, action: 'DELETE', entity: 'CommissionRate',
     entityId: id, reason: 'Commission rate deleted',
   })
   return NextResponse.json({ success: true })

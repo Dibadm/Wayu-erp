@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
   const calendar = (searchParams.get('calendar') ?? 'gregorian') as CalendarMode
   const amharic = searchParams.get('amharic') === 'true'
 
-  const userId = (session.user as any).id
+  const userId = session.user.id
   let buffer: Buffer
   let filename: string
 

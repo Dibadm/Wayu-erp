@@ -18,7 +18,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const role = (session.user as any).role
+  const role = session.user.role
   if (role !== Role.ADMIN) return NextResponse.json({ error: 'Admin only' }, { status: 403 })
   const body = await req.json()
   if (!body.fromAccountId || !body.toAccountId || !body.amount) {
@@ -45,11 +45,11 @@ export async function POST(req: NextRequest) {
       data: {
         amount: body.amount, description: body.description ?? null, reference: body.reference ?? null,
         fromAccountId: body.fromAccountId, toAccountId: body.toAccountId,
-        createdById: (session.user as any).id,
+        createdById: session.user.id,
       },
     })
     return transfer
   })
-  await writeAuditLog({ userId: (session.user as any).id, action: 'CREATE', entity: 'BankTransfer', entityId: created.id, entityName: `Transfer ${created.amount}`, reason: 'Bank transfer recorded' })
+  await writeAuditLog({ userId: session.user.id, action: 'CREATE', entity: 'BankTransfer', entityId: created.id, entityName: `Transfer ${created.amount}`, reason: 'Bank transfer recorded' })
   return NextResponse.json(created, { status: 201 })
 }

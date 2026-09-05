@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
   })
 
   await writeAuditLog({
-    userId: (session.user as any).id,
+    userId: session.user.id,
     action: 'CREATE',
     entity: 'CreditApplication',
     entityId: application.id,

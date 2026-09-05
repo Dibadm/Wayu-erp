@@ -18,7 +18,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const role = (session.user as any).role
+  const role = session.user.role
   if (role !== Role.ADMIN) return NextResponse.json({ error: 'Admin only' }, { status: 403 })
   const body = await req.json()
   if (!body.accountName || !body.accountNumber || !body.bankName) {
@@ -29,35 +29,35 @@ export async function POST(req: NextRequest) {
       accountName: body.accountName, accountNumber: body.accountNumber, bankName: body.bankName,
       accountType: body.accountType ?? 'SAVINGS', currency: body.currency ?? 'ETB',
       openingBalance: body.openingBalance ?? 0, currentBalance: body.openingBalance ?? 0,
-      createdById: (session.user as any).id,
+      createdById: session.user.id,
     },
   })
-  await writeAuditLog({ userId: (session.user as any).id, action: 'CREATE', entity: 'BankAccount', entityId: created.id, entityName: created.accountName, reason: 'Bank account created' })
+  await writeAuditLog({ userId: session.user.id, action: 'CREATE', entity: 'BankAccount', entityId: created.id, entityName: created.accountName, reason: 'Bank account created' })
   return NextResponse.json(created, { status: 201 })
 }
 
 export async function PATCH(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const role = (session.user as any).role
+  const role = session.user.role
   if (role !== Role.ADMIN) return NextResponse.json({ error: 'Admin only' }, { status: 403 })
   const body = await req.json()
   const { id, ...rest } = body
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })
   const updated = await prisma.bankAccount.update({ where: { id }, data: rest })
-  await writeAuditLog({ userId: (session.user as any).id, action: 'UPDATE', entity: 'BankAccount', entityId: updated.id, entityName: updated.accountName, reason: 'Bank account updated' })
+  await writeAuditLog({ userId: session.user.id, action: 'UPDATE', entity: 'BankAccount', entityId: updated.id, entityName: updated.accountName, reason: 'Bank account updated' })
   return NextResponse.json(updated)
 }
 
 export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const role = (session.user as any).role
+  const role = session.user.role
   if (role !== Role.ADMIN) return NextResponse.json({ error: 'Admin only' }, { status: 403 })
   const { searchParams } = new URL(req.url)
   const id = searchParams.get('id')
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })
   const updated = await prisma.bankAccount.update({ where: { id }, data: { isActive: false } })
-  await writeAuditLog({ userId: (session.user as any).id, action: 'DELETE', entity: 'BankAccount', entityId: updated.id, entityName: updated.accountName, reason: 'Bank account soft deleted' })
+  await writeAuditLog({ userId: session.user.id, action: 'DELETE', entity: 'BankAccount', entityId: updated.id, entityName: updated.accountName, reason: 'Bank account soft deleted' })
   return NextResponse.json(updated)
 }

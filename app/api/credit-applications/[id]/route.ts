@@ -37,7 +37,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   if (body.status) data.status = body.status
   if (body.rejectionReason) data.rejectionReason = body.rejectionReason
   if (body.reviewedBy || body.reviewedAt) {
-    data.reviewedBy = (session.user as any).id
+    data.reviewedBy = session.user.id
     data.reviewedAt = new Date()
   }
 
@@ -60,7 +60,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   }
 
   await writeAuditLog({
-    userId: (session.user as any).id,
+    userId: session.user.id,
     action: 'UPDATE',
     entity: 'CreditApplication',
     entityId: application.id,

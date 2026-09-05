@@ -28,7 +28,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
   if (!product) notFound()
 
   const status = getStockStatus(product.quantity, product.minStockLevel)
-  const userId = (session.user as any).id
+  const userId = session.user.id
 
   // Augment movements with product info for table component
   const movements = product.movements.map(m => ({

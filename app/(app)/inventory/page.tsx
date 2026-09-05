@@ -19,7 +19,7 @@ export default async function InventoryPage() {
     include: { _count: { select: { movements: true } } },
   })
 
-  const isAdmin = (session.user as any)?.role === 'ADMIN'
+  const isAdmin = session.user?.role === 'ADMIN'
 
   return (
     <div className="space-y-6 animate-fade-in">

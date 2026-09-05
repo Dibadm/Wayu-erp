@@ -7,7 +7,7 @@ import CommissionRatesClient from './CommissionRatesClient'
 export default async function CommissionPage() {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
-  if ((session.user as any).role !== 'ADMIN') redirect('/dashboard')
+  if (session.user.role !== 'ADMIN') redirect('/dashboard')
 
   const [rates, products, users] = await Promise.all([
     prisma.commissionRate.findMany({

@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
   const customer = await prisma.customer.create({ data })
 
   await writeAuditLog({
-    userId: (session.user as any).id,
+    userId: session.user.id,
     action: 'CREATE', entity: 'Customer',
     entityId: customer.id, entityName: customer.name,
   })

@@ -22,7 +22,7 @@ const ACTION_COLORS: Record<string, string> = {
 export default async function AuditPage() {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
-  if ((session.user as any)?.role !== 'ADMIN') redirect('/dashboard')
+  if (session.user?.role !== 'ADMIN') redirect('/dashboard')
 
   const logs = await prisma.auditLog.findMany({
     orderBy: { timestamp: 'desc' },

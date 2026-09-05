@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
       utilizedCredit: 0,
       paymentTerms: paymentTerms ?? 30,
       notes,
-      approvedBy: (session.user as any).id,
+      approvedBy: session.user.id,
       approvedAt: new Date(),
     },
     include: {
@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
   })
 
   await writeAuditLog({
-    userId: (session.user as any).id,
+    userId: session.user.id,
     action: 'CREATE',
     entity: 'CreditProfile',
     entityId: profile.id,

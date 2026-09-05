@@ -9,7 +9,7 @@ import { writeAuditLog } from '@/lib/audit'
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  if ((session.user as any)?.role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
+  if (session.user.role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
 
   const backups = await prisma.backupRecord.findMany({
     orderBy: { startedAt: 'desc' },
@@ -29,9 +29,9 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  if ((session.user as any)?.role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
+  if (session.user.role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
 
-  const userId = (session.user as any).id
+  const userId = session.user.id
 
   await writeAuditLog({
     userId,

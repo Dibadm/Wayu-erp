@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
   const dateFrom = searchParams.get('from') ? new Date(searchParams.get('from')!) : new Date(Date.now() - 30 * 86400000)
   const dateTo   = searchParams.get('to')   ? new Date(searchParams.get('to')!)   : new Date()
 
-  const userId = (session.user as any).id
+  const userId = session.user.id
 
   await writeAuditLog({
     userId,

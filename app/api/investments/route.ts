@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const role = (session.user as any).role
+  const role = session.user.role
   if (role !== Role.ADMIN) return NextResponse.json({ error: 'Admin only' }, { status: 403 })
   const body = await req.json()
   if (!body.name || !body.type || !body.amount) {
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
       name: body.name, type: body.type as any, amount: body.amount,
       expectedReturn: body.expectedReturn ?? 0, startDate: new Date(body.startDate),
       maturityDate: body.maturityDate ? new Date(body.maturityDate) : null,
-      status: body.status ?? 'ACTIVE', notes: body.notes ?? null, createdById: (session.user as any).id,
+      status: body.status ?? 'ACTIVE', notes: body.notes ?? null, createdById: session.user.id,
     },
     update: {
       name: body.name, type: body.type as any, amount: body.amount,
@@ -42,6 +42,6 @@ export async function POST(req: NextRequest) {
       status: body.status ?? 'ACTIVE', notes: body.notes ?? null, updatedAt: new Date(),
     },
   })
-  await writeAuditLog({ userId: (session.user as any).id, action: body.id ? 'UPDATE' : 'CREATE', entity: 'Investment', entityId: upserted.id, entityName: upserted.name, reason: 'Investment created/updated' })
+  await writeAuditLog({ userId: session.user.id, action: body.id ? 'UPDATE' : 'CREATE', entity: 'Investment', entityId: upserted.id, entityName: upserted.name, reason: 'Investment created/updated' })
   return NextResponse.json(upserted)
 }

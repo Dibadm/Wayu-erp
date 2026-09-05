@@ -39,7 +39,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   const customer = await prisma.customer.update({ where: { id: params.id }, data: parsed.data })
 
   await writeAuditLog({
-    userId: (session.user as any).id,
+    userId: session.user.id,
     action: 'UPDATE', entity: 'Customer',
     entityId: customer.id, entityName: customer.name,
     changes: Object.fromEntries(

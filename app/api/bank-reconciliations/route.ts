@@ -28,9 +28,9 @@ export async function POST(req: NextRequest) {
       asOf: body.asOf ? new Date(body.asOf) : new Date(),
       bookBalance: book, bankBalance: bank, difference: bank - book,
       notes: body.notes ?? null, status: body.status ?? 'PENDING',
-      createdById: (session.user as any).id,
+      createdById: session.user.id,
     },
   })
-  await writeAuditLog({ userId: (session.user as any).id, action: 'CREATE', entity: 'BankReconciliation', entityId: created.id, entityName: created.title, reason: 'Bank reconciliation recorded' })
+  await writeAuditLog({ userId: session.user.id, action: 'CREATE', entity: 'BankReconciliation', entityId: created.id, entityName: created.title, reason: 'Bank reconciliation recorded' })
   return NextResponse.json(created, { status: 201 })
 }

@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  if ((session.user as any)?.role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
+  if (session.user.role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
 
   const body = await req.json()
   const parsed = locationSchema.safeParse(body)
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
   const location = await prisma.location.create({ data: parsed.data })
 
   await writeAuditLog({
-    userId: (session.user as any).id,
+    userId: session.user.id,
     action: 'CREATE',
     entity: 'Location',
     entityId: location.id,

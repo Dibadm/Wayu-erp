@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       customerId: body.customerId,
       arStatementId: body.arStatementId,
       amount: body.amount,
-      assignedTo: body.assignedTo ?? (session.user as any).id,
+      assignedTo: body.assignedTo ?? session.user.id,
       priority: body.priority ?? 'MEDIUM',
       dueDate: body.dueDate ? new Date(body.dueDate) : undefined,
       notes: body.notes,
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
   })
 
   await writeAuditLog({
-    userId: (session.user as any).id,
+    userId: session.user.id,
     action: 'CREATE',
     entity: 'CollectionCase',
     entityId: case_.id,

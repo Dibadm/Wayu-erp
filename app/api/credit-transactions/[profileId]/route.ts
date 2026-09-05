@@ -40,14 +40,14 @@ export async function POST(req: NextRequest, { params }: { params: { profileId: 
       oldValue: body.oldValue,
       newValue: body.newValue,
       reason: body.reason,
-      createdById: (session.user as any).id,
+      createdById: session.user.id,
       profileId: params.profileId,
     },
     include: { createdBy: { select: { name: true } } },
   })
 
   await writeAuditLog({
-    userId: (session.user as any).id,
+    userId: session.user.id,
     action: 'CREATE',
     entity: 'CreditTransaction',
     entityId: transaction.id,

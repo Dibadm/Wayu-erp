@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  if ((session.user as any).role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
+  if (session.user.role !== 'ADMIN') return NextResponse.json({ error: 'Admin only' }, { status: 403 })
   const body = await req.json()
   if (!body.productId || !body.periodStart) return NextResponse.json({ error: 'productId and periodStart required' }, { status: 400 })
   const start = new Date(body.periodStart)
