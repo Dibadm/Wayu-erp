@@ -114,7 +114,7 @@ export default function TipsOverlay({ isOpen, onClose }: Props) {
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-5 space-y-6">
+            <div className="flex-1 overflow-y-auto p-5 space-y-6 min-h-0">
               {SECTIONS.map(section => {
                 const sectionTips = grouped.get(section)
                 if (!sectionTips || sectionTips.length === 0) return null

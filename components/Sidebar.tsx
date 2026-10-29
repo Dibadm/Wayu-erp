@@ -23,13 +23,17 @@ import TipsTrigger from '@/components/TipsTrigger'
 const NAV = [
   { href: '/dashboard',       label: 'Dashboard',       icon: LayoutDashboard },
   { href: '/analytics',       label: 'Analytics',       icon: BarChart3 },
-  { href: '/inventory',       label: 'Inventory',       icon: Package },
   { href: '/movements',       label: 'Movements',       icon: ArrowLeftRight },
-  { href: '/batches',         label: 'Expiry',          icon: FlaskRound },
-  { href: '/suppliers',       label: 'Suppliers',       icon: Building2 },
   { href: '/purchase-orders', label: 'Purchase Orders', icon: ShoppingCart },
   { href: '/locations',       label: 'Locations',       icon: MapPin },
   { href: '/reports',         label: 'Reports',         icon: FileBarChart },
+]
+
+// Relocated out of the main nav into the Settings area (all roles).
+const SETTINGS_NAV = [
+  { href: '/inventory',       label: 'Inventory',       icon: Package },
+  { href: '/batches',         label: 'Expiry',          icon: FlaskRound },
+  { href: '/suppliers',       label: 'Suppliers',       icon: Building2 },
 ]
 
 const FINANCE_NAV = [
@@ -180,6 +184,7 @@ export default function Sidebar() {
     cashFlow: false,
     credit: false,
     ai: false,
+    settings: true,
     admin: false,
   })
 
@@ -302,7 +307,7 @@ export default function Sidebar() {
           </div>
         )}
 
-        {showAI && (
+{showAI && (
           <div>
             <SectionHeader label="AI Features" icon={Zap} color="var(--accent-blue)" isOpen={openSections.ai} onToggle={() => toggleSection('ai')} />
             <div
@@ -312,10 +317,23 @@ export default function Sidebar() {
                 opacity: openSections.ai ? 1 : 0,
               }}
             >
-              {AI_NAV.map(n => <NavLink key={n.href} {...n} />)}
+              {AI_NAV.map(n => <NavLink key={n.href} {...n} accent="blue" />)}
             </div>
           </div>
         )}
+
+        <div>
+          <SectionHeader label="Inventory & Suppliers" icon={Package} color="var(--accent-emerald)" isOpen={openSections.settings} onToggle={() => toggleSection('settings')} />
+          <div
+            className="overflow-hidden transition-all duration-200 ease-in-out"
+            style={{
+              maxHeight: openSections.settings ? '500px' : '0px',
+              opacity: openSections.settings ? 1 : 0,
+            }}
+          >
+            {SETTINGS_NAV.map(n => <NavLink key={n.href} {...n} accent="emerald" />)}
+          </div>
+        </div>
 
         <div className="px-1 mt-1">
           <OCRScanner />
