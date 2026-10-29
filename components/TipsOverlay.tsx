@@ -99,7 +99,7 @@ export default function TipsOverlay({ isOpen, onClose }: Props) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
             transition={{ duration: 0.2 }}
-            className="glass-card w-full max-w-3xl shadow-2xl flex flex-col max-h-[85vh]"
+            className="glass-card w-full max-w-3xl shadow-2xl flex flex-col max-h-[85vh] min-h-0"
           >
             <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex-shrink-0">
               <div className="flex items-center gap-2">
